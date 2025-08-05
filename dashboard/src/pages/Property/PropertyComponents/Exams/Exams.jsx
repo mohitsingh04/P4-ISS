@@ -234,7 +234,12 @@ export default function Exams() {
           <UpdateExams />
         )
       ) : (
-        <AddExams />
+        <AddExams
+          exams={exams}
+          property={property}
+          setIsAdding={setIsAdding}
+          onSubmit={getPropertyExams}
+        />
       )}
     </div>
   );

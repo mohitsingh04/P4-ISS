@@ -240,6 +240,11 @@ import {
   softDeleteExam,
   updateExam,
 } from "../controller/ExamController.js";
+import {
+  createPropertyExam,
+  deletePropertyExamById,
+  getExamByPropertyId,
+} from "../controller/PropertyExamController.js";
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -304,6 +309,11 @@ router.get(`/exam/:objectId`, getExamById);
 router.patch(`/exam/:objectId`, updateExam);
 router.get("/exam/soft/:objectId", softDeleteExam);
 router.get("/exam/restore/:objectId", restoreExam);
+
+//? Property Exam Routes
+router.post(`/property-exam`, createPropertyExam);
+router.delete(`/property-exam/:objectId`, deletePropertyExamById);
+router.get(`/property/property-exam/:property_id`, getExamByPropertyId);
 
 // ?Category Route
 const categoryUpload = categoryUploadMulter.fields([
