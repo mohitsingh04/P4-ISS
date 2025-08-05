@@ -1,0 +1,4 @@
+add Skeleton to Create Pages
+Check error handling in functions
+Create View Property Page with its all the Tabs
+create a git repo for v2

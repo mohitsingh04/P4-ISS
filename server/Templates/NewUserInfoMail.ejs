@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome to YogPrerna - Your Login Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f7;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <table
+      align="center"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="
+        max-width: 620px;
+        width: 100%;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      "
+    >
+      <!-- Header -->
+      <tr>
+        <td
+          style="
+            padding: 32px 24px;
+            background: #b47aff;
+            color: #ffffff;
+            text-align: center;
+          "
+        >
+          <h1 style="margin: 0; font-size: 22px; line-height: 1.4">
+            Welcome to YogPrerna!
+          </h1>
+          <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.5">
+            Your mindful digital wellness journey starts here.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Body Content -->
+      <tr>
+        <td style="padding: 24px; text-align: left">
+          <h2 style="font-size: 18px; margin: 0 0 15px; color: #333333">
+            Namaste,
+          </h2>
+
+          <p
+            style="
+              font-size: 15px;
+              color: #555555;
+              line-height: 1.6;
+              margin: 0 0 16px;
+            "
+          >
+            Your account has been successfully created on
+            <strong>YogPrerna</strong>. Here are your login details:
+          </p>
+
+          <table
+            cellpadding="10"
+            cellspacing="0"
+            style="
+              width: 100%;
+              background: #f8f8f8;
+              border-radius: 10px;
+              margin: 15px 0;
+              font-size: 15px;
+              color: #444444;
+            "
+          >
+            <tr>
+              <td style="font-weight: bold; width: 100px; color: #444">
+                Email:
+              </td>
+              <td style="color: #333"><%= email %></td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #444">Password:</td>
+              <td style="color: #333"><%= password%></td>
+            </tr>
+          </table>
+
+          <p style="font-size: 14px; color: #777777; margin: 16px 0 0">
+            For your security, please log in and change your password
+            immediately.
+          </p>
+
+          <div style="text-align: center; margin-top: 24px">
+            <a
+              href="<%= process.env.FRONTEND_DASHBOARD_URL %>"
+              style="
+                display: inline-block;
+                background: #b47aff;
+                color: #ffffff;
+                padding: 12px 24px;
+                font-size: 14px;
+                font-weight: bold;
+                text-decoration: none;
+                border-radius: 30px;
+                width: auto;
+              "
+            >
+              🔐 Go to Login
+            </a>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td
+          style="
+            padding: 20px 24px;
+            font-size: 12px;
+            color: #aaaaaa;
+            text-align: left;
+          "
+        >
+          <strong>© YogPrerna</strong><br />
+          Empowering mindful living through secure digital wellness journeys.
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

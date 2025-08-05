@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+
+:root {
+  --font-sans: var(--font-poppins);
+}
+
+body {
+  font-family: var(--font-sans), sans-serif;
+}
+
+.flipCardHover {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.flipCardHover::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  background-color: color-mix(in srgb, var(--bg-color) 20%, transparent);
+  width: 100%;
+  height: 200%;
+  transform-origin: center bottom;
+  transform: rotateX(90deg);
+  transition: 1s ease-in-out;
+  border-radius: 30% 30% 0 0;
+}
+.flipCardHover:hover::before {
+  transform: rotate(0);
+  border-radius: 0;
+}
+
+.phone-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.phone-label {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.phone-input-custom .form-control {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.phone-input-custom .flag-dropdown {
+  border: none;
+  background-color: transparent;
+  padding-left: 1rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.phone-input-custom {
+  border-radius: 0.5rem;
+}

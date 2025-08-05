@@ -1,0 +1,499 @@
+.no-caret::after {
+  display: none !important;
+}
+.rating_hover.badge {
+  width: 30px !important;
+}
+.cursor {
+  cursor: pointer;
+}
+
+[dir="rtl"] .leaflet-pane,
+[dir="rtl"] .leaflet-tile,
+[dir="rtl"] .leaflet-marker-icon,
+[dir="rtl"] .leaflet-marker-shadow,
+[dir="rtl"] .leaflet-tile-container {
+  inset-inline-end: 0;
+  inset-inline-start: auto;
+}
+.yarl__slide_image {
+  border-radius: 5px;
+}
+@media (max-width: 490px) {
+  .rodal-dialog {
+    width: 300px !important;
+    height: 293px !important;
+  }
+  .card-sigin {
+    padding: 20px !important;
+  }
+  .rounded-alert {
+    .alert-primary,
+    .alert-secondary,
+    .alert-danger,
+    .alert-warning,
+    .alert-info {
+      &.alert-dismissible .btn-close {
+        padding: 0.4rem 0.4rem !important;
+      }
+    }
+  }
+  .bd-example-ratios-breakpoint .ratio-4x3 {
+    width: 15rem;
+  }
+}
+.rodal-dialog {
+  padding: 0 !important;
+}
+.rodal,
+.rodal-mask {
+  z-index: 999;
+}
+.rodal-dialog {
+  z-index: 9999;
+  background-color: $custom-white;
+}
+.rodal {
+  .modal-body {
+    padding: 15px;
+    height: 155px;
+    overflow-y: scroll;
+  }
+}
+.rodal-close {
+  inset-inline-end: 16px !important;
+  right: unset;
+}
+.react-dropdown-select {
+  border: 1px solid $input-border !important;
+}
+.react-dropdown-select-dropdown {
+  background-color: $custom-white !important;
+  border: 1px solid $input-border !important;
+}
+.react-dropdown-select-item {
+  border-bottom: 1px solid $input-border !important;
+}
+.react-dropdown-select-item-selected,
+.react-dropdown-select-option {
+  background-color: $primary !important;
+}
+.react-dropdown-select-item.react-dropdown-select-item-disabled {
+  background-color: $light;
+}
+.react-dropdown-select-item:hover {
+  background-color: $primary-01 !important;
+}
+.widgets-cards {
+  .apexcharts-radialbar-hollow {
+    background-color: transparent;
+    fill: transparent;
+  }
+  .apexcharts-title-text,
+  .apexcharts-datalabel-label,
+  .apexcharts-datalabels-group .apexcharts-text.apexcharts-datalabel-value {
+    fill: #fff;
+  }
+}
+.search_drop {
+  position: absolute;
+  width: 100%;
+  height: 22.9rem;
+  overflow: auto;
+  top: 41px;
+}
+.not_found {
+  margin-bottom: 0px;
+  position: absolute;
+  background: $custom-white;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 1px 1px 7px rgba(154, 154, 204, 0.1);
+}
+.Select2__menu {
+  div,
+  li,
+  .Select2__single-value {
+    &.active,
+    .Select2__option--is-selected {
+      background: $primary !important;
+      color: $white !important;
+    }
+  }
+}
+.Select2__menu {
+  background-color: $custom-white;
+  border: 1px solid $default-border;
+  z-index: 8 !important;
+}
+.Select2__control,
+.Select2__menu {
+  background-color: var(--custom-white) !important;
+  border-color: $default-border !important;
+}
+.Select2__option:hover,
+.Select2__option.active,
+.Select2__option:active,
+.Select2__multi-value {
+  color: #fff !important;
+  background-color: $primary !important;
+}
+.Select2__multi-value__label {
+  color: #fff !important;
+}
+.Select2__indicator-separator {
+  background-color: $default-border !important;
+}
+.Select2__option--is-selected,
+.Select2__option--is-focused {
+  background: $custom-white !important;
+  color: $default-text-color !important;
+}
+.Select2__option:hover {
+  background: $primary !important;
+}
+.Select2__placeholder {
+  color: $default-text-color !important;
+}
+.Select2__input-container,
+.Select2__single-value {
+  color: $default-text-color !important;
+}
+.sun-editor {
+  background: $custom-white !important;
+  border: 1px solid $default-border;
+}
+.sun-editor .se-resizing-bar {
+  background: $custom-white !important;
+  border-top: 1px solid $default-border;
+}
+.sun-editor-editable {
+  background: $custom-white !important;
+}
+.sun-editor .se-toolbar {
+  background: $custom-white !important;
+  outline: 1px solid $default-border !important;
+}
+.sun-editor .se-btn-list:disabled,
+.sun-editor .se-btn:disabled,
+.sun-editor button:disabled {
+  color: $text-muted !important;
+}
+.sun-editor .se-btn-module-border {
+  border: 1px solid $default-border;
+}
+.sun-editor button {
+  color: $default-text-color !important;
+}
+.sun-editor .se-btn:enabled:focus,
+.sun-editor .se-btn:enabled:hover,
+.sun-editor .se-btn:enabled:active {
+  background: $light !important;
+}
+.navbar-brand:focus,
+.navbar-brand:hover {
+  color: $default-text-color;
+}
+.productdesc-1 .carousel-indicators {
+  display: none;
+}
+.filepond--root .filepond--panel[data-scalable="true"] {
+  border: 1px dashed var(--default-border) !important;
+}
+.filepond--root .filepond--panel-root {
+  border: 0rem dashed transparent !important;
+}
+.filepond--wrapper .filepond--root .filepond--drop-label {
+  border-bottom: 1px dashed var(--default-border) !important;
+}
+.MuiSlider-markLabel.MuiSlider-markLabel {
+  color: $default-text-color;
+}
+.react-datepicker__input-container input {
+  background-color: transparent;
+  color: $default-text-color !important;
+}
+.table > :not(caption) > * > * {
+  background-color: var(--bs-table-bg);
+  border-block-end-width: 1px;
+  border-block-end-color: $default-border !important;
+}
+.selectpage {
+  background-color: var(--custom-white);
+  border: 1px solid var(--default-border);
+  color: var(--default-text-color);
+  border-radius: 5px;
+  padding: 4px;
+}
+.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+#chart-years svg {
+  background-color: $light !important;
+}
+.react-calendar__navigation button,
+.react-calendar button {
+  color: var(--default-text-color);
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range,
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected,
+.react-calendar__tile--active,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item:hover,
+.react-datepicker__day:hover,
+.react-datepicker__month-text:hover,
+.react-datepicker__quarter-text:hover,
+.react-datepicker__year-text:hover,
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: var(--primary01);
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: $light;
+}
+
+.dynamic_checkout {
+  height: 250px;
+  overflow-y: scroll;
+}
+.fc-event {
+  color: #fff !important;
+  .fc-event-title,
+  .fc-event-time {
+    &:hover {
+      color: #fff !important;
+    }
+  }
+}
+.text-wrap .btn {
+  white-space: normal !important;
+}
+.list-group-item.active h6 {
+  color: #fff;
+}
+
+.MuiBox-root {
+  width: 100% !important;
+}
+.MuiSlider-rail {
+  background-color: var(--primary-color) !important;
+}
+.MuiSlider-track {
+  border: 1px solid var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
+}
+.MuiSlider-thumb {
+  background-color: var(--primary-color) !important;
+}
+.MuiSlider-valueLabel {
+  border-radius: 10px !important;
+  background-color: var(--primary-color) !important;
+}
+.MuiSlider-markLabel {
+  color: var(--default-text-color) !important;
+}
+.MuiSlider-mark {
+  width: 4px !important;
+  height: 10px !important;
+  border-radius: 5px !important;
+  background-color: var(--primary-color) !important;
+}
+.rc-slider-track,
+.rc-slider-tracks {
+  background-color: var(--primary-color) !important;
+}
+.rc-slider-handle {
+  border: 2px solid var(--primary-color) !important;
+}
+.rc-slider-dot {
+  border: 2px solid var(--primary-color) !important;
+}
+.rc-slider-mark-text {
+  color: var(--default-text-color) !important;
+}
+[dir="rtl"] {
+  .MuiRating-root {
+    direction: ltr;
+  }
+}
+
+@media (min-width: 992px) {
+  [data-nav-layout="horizontal"][data-nav-style="icon-click"]
+    .app-sidebar
+    .main-menu,
+  [data-nav-layout="horizontal"][data-nav-style="icon-hover"]
+    .app-sidebar
+    .main-menu {
+    margin-inline: 0 !important;
+  }
+}
+
+@media screen and (min-width: 992px) and (hover: none) and (pointer: coarse) {
+  [data-nav-style="menu-hover"][data-toggled="menu-hover-closed"]
+    .slide.has-sub
+    .side-menu__item {
+    z-index: -1;
+  }
+}
+
+[data-theme-mode="dark"] {
+  .react-datepicker__input-time-container
+    .react-datepicker-time__input-container
+    .react-datepicker-time__input
+    input[type="time"] {
+    background: rgb(var(--light-rgb));
+    border: 1px solid var(--default-border);
+    color: var(--default-text-color);
+    padding: 0 5px;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  input[type="month"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="week"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+  .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle,  .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle  {
+    fill: var(--default-body-bg-color);
+    color: var(--default-body-bg-color);
+  }
+  .react-datepicker-popper .react-datepicker__triangle {
+    stroke: var(--default-body-bg-color);
+  }
+}
+#vector-map,
+#marker-map,
+#marker-image-map,
+#lines-map,
+#us-map,
+#canada-map,
+#spain-map,
+#russia-map,
+#vmap {
+  height: 20rem;
+}
+
+#vmap3 {
+  height: 320px !important;
+
+  svg {
+    height: 258px;
+  }
+}
+#vmap2 {
+  height: 320px !important;
+
+  svg {
+    height: 430px !important;
+  }
+}
+
+#secondary-colored-slider {
+
+  .rc-slider-track,
+  .rc-slider-tracks {
+    background-color: #fb6b25 !important;
+  }
+
+  .rc-slider-handle {
+    border: 2px solid #fb6b25 !important;
+  }
+}
+
+#warning-colored-slider {
+
+  .rc-slider-track,
+  .rc-slider-tracks {
+    background-color: #f7b731 !important;
+  }
+
+  .rc-slider-handle {
+    border: 2px solid #f7b731 !important;
+  }
+}
+
+#info-colored-slider {
+
+  .rc-slider-track,
+  .rc-slider-tracks {
+    background-color: #45aaf2 !important;
+  }
+
+  .rc-slider-handle {
+    border: 2px solid #45aaf2 !important;
+  }
+}
+
+#success-colored-slider {
+
+  .rc-slider-track,
+  .rc-slider-tracks {
+    background-color: #09ad95 !important;
+  }
+
+  .rc-slider-handle {
+    border: 2px solid #09ad95 !important;
+  }
+}
+
+#danger-colored-slider {
+
+  .rc-slider-track,
+  .rc-slider-tracks {
+    background-color: #f82649 !important;
+  }
+
+  .rc-slider-handle {
+    border: 2px solid #f82649 !important;
+  }
+}
+[data-bg-img="bgimg1"] {
+  --menu-bg: url(/src/assets/images/menu-bg-images/bg-img1.jpg) !important;
+}
+[data-bg-img="bgimg2"] {
+  --menu-bg: url(/src/assets/images/menu-bg-images/bg-img2.jpg) !important;
+}
+[data-bg-img="bgimg3"] {
+  --menu-bg: url(/src/assets/images/menu-bg-images/bg-img3.jpg) !important;
+}
+[data-bg-img="bgimg4"] {
+  --menu-bg: url(/src/assets/images/menu-bg-images/bg-img4.jpg) !important;
+}
+[data-bg-img="bgimg5"] {
+  --menu-bg: url(/src/assets/images/menu-bg-images/bg-img5.jpg) !important;
+}

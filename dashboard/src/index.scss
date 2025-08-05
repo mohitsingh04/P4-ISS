@@ -1,0 +1,84 @@
+@import "./assets/scss/variables";
+@import "./assets/scss/switcher";
+@import "./assets/css/bootstrap.css";
+
+//Swiper CSS
+@import "swiper/css";
+@import "swiper/css/pagination";
+// @import 'swiper/css/navigation';
+@import "swiper/css/effect-coverflow";
+@import "swiper/css/thumbs";
+@import "swiper/css/effect-flip";
+@import "swiper/css/effect-fade";
+@import "swiper/css/effect-cube";
+@import "swiper/css/scrollbar";
+@import "swiper/css/free-mode";
+
+//tag input
+@import "react-tagsinput/react-tagsinput.css";
+
+//react time picker css
+@import "flatpickr/dist/flatpickr.css";
+@import "flatpickr/dist/flatpickr.min.css";
+
+//React Sun editor
+@import "suneditor/dist/css/suneditor.min.css";
+
+//File pond css
+@import "filepond/dist/filepond.min.css";
+@import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+//Simple bar css
+
+@import "simplebar-react/dist/simplebar.min.css";
+
+//yet image librery
+@import "yet-another-react-lightbox/styles.css";
+@import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+//Grid-js Table
+
+@import "gridjs/dist/theme/mermaid.css";
+@import "rc-slider/assets/index.css";
+@import "react-range-slider-input/dist/style.css"; //rangeSliderinput
+
+@import "react-datepicker/dist/react-datepicker.css"; //react-datepicker
+
+@import "react-calendar/dist/Calendar.css"; //  react Calendar
+
+@import "@simonwep/pickr/dist/themes/classic.min.css"; // 'classic' theme
+@import "@simonwep/pickr/dist/themes/monolith.min.css"; // 'monolith' theme
+@import "@simonwep/pickr/dist/themes/nano.min.css"; // 'nano' theme
+
+//Rodal css
+@import "rodal/lib/rodal.css";
+
+@import "./assets/css/styles.css";
+@import "./assets/css/icons.css";
+.truncate-3-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-select__control {
+  border-radius: 50px !important;
+}
+
+.form-check-input {
+  border-color: black;
+}
+
+.review-text.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review-text.expanded {
+  display: block;
+}
