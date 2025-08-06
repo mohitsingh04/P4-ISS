@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -7,11 +7,13 @@ import JoditEditor from "jodit-react";
 import { API } from "../../context/API";
 import Swal from "sweetalert2";
 import { ExamValidation } from "../../context/ValidationSchemas";
+import { getEditorConfig } from "../../context/getEditorConfig";
 
 export default function CreateExam() {
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState("");
   const [authLoading, setAuthLoading] = useState(true);
+  const editorConfig = useMemo(() => getEditorConfig(), []);
 
   const getAuhtUser = async () => {
     setAuthLoading(true);
@@ -252,6 +254,7 @@ export default function CreateExam() {
                       onChange={(newContent) =>
                         formik.setFieldValue("description", newContent)
                       }
+                      config={editorConfig}
                     />
                     {formik.touched.description &&
                       formik.errors.description && (

@@ -118,6 +118,109 @@ export const createPropertyExam = async (req, res) => {
   }
 };
 
+export const updatePropertyExam = async (req, res) => {
+  try {
+    const { objectId } = req.params;
+
+    const {
+      exam_id,
+      exam_name,
+      exam_short_name,
+      upcoming_exam_date,
+      result_date,
+      application_form_date,
+      application_form_link,
+      exam_form_link,
+      exam_mode,
+      description,
+    } = req.body;
+
+    if (!objectId || !exam_id) {
+      return res
+        .status(400)
+        .json({ error: "objectId and exam_id are required" });
+    }
+
+    const propertyExam = await PropertyExam.findById(objectId);
+    if (!propertyExam) {
+      return res.status(404).json({ error: "PropertyExam not found" });
+    }
+
+    const originalExam = await Exam.findOne({ uniqueId: exam_id });
+    if (!originalExam) {
+      return res.status(404).json({ error: "Base Exam not found" });
+    }
+
+    console.log(exam_short_name, originalExam?.exam_short_name);
+    const updatedFields = {};
+
+    if (exam_name && exam_name !== originalExam.exam_name) {
+      updatedFields.exam_name = exam_name;
+    }
+
+    if (exam_short_name && exam_short_name !== originalExam.exam_short_name) {
+      updatedFields.exam_short_name = exam_short_name;
+    }
+
+    if (
+      upcoming_exam_date &&
+      !isSameDate(upcoming_exam_date, originalExam.upcoming_exam_date)
+    ) {
+      updatedFields.upcoming_exam_date = upcoming_exam_date;
+    }
+
+    if (result_date && !isSameDate(result_date, originalExam.result_date)) {
+      updatedFields.result_date = result_date;
+    }
+
+    if (
+      application_form_date &&
+      !isSameDate(application_form_date, originalExam.application_form_date)
+    ) {
+      updatedFields.application_form_date = application_form_date;
+    }
+
+    if (
+      application_form_link &&
+      application_form_link !== originalExam.application_form_link
+    ) {
+      updatedFields.application_form_link = application_form_link;
+    }
+
+    if (exam_form_link && exam_form_link !== originalExam.exam_form_link) {
+      updatedFields.exam_form_link = exam_form_link;
+    }
+
+    if (exam_mode && exam_mode !== originalExam.exam_mode) {
+      updatedFields.exam_mode = exam_mode;
+    }
+
+    if (description && description !== originalExam.description) {
+      updatedFields.description = description;
+    }
+
+    if (Object.keys(updatedFields).length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No changes detected", property_exam: propertyExam });
+    }
+
+    const updatedPropertyExam = await PropertyExam.findByIdAndUpdate(
+      objectId,
+      { $set: updatedFields },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      message: "Property exam updated successfully",
+      property_exam: updatedPropertyExam,
+    });
+  } catch (error) {
+    console.error("Update PropertyExam error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 export const getExamByPropertyId = async (req, res) => {
   try {
     const { property_id } = req.params;

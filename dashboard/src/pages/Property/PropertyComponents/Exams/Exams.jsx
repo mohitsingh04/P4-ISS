@@ -130,6 +130,11 @@ export default function Exams() {
     return item;
   };
 
+  const getExamById = (id) => {
+    const mainExam = allExams.find((item) => item.uniqueId === id);
+    return mainExam;
+  };
+
   const columns = [
     {
       name: "Exam Name",
@@ -228,10 +233,14 @@ export default function Exams() {
               </Col>
             </Row>
           ) : (
-            <ViewExams />
+            <ViewExams exam={isViewing} getExamById={getExamById} />
           )
         ) : (
-          <UpdateExams />
+          <UpdateExams
+            property={property}
+            exam={isEditing}
+            getExamById={getExamById}
+          />
         )
       ) : (
         <AddExams

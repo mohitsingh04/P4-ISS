@@ -244,6 +244,7 @@ import {
   createPropertyExam,
   deletePropertyExamById,
   getExamByPropertyId,
+  updatePropertyExam,
 } from "../controller/PropertyExamController.js";
 
 const router = express.Router();
@@ -314,6 +315,7 @@ router.get("/exam/restore/:objectId", restoreExam);
 router.post(`/property-exam`, createPropertyExam);
 router.delete(`/property-exam/:objectId`, deletePropertyExamById);
 router.get(`/property/property-exam/:property_id`, getExamByPropertyId);
+router.patch(`/property-exam/:objectId`, updatePropertyExam);
 
 // ?Category Route
 const categoryUpload = categoryUploadMulter.fields([

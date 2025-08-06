@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { Card, Col, Row, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import JoditEditor from "jodit-react";
 import { API } from "../../../../context/API";
 import Swal from "sweetalert2";
+import { getEditorConfig } from "../../../../context/getEditorConfig";
 
 export default function AddExams({ exams, property, setIsAdding, onSubmit }) {
-  const editor = useRef(null);
   const [selectedExamId, setSelectedExamId] = useState("");
   const [initialValues, setInitialValues] = useState({
     property_id: "",
@@ -20,6 +20,7 @@ export default function AddExams({ exams, property, setIsAdding, onSubmit }) {
     exam_mode: "",
     description: "",
   });
+  const editorConfig = useMemo(() => getEditorConfig(), []);
 
   useEffect(() => {
     if (selectedExamId) {
@@ -217,15 +218,11 @@ export default function AddExams({ exams, property, setIsAdding, onSubmit }) {
                 <Form.Group className="mb-3" controlId="description">
                   <Form.Label>Description</Form.Label>
                   <JoditEditor
-                    ref={editor}
                     value={formik.values.description}
-                    tabIndex={1}
                     onChange={(newContent) =>
                       formik.setFieldValue("description", newContent)
                     }
-                    config={{
-                      placeholder: "Write full exam description here...",
-                    }}
+                    config={editorConfig}
                   />
                 </Form.Group>
 
