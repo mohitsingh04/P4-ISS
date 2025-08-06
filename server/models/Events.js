@@ -44,7 +44,7 @@ const EventSchema = mongoose.Schema(
       type: String,
     },
     prices: {
-      type: Object,
+      type: Number,
     },
     event_description: {
       type: String,

@@ -1,13 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Breadcrumb,
-  Button,
-  Card,
-  Col,
-  Form,
-  InputGroup,
-  Row,
-} from "react-bootstrap";
+import { Breadcrumb, Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,16 +14,14 @@ export default function CreateEvent() {
   const [featuredImage, setFeaturedImage] = useState(null);
   const [featuredImagePreview, setFeaturedImagePreview] = useState(null);
   const [entranceType, setEntranceType] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [priceInput, setPriceInput] = useState("");
-  const [prices, setPrices] = useState({});
   const editorConfig = useMemo(() => getEditorConfig(), []);
   const [categories, setCategories] = useState([]);
   const [yogatypes, setYogaTypes] = useState([]);
   const [yogaOptions, setYogaOptions] = useState([]);
   const [authLoading, setAuthLoading] = useState(true);
   const [authUser, setAuthUser] = useState("");
-  const getAuthUser = async () => {
+
+  const getAuthUser = useCallback(async () => {
     setAuthLoading(true);
     try {
       const response = await API.get(`/profile`);
@@ -45,11 +35,11 @@ export default function CreateEvent() {
     } finally {
       setAuthLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getAuthUser();
-  }, []);
+  }, [getAuthUser]);
 
   if (!authLoading) {
     if (!authUser?.permissions?.some((item) => item === "Create Event")) {
@@ -112,6 +102,7 @@ export default function CreateEvent() {
       duration_value: "",
       duration_type: "",
       featured_image: null,
+      price: "",
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -160,8 +151,9 @@ export default function CreateEvent() {
       formData.append("address", values.address);
       formData.append(
         "price",
-        entranceType === "paid" ? JSON.stringify(prices) : "{}"
+        values.entrance_type === "paid" ? values.price : ""
       );
+
       formData.append(
         "duration",
         `${values.duration_value} ${values.duration_type}`
@@ -205,14 +197,6 @@ export default function CreateEvent() {
         setFeaturedImagePreview(null);
         formik.setFieldValue("featured_image", null);
       }
-    }
-  };
-
-  const handleAddPrice = () => {
-    if (currency && priceInput) {
-      setPrices({ ...prices, [currency]: priceInput });
-      setCurrency("");
-      setPriceInput("");
     }
   };
 
@@ -302,62 +286,20 @@ export default function CreateEvent() {
                 </Form.Group>
 
                 {entranceType === "paid" && (
-                  <Row className="align-items-end mb-3">
-                    <Col md={6}>
-                      <Form.Label>Currency</Form.Label>
-                      <InputGroup>
-                        <Form.Select
-                          value={currency}
-                          onChange={(e) => setCurrency(e.target.value)}
-                        >
-                          <option value="">Select Currency</option>
-                          <option value="INR">₹ INR</option>
-                          <option value="DOLLAR">$ Dollar</option>
-                          <option value="EURO">€ Euro</option>
-                        </Form.Select>
-                        <Form.Control
-                          type="number"
-                          value={priceInput}
-                          onChange={(e) => setPriceInput(e.target.value)}
-                          placeholder="Enter price"
-                        />
-                        <Button onClick={handleAddPrice} variant="success">
-                          <i className="fe fe-plus-circle me-1"></i>Add Price
-                        </Button>
-                      </InputGroup>
-                    </Col>
-                    <Col md={6}>
-                      {Object.keys(prices).length > 0 && (
-                        <div className="tags">
-                          {Object.entries(prices).map(([currency, value]) => (
-                            <div
-                              key={currency}
-                              className="tag shadow-sm"
-                              style={{ fontSize: "0.9rem" }}
-                            >
-                              <span>
-                                {currency === "INR" && "₹"}
-                                {currency === "DOLLAR" && "$"}
-                                {currency === "EURO" && "€"}
-                                {value}
-                              </span>
-                              <button
-                                type="button"
-                                className="tag-addon btn"
-                                onClick={() => {
-                                  const updated = { ...prices };
-                                  delete updated[currency];
-                                  setPrices(updated);
-                                }}
-                              >
-                                <i className="fe fe-x"></i>
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </Col>
-                  </Row>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Price (INR)</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="price"
+                      value={formik.values.price}
+                      onChange={formik.handleChange}
+                      isInvalid={formik.touched.price && !!formik.errors.price}
+                      placeholder="Enter price"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.price}
+                    </Form.Control.Feedback>
+                  </Form.Group>
                 )}
 
                 <Row className="mb-3">

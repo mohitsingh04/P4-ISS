@@ -12,28 +12,13 @@ import AddLocation from "./LocationComponent/AddLocation";
 export default function LocationDetails() {
   const { objectId } = useParams();
   const [property, setProperty] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState("");
   const [location, setLocation] = useState("");
-  const [countries, setCountries] = useState([]);
   const [allStates, setAllStates] = useState([]);
   const [filteredStates, setFilteredStates] = useState([]);
   const [allCities, setAllCities] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
-
-  const getCountries = async () => {
-    try {
-      const response = await API.get(`/countries`);
-      const data = response.data;
-      setCountries(data);
-    } catch (error) {
-      console.error(error.response.data.error);
-    }
-  };
-
-  useEffect(() => {
-    getCountries();
-  }, []);
 
   const getStates = async () => {
     try {
@@ -130,10 +115,8 @@ export default function LocationDetails() {
                 <AddLocation
                   property={property}
                   getLocation={getLocation}
-                  countries={countries}
                   states={filteredStates}
                   cities={filteredCities}
-                  setSelectedCountry={setSelectedCountry}
                   setSelectedState={setSelectedState}
                 />
               ) : (
@@ -157,7 +140,6 @@ export default function LocationDetails() {
                   <Row>
                     <Col md={4}>
                       <PropertyCountry
-                        countries={countries}
                         property={property}
                         location={location}
                         getProperty={getProperty}

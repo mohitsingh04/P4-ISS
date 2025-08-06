@@ -180,15 +180,7 @@ export default function EventView() {
                       {event.prices && (
                         <tr>
                           <th>Prices</th>
-                          <td>
-                            {Object.entries(event.prices).map(
-                              ([currency, value]) => (
-                                <div key={currency}>
-                                  <strong>{currency}:</strong> {value}
-                                </div>
-                              )
-                            )}
-                          </td>
+                          <td>{event.prices}</td>
                         </tr>
                       )}
                       <tr>

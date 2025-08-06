@@ -1,6 +1,5 @@
 import { addPropertyScore } from "../AnalyticController/PropertyScoreController.js";
 import { MainImageMover } from "../helper/FolderCleaners/PropertyImageMover.js";
-import Certifications from "../models/Certifications.js";
 import Amenities from "../models/Ameniteis.js";
 import ArchiveEnquiry from "../models/ArchiveEnquiry.js";
 import BusinessHour from "../models/BusinessHour.js";
@@ -9,7 +8,6 @@ import Faqs from "../models/Faqs.js";
 import Gallery from "../models/Gallery.js";
 import Location from "../models/Location.js";
 import Property from "../models/Property.js";
-import PropertyCourse from "../models/PropertyCourse.js";
 import Review from "../models/Reviews.js";
 import Seo from "../models/Seo.js";
 import Teachers from "../models/Teachers.js";
@@ -22,7 +20,7 @@ import SeoScore from "../AnalyticModel/SeoScore.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { downloadImageAndReplaceSrc } from "../helper/FolderCleaners/EditorImagesController.js";
-import Accomodation from "../models/Accomodation.js";
+import Hostel from "../models/Hostel.js";
 import Coupon from "../models/Coupon.js";
 import Category from "../models/Category.js";
 
@@ -317,10 +315,8 @@ export const deleteProperty = async (req, res) => {
       Teachers.deleteMany({ property_id: uniqueId }),
       Gallery.deleteMany({ propertyId: uniqueId }),
       Review.deleteMany({ property_id: uniqueId }),
-      PropertyCourse.deleteMany({ property_id: uniqueId }),
       Seo.deleteMany({ property_id: uniqueId }),
       Faqs.deleteMany({ property_id: uniqueId }),
-      Certifications.deleteMany({ property_id: uniqueId }),
       BusinessHour.deleteMany({ property_id: uniqueId }),
       Enquiry.deleteMany({ property_id: uniqueId }),
       ArchiveEnquiry.deleteMany({ property_id: uniqueId }),
@@ -331,7 +327,7 @@ export const deleteProperty = async (req, res) => {
       EnquiryCount.deleteMany({ property_id: uniqueId }),
       PropertyScore.deleteMany({ property_id: uniqueId }),
       SeoScore.deleteMany({ property_id: uniqueId }),
-      Accomodation.deleteMany({ property_id: uniqueId }),
+      Hostel.deleteMany({ property_id: uniqueId }),
       Coupon.deleteMany({ property_id: uniqueId }),
     ]);
 

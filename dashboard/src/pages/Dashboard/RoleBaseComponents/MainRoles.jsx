@@ -7,7 +7,7 @@ import RankTable from "../DashboardComponents/RankTable";
 export default function MainRoles({ authUser, properties }) {
   const [users, setUsers] = useState([]);
   const [category, setCategory] = useState([]);
-  const [course, setCourse] = useState([]);
+  const [exam, setExam] = useState([]);
   const [profile, setProfile] = useState("");
   const [blogs, setBlogs] = useState([]);
 
@@ -28,10 +28,10 @@ export default function MainRoles({ authUser, properties }) {
     }
   }, []);
 
-  const getCourse = useCallback(async () => {
+  const getExams = useCallback(async () => {
     try {
-      const response = await API.get(`/course`);
-      setCourse(response.data);
+      const response = await API.get(`/exam`);
+      setExam(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,8 +64,8 @@ export default function MainRoles({ authUser, properties }) {
     getUsers();
   }, [getUsers]);
   useEffect(() => {
-    getCourse();
-  }, [getCourse]);
+    getExams();
+  }, [getExams]);
   useEffect(() => {
     getCategory();
   }, [getCategory]);
@@ -125,8 +125,8 @@ export default function MainRoles({ authUser, properties }) {
       roles: ["Super Admin", "Editor", "Seo Manager"],
     },
     {
-      title: "Course",
-      count: course?.length || 0,
+      title: "Exam",
+      count: exam?.length || 0,
       icon: "fe-book-open",
       color: "danger",
       roles: ["Super Admin", "Editor", "Seo Manager"],

@@ -75,7 +75,6 @@ import Tags from "./pages/Blogs/Tags/Tags";
 import CreateBlogCategory from "./pages/Blogs/Category/CreateBlogCategory";
 import EditBlogCategory from "./pages/Blogs/Category/EditBlogCategory";
 import ViewBlog from "./pages/Blogs/ViewBlog";
-import SoftDeletedCourses from "./pages/Courses/SoftDeletedCourses";
 import BlogSeo from "./pages/Blogs/SEO/blogSeo";
 import YourProperty from "./pages/Property/YourProperty";
 import Events from "./pages/Events/Events";

@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import User from "../../models/Users.js";
-import Course from "../../models/Courses.js";
 import Category from "../../models/Category.js";
 import Property from "../../models/Property.js";
 import Gallery from "../../models/Gallery.js";
@@ -38,37 +37,6 @@ export const UserFolderCleaners = async () => {
     );
   } catch (error) {
     console.error("Error during cleanup");
-  }
-};
-
-export const courseFolderCleaners = async () => {
-  try {
-    const allCourses = await Course.find();
-
-    const courseImages = new Set();
-    allCourses.forEach((course) => {
-      if (course.image && Array.isArray(course.image)) {
-        course.image.forEach((img) => {
-          if (img) courseImages.add(img);
-        });
-      }
-    });
-
-    const courseMediaFolder = path.join(__dirname, "../../media/course");
-
-    const filesInFolder = await fs.readdir(courseMediaFolder);
-
-    await Promise.all(
-      filesInFolder.map(async (file) => {
-        const filePath = `media/course/${file}`;
-
-        if (!courseImages.has(filePath)) {
-          await fs.unlink(path.join(courseMediaFolder, file));
-        }
-      })
-    );
-  } catch (error) {
-    console.error("Error during cleanup:");
   }
 };
 

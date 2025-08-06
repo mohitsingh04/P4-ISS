@@ -6,15 +6,12 @@ import { locationValidation } from "../../../../../context/ValidationSchemas";
 import { useState } from "react";
 
 export default function AddLocation({
-  countries,
   states,
   cities,
-  setSelectedCountry,
   property,
   setSelectedState,
   getLocation,
 }) {
-  const [showOtherCountry, setShowOtherCountry] = useState(false);
   const [showOtherState, setShowOtherState] = useState(false);
   const [showOtherCity, setShowOtherCity] = useState(false);
 
@@ -22,7 +19,7 @@ export default function AddLocation({
     initialValues: {
       property_address: "",
       property_pincode: "",
-      property_country: "",
+      property_country: "India",
       property_state: "",
       property_city: "",
       property_id: property?.uniqueId || "",
@@ -38,11 +35,6 @@ export default function AddLocation({
       try {
         const submissionData = { ...values };
 
-        // If country_name provided, blank property_country
-        if (values.country_name?.trim() !== "") {
-          submissionData.property_country = "";
-        }
-
         if (values.state_name?.trim() !== "") {
           submissionData.property_state = "";
         }
@@ -52,7 +44,6 @@ export default function AddLocation({
         }
 
         const response = await API.post("/location", submissionData);
-        console.log("Location added:", response.data);
 
         Swal.fire(
           "Success",
@@ -61,7 +52,6 @@ export default function AddLocation({
         );
         getLocation();
         resetForm();
-        setShowOtherCountry(false);
         setShowOtherState(false);
         setShowOtherCity(false);
       } catch (error) {
@@ -119,49 +109,18 @@ export default function AddLocation({
           <Col md={4}>
             <Form.Group controlId="property_country">
               <Form.Label>Country</Form.Label>
-              <Form.Select
+              <Form.Control
                 name="property_country"
                 value={formik.values.property_country}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  formik.setFieldValue("property_country", value);
-                  setSelectedCountry(value === "Other" ? "" : value);
-                  setShowOtherCountry(value === "Other");
-                }}
+                onChange={formik.handleChange}
+                disabled
                 onBlur={formik.handleBlur}
                 isInvalid={formik.errors.property_country}
-              >
-                <option value="">Select Country</option>
-                {countries
-                  ?.sort((a, b) => a.country_name.localeCompare(b.country_name))
-                  .map((country, idx) => (
-                    <option key={idx} value={country?.country_name}>
-                      {country?.country_name}
-                    </option>
-                  ))}
-                <option value="Other">Other</option>
-              </Form.Select>
+              />
               <Form.Control.Feedback type="invalid">
                 {formik.errors.property_country}
               </Form.Control.Feedback>
             </Form.Group>
-            {showOtherCountry && (
-              <Form.Group controlId="country_name" className="mt-2">
-                <Form.Label>Enter Country Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter country name"
-                  name="country_name"
-                  value={formik.values.country_name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  isInvalid={formik.errors.country_name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {formik.errors.country_name}
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
           </Col>
           <Col md={4}>
             <Form.Group controlId="property_state">
@@ -173,7 +132,6 @@ export default function AddLocation({
                   const value = e.target.value;
                   formik.setFieldValue("property_state", value);
                   setSelectedState(value === "Other" ? "" : value);
-                  setShowOtherState(value === "Other");
                 }}
                 onBlur={formik.handleBlur}
                 isInvalid={formik.errors.property_state}

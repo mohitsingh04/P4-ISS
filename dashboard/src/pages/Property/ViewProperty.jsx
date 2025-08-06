@@ -16,17 +16,12 @@ import Faq from "./PropertyComponents/Faq/Faq";
 import Reviews from "./PropertyComponents/Reviews/Reviews";
 import Seo from "./PropertyComponents/SEO/Seo";
 import Teacher from "./PropertyComponents/Teacher/Teacher";
-// import Course from "./PropertyComponents/Course/Course";
 import Gallery from "./PropertyComponents/Gallery/Gallery";
 import Businesshours from "./PropertyComponents/BussinessHours/BussinessHours";
 import Enquiry from "./PropertyComponents/Enquiry/Enquiry";
 import Amenities from "./PropertyComponents/Amenities/Amenities";
-// import AdditionalDetails from "./PropertyComponents/AdditionalDetails/AdditionalDetails";
 import Coupon from "./PropertyComponents/Coupon/Coupon";
-import Certifications from "./PropertyComponents/Certifications/Certifications";
-import Accomodation from "./PropertyComponents/Accomodation/Accomodation";
-import Hiring from "./PropertyComponents/Hiring/Hiring";
-import Applications from "./PropertyComponents/Applications/Applications";
+import Hostel from "./PropertyComponents/Hostel/Hostel";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -75,10 +70,10 @@ export default function ViewProperty() {
       online: false,
     },
     {
-      key: "accomodation",
-      label: "Accomodation",
+      key: "hostel",
+      label: "Hostel",
       icon: "ri-hotel-line",
-      component: <Accomodation />,
+      component: <Hostel />,
       online: false,
     },
     {
@@ -99,7 +94,7 @@ export default function ViewProperty() {
       key: "exams",
       label: "Exams",
       icon: "ri-book-open-line",
-      component: <Exams/>,
+      component: <Exams />,
       online: true,
     },
     {
@@ -121,27 +116,6 @@ export default function ViewProperty() {
       label: "FAQ's",
       icon: "ri-question-answer-line",
       component: <Faq />,
-      online: true,
-    },
-    {
-      key: "certifications",
-      label: "Certifications",
-      icon: "ri-trophy-line",
-      component: <Certifications />,
-      online: true,
-    },
-    {
-      key: "hiring",
-      label: "Hiring",
-      icon: "ri-briefcase-line ",
-      component: <Hiring />,
-      online: true,
-    },
-    {
-      key: "applications",
-      label: "Applications",
-      icon: "ri-file-text-line",
-      component: <Applications />,
       online: true,
     },
     {

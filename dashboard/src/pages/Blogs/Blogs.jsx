@@ -133,7 +133,7 @@ export default function Blogs() {
                 }`
               : ALLImages("face8")
           }
-          alt={row?.featured_image?.[0] || "Course"}
+          alt={row?.featured_image?.[0] || "Blog"}
           className="rounded-circle"
           width="40"
           height="40"

@@ -1,16 +1,8 @@
 import { useFormik } from "formik";
 import JoditEditor from "jodit-react";
 import CreatableSelect from "react-select/creatable";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Card,
-  Col,
-  Form,
-  InputGroup,
-  Row,
-  Button,
-  Breadcrumb,
-} from "react-bootstrap";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Card, Col, Form, Row, Button, Breadcrumb } from "react-bootstrap";
 import { getEditorConfig } from "../../context/getEditorConfig";
 import { API } from "../../context/API";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -22,9 +14,6 @@ export default function UpdateEvent() {
   const navigator = useNavigate();
   const editorConfig = useMemo(() => getEditorConfig(), []);
   const [entranceType, setEntranceType] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [priceInput, setPriceInput] = useState("");
-  const [prices, setPrices] = useState({});
   const [categories, setCategories] = useState([]);
   const [yogatypes, setYogaTypes] = useState([]);
   const [yogaOptions, setYogaOptions] = useState([]);
@@ -49,7 +38,7 @@ export default function UpdateEvent() {
     getStatus();
   }, [getStatus]);
 
-  const getAuthUser = async () => {
+  const getAuthUser = useCallback(async () => {
     setAuthLoading(true);
     try {
       const response = await API.get(`/profile`);
@@ -63,11 +52,11 @@ export default function UpdateEvent() {
     } finally {
       setAuthLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getAuthUser();
-  }, []);
+  }, [getAuthUser]);
 
   if (!authLoading) {
     if (!authUser?.permissions?.some((item) => item === "Update Event")) {
@@ -79,8 +68,6 @@ export default function UpdateEvent() {
     try {
       const response = await API.get(`/event/${objectId}`);
       setEvent(response.data);
-      console.log(response.data);
-      setPrices(response.data.prices);
       setEntranceType(response.data.entrance_type);
     } catch (error) {
       console.log(error);
@@ -104,8 +91,6 @@ export default function UpdateEvent() {
     getYogaTypes();
   }, [getYogaTypes]);
 
-  //   console.log(entranceType)
-
   useEffect(() => {
     if (yogatypes?.length > 0) {
       const options = yogatypes.map((type) => ({
@@ -124,8 +109,6 @@ export default function UpdateEvent() {
       console.log(error);
     }
   }, []);
-
-  console.log(entranceType, prices);
 
   useEffect(() => {
     getCategoies();
@@ -152,6 +135,7 @@ export default function UpdateEvent() {
       duration_type: event?.duration?.split(" ")?.[1] || "",
       featured_image: null,
       status: event.status || "",
+      price: event?.prices || "",
     },
 
     enableReinitialize: true,
@@ -170,7 +154,7 @@ export default function UpdateEvent() {
       formData.append("address", values.address);
       formData.append(
         "price",
-        entranceType === "paid" ? JSON.stringify(prices) : "{}"
+        values.entrance_type === "paid" ? values.price : ""
       );
       formData.append(
         "duration",
@@ -200,14 +184,6 @@ export default function UpdateEvent() {
       }
     },
   });
-
-  const handleAddPrice = () => {
-    if (currency && priceInput) {
-      setPrices({ ...prices, [currency]: priceInput });
-      setCurrency("");
-      setPriceInput("");
-    }
-  };
 
   const handleFeaturedImageChange = (e) => {
     const file = e.currentTarget.files[0];
@@ -306,62 +282,20 @@ export default function UpdateEvent() {
                 </Form.Group>
 
                 {entranceType === "paid" && (
-                  <Row className="align-items-end mb-3">
-                    <Col md={6}>
-                      <Form.Label>Currency</Form.Label>
-                      <InputGroup>
-                        <Form.Select
-                          value={currency}
-                          onChange={(e) => setCurrency(e.target.value)}
-                        >
-                          <option value="">Select Currency</option>
-                          <option value="INR">₹ INR</option>
-                          <option value="DOLLAR">$ Dollar</option>
-                          <option value="EURO">€ Euro</option>
-                        </Form.Select>
-                        <Form.Control
-                          type="number"
-                          value={priceInput}
-                          onChange={(e) => setPriceInput(e.target.value)}
-                          placeholder="Enter price"
-                        />
-                        <Button onClick={handleAddPrice} variant="success">
-                          <i className="fe fe-plus-circle me-1"></i>Add Price
-                        </Button>
-                      </InputGroup>
-                    </Col>
-                    <Col md={6}>
-                      {prices && Object.keys(prices).length > 0 && (
-                        <div className="tags">
-                          {Object.entries(prices).map(([currency, value]) => (
-                            <div
-                              key={currency}
-                              className="tag shadow-sm"
-                              style={{ fontSize: "0.9rem" }}
-                            >
-                              <span>
-                                {currency === "INR" && "₹"}
-                                {currency === "DOLLAR" && "$"}
-                                {currency === "EURO" && "€"}
-                                {value}
-                              </span>
-                              <button
-                                type="button"
-                                className="tag-addon btn"
-                                onClick={() => {
-                                  const updated = { ...prices };
-                                  delete updated[currency];
-                                  setPrices(updated);
-                                }}
-                              >
-                                <i className="fe fe-x"></i>
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </Col>
-                  </Row>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Price (INR)</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="price"
+                      value={formik.values.price}
+                      onChange={formik.handleChange}
+                      isInvalid={formik.touched.price && !!formik.errors.price}
+                      placeholder="Enter price"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.price}
+                    </Form.Control.Feedback>
+                  </Form.Group>
                 )}
 
                 <Row className="mb-3">

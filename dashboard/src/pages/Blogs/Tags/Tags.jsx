@@ -68,7 +68,8 @@ export default function Tags() {
       );
     }
   }, [search, tags]);
-  const deleteCourse = async (id) => {
+
+  const deleteTag = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "This tag will be deleted permanently!",
@@ -109,7 +110,7 @@ export default function Tags() {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => deleteCourse(row._id)}
+                  onClick={() => deleteTag(row._id)}
                 >
                   <i className="fe fe-trash-2"></i>
                 </Button>

@@ -95,38 +95,6 @@ export const CreateStatusValidation = Yup.object({
   ),
 });
 
-const duration_value = Yup.number()
-  .typeError("Duration must be a number.")
-  .required("Course duration is required.")
-  .min(0, "Duration cannot be negative.");
-const duration_type = Yup.string().required(
-  "Course duration type is required."
-);
-const course_level = Yup.string().required("Course level is required.");
-
-const course_type = Yup.string().required("Course type is required.");
-const certification_type = Yup.string().required(
-  "Certification type is required."
-);
-export const EditCourseValidation = Yup.object({
-  course_name: name,
-  duration_value,
-  duration_type,
-  course_level,
-  status,
-  course_type,
-  certification_type,
-});
-
-export const createCourseValidation = Yup.object({
-  course_name: name,
-  duration_value,
-  duration_type,
-  course_level,
-  course_type,
-  certification_type,
-});
-
 const parent_status = Yup.string().required("Please select a parent category");
 export const EditCategoryValidation = Yup.object().shape({
   category_name: name,
@@ -195,16 +163,6 @@ export const teacherValidation = Yup.object({
     }),
 });
 
-export const propertyCourseValidation = Yup.object({
-  course_type: course_type,
-  course_name: name,
-  duration_value,
-  duration_type,
-  course_level,
-  certification_type,
-  course_format: Yup.string().required("Course Format is Required"),
-});
-
 export const stateValidation = Yup.object({ property_state: state });
 
 export const cityValidation = Yup.object({ property_city: city });
@@ -213,7 +171,7 @@ export const countryValidation = Yup.object({ property_country: country });
 
 export const addressValidation = Yup.object({ property_address: address });
 export const pincodeValidation = Yup.object({ property_pincode: pincode });
-export const accomodationValidation = Yup.object({ accomodation_name: name });
+export const hostelValidation = Yup.object({ hostel_name: name });
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -265,27 +223,6 @@ export const BlogCategoryValidation = Yup.object({
     .required("Blog Category is required")
     .min(3, "Must be at least 3 characters"),
   parent_category: Yup.string().required("Parent Category is required"),
-});
-export const HiringValidation = Yup.object({
-  title: Yup.string()
-    .trim()
-    .min(3, "Title must be at least 3 characters")
-    .matches(/^\S.*\S$/, "Title cannot start or end with a space")
-    .required("Title is required"),
-
-  job_description: Yup.string().required("Job Description is Required"),
-
-  experience: Yup.string().required("Experience is Required"),
-
-  job_type: Yup.string().required("Job Type is Required"),
-
-  start_date: Yup.date()
-    .optional("Required")
-    .min(today, "Start date must be today or in the future"),
-
-  end_date: Yup.date()
-    .optional("Required")
-    .min(Yup.ref("start_date"), "Must be after start date"),
 });
 
 export const ExamValidation = Yup.object({

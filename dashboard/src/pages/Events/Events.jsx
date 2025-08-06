@@ -114,7 +114,7 @@ export default function Events() {
                 }`
               : ALLImages("face8")
           }
-          alt={row?.featured_image?.[0] || "Course"}
+          alt={row?.featured_image?.[0] || "Events"}
           className="rounded-circle"
           width="40"
           height="40"

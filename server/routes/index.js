@@ -3,10 +3,8 @@ import bodyParser from "body-parser";
 import {
   blogUploadMulter,
   categoryUploadMulter,
-  courseUploadMulter,
   eventUploadMulter,
   processImage,
-  ResuemUploadMulter,
   upload,
   userUpload,
 } from "../multer/index.js";
@@ -81,16 +79,6 @@ import {
   updateFaq,
 } from "../controller/FaqsController.js";
 import {
-  addCourse,
-  deleteCourse,
-  getCourse,
-  getCourseById,
-  getCourseByUniqueId,
-  restoreCourse,
-  softDeleteCourse,
-  updateCourse,
-} from "../controller/CourseController.js";
-import {
   addGallery,
   addNewGalleryImages,
   deleteGallery,
@@ -109,15 +97,6 @@ import {
   getSeoByPropertyId,
   updateSeo,
 } from "../controller/SeoController.js";
-import {
-  addPropertyCourse,
-  deletePropertyCourse,
-  getPropertyCourse,
-  getPropertyCourseById,
-  getPropertyCourseByPropertyId,
-  getPropertyCourseByUniqueId,
-  updatePropertyCourse,
-} from "../controller/PropertyCourseController.js";
 import {
   addBusinessHours,
   changePropertyCategory,
@@ -163,18 +142,13 @@ import {
   UpdateCoupon,
 } from "../controller/CouponController.js";
 import {
-  addCertifications,
-  addNewcertifications,
-  getCertificationsByPropertyId,
-  removecertifications,
-} from "../controller/CertificationsController.js";
-import {
-  AddAccomodation,
-  AddAccomodationImages,
-  EditAccomodation,
-  getAccomodationByPropertyId,
-  removeAccomodationImages,
-} from "../controller/AccomodationController.js";
+  AddHostel,
+  AddHostelImages,
+  DeleteHostel,
+  EditHostel,
+  getHostelByPropertyId,
+  removeHostelImages,
+} from "../controller/HostelController.js";
 import ExpireVerification from "../helper/ExpireVerification/ExpireVerification.js";
 import { GoogleLoginAuth } from "../controller/GoogleAuth.js";
 import { addOrUpdateLegal, getLegal } from "../controller/LegalController.js";
@@ -199,23 +173,6 @@ import {
   getAllBlogTags,
   getBlogTagById,
 } from "../controller/BlogTagController.js";
-import {
-  addHiring,
-  deleteHiring,
-  getHiring,
-  getHiringByObjectId,
-  getHiringByPropertyId,
-  updateHiring,
-} from "../controller/HiringController.js";
-import {
-  applyForHiring,
-  getApplyHiringByPropertyId,
-  getApplyHiringByUserId,
-} from "../controller/ApplyHiringController.js";
-import {
-  getAllResume,
-  getResumeByUserId,
-} from "../controller/UserDocController.js";
 import {
   CreateBlogSeo,
   deleteBlogSeo,
@@ -288,19 +245,6 @@ router.get("/status/:objectId", getStatusById);
 router.post("/status", addStatus);
 router.patch("/status/:objectId", updateStatus);
 router.delete("/status/:objectId", deleteStatus);
-
-// // ?Course Route
-// const courseUpload = courseUploadMulter.fields([
-//   { name: "image", maxCount: 1 },
-// ]);
-// router.get("/course", getCourse);
-// router.post("/course", courseUpload, processImage, addCourse);
-// router.patch("/course/:objectId", courseUpload, processImage, updateCourse);
-// router.delete("/course/:objectId", deleteCourse);
-// router.get("/course/:objectId", getCourseById);
-// router.get("/course-detail/:uniqueId", getCourseByUniqueId);
-// router.get("/course/soft/:objectId", softDeleteCourse);
-// router.get("/course/restore/:objectId", restoreCourse);
 
 //? Exams Routes
 router.post(`/exam`, createExam);
@@ -389,18 +333,19 @@ router.delete("/teacher/:objectId", deleteTeacher);
 router.get("/teacher/:objectId", getTeacherById);
 router.get("/teacher/property/:propertyId", getTeacherByPropertyId);
 
-//? Accomodation Route
-const accomodationUpload = upload.fields([{ name: "images", maxCount: 8 }]);
-router.post("/accomodation", AddAccomodation);
-router.get("/accomodation/:property_id", getAccomodationByPropertyId);
-router.patch("/accomodation/:uniqueId", EditAccomodation);
+//? Hostel Route
+const HostelUpload = upload.fields([{ name: "images", maxCount: 8 }]);
+router.post("/hostel", AddHostel);
+router.get("/hostel/:property_id", getHostelByPropertyId);
+router.patch("/hostel/:uniqueId", EditHostel);
 router.patch(
-  "/accomodation/images/:uniqueId",
-  accomodationUpload,
+  "/hostel/images/:uniqueId",
+  HostelUpload,
   processImage,
-  AddAccomodationImages
+  AddHostelImages
 );
-router.post(`/accomodation/images/remove/:uniqueId`, removeAccomodationImages);
+router.post(`/hostel/images/remove/:uniqueId`, removeHostelImages);
+router.delete(`/hostel/:objectId`, DeleteHostel);
 
 //? Review Route
 router.get("/review", getReview);
@@ -444,36 +389,12 @@ router.delete("/seo/:objectId", deleteSeo);
 router.get("/seo/:objectId", getSeoById);
 router.get("/seo/property/:property_id", getSeoByPropertyId);
 
-//? Property Course
-router.get("/property-course", getPropertyCourse);
-router.post("/property-course", addPropertyCourse);
-router.patch("/property-course/:objectId", updatePropertyCourse);
-router.get("/property-course/:objectId", getPropertyCourseById);
-router.get("/property-course/uniqueId/:uniqueId", getPropertyCourseByUniqueId);
-router.get(
-  "/property/property-course/:propertyId",
-  getPropertyCourseByPropertyId
-);
-router.delete("/property-course/:objectId", deletePropertyCourse);
-
 //? Business Hours
 router.get("/business-hours", getBusinessHours);
 router.get("/business-hours/:property_id", getBusinessHoursByPropertyId);
 router.post("/business-hours", addBusinessHours);
 router.patch("/business-hours/category", changePropertyCategory);
 router.patch("/business-hours/:uniqueId", updateBusinessHours);
-
-//?certifications
-const certifications = upload.fields([{ name: "certifications", maxCount: 8 }]);
-router.post("/certifications", certifications, processImage, addCertifications);
-router.post(
-  "/certifications/add/:property_id",
-  certifications,
-  processImage,
-  addNewcertifications
-);
-router.post("/certifications/remove/:property_id", removecertifications);
-router.get("/certifications/:property_id", getCertificationsByPropertyId);
 
 //? amenties
 router.post("/amenities", addAmenities);
@@ -522,26 +443,6 @@ router.get("/blog/tag/all", getAllBlogTags);
 router.get("/blog/tag/id/:objectId", getBlogTagById);
 router.post("/blog/tag", CreateTagController);
 router.delete("/blog/tag/:objectId", deleteblogTag);
-
-//? Hiring Routes
-router.post(`/hiring`, addHiring);
-router.get(`/hiring`, getHiring);
-router.get(`/hiring/:property_id`, getHiringByPropertyId);
-router.delete(`/hiring/:uniqueId`, deleteHiring);
-router.patch(`/hiring/:uniqueId`, updateHiring);
-router.get(`/hiring/:objectId`, getHiringByObjectId);
-
-//? Apply Hiring
-const resumeUpload = ResuemUploadMulter.fields([
-  { name: "resume", maxCount: 1 },
-]);
-router.post(`/apply/hiring`, resumeUpload, applyForHiring);
-router.get(`/apply/hiring/:userId`, getApplyHiringByUserId);
-router.get(`/apply/applications/:property_id`, getApplyHiringByPropertyId);
-
-//? User Doc Routes
-router.get(`/user/doc/all`, getAllResume);
-router.get(`/user/doc/:userId`, getResumeByUserId);
 
 //? Events Routes
 const eventsUpload = eventUploadMulter.fields([

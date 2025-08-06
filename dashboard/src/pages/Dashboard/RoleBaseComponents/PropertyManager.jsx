@@ -5,7 +5,7 @@ import { API } from "../../../context/API";
 
 export default function PropertyManager({ authUser, properties }) {
   const [authProperties, setAuthProperties] = useState([]);
-  const [propertyCourse, setPropertyCourse] = useState([]);
+  const [propertyExams, setPropertyExam] = useState([]);
   const [review, setReview] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [faq, setFaq] = useState([]);
@@ -52,15 +52,15 @@ export default function PropertyManager({ authUser, properties }) {
     }
   }, [authProperties]);
 
-  // Fetch all property courses and filter by property_id
-  const getPropertyCourse = useCallback(async () => {
+  // Fetch all property Exam and filter by property_id
+  const getPropertyExam = useCallback(async () => {
     try {
-      const response = await API.get(`/property-course`);
+      const response = await API.get(`/property-exam`);
       const propertyIds = authProperties.map((property) => property.uniqueId);
-      const filteredCourses = response.data.filter((course) =>
-        propertyIds.includes(course.property_id)
+      const filteredExam = response.data.filter((exam) =>
+        propertyIds.includes(exam.property_id)
       );
-      setPropertyCourse(filteredCourses);
+      setPropertyExam(filteredExam);
     } catch (error) {
       console.log(error);
     }
@@ -82,9 +82,9 @@ export default function PropertyManager({ authUser, properties }) {
       getTeachers();
       getReview();
       getFaq();
-      getPropertyCourse();
+      getPropertyExam();
     }
-  }, [authProperties, getTeachers, getReview, getFaq, getPropertyCourse]);
+  }, [authProperties, getTeachers, getReview, getFaq, getPropertyExam]);
 
   const data = [
     {
@@ -94,8 +94,8 @@ export default function PropertyManager({ authUser, properties }) {
       color: "primary",
     },
     {
-      title: "Courses",
-      count: propertyCourse?.length || 0,
+      title: "Exams",
+      count: propertyExams?.length || 0,
       icon: "fe-cpu",
       color: "light",
     },

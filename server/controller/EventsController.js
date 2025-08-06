@@ -55,8 +55,6 @@ export const CreateEvent = async (req, res) => {
         .json({ error: "Same Title Already Existing For Same User" });
     }
 
-    const prices = JSON.parse(price);
-
     let yogaTypeDoc = await YogaType.findOne({ yoga_type });
     let yogaTypeUniqueId;
     if (yogaTypeDoc) {
@@ -88,7 +86,7 @@ export const CreateEvent = async (req, res) => {
       visibility_start_date,
       visibility_end_date,
       entrance_type,
-      prices: prices,
+      prices: price,
       event_description: updatedDescription,
       address,
     });
@@ -193,8 +191,6 @@ export const UpdateEvent = async (req, res) => {
       }
     }
 
-    const prices = price ? JSON.parse(price) : undefined;
-
     const updatedEvent = await Events.findOneAndUpdate(
       { _id: objectId },
       {
@@ -212,7 +208,7 @@ export const UpdateEvent = async (req, res) => {
         ...(visibility_start_date && { visibility_start_date }),
         ...(visibility_end_date && { visibility_end_date }),
         ...(entrance_type && { entrance_type }),
-        ...(prices && { prices }),
+        ...(price && { price }),
         ...(updatedDescription && { event_description: updatedDescription }),
         ...(address && { address }),
         ...(status && { status }),

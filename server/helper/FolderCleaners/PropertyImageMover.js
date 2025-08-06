@@ -4,8 +4,7 @@ import { fileURLToPath } from "url";
 import Property from "../../models/Property.js";
 import Teachers from "../../models/Teachers.js";
 import Gallery from "../../models/Gallery.js";
-import Certifications from "../../models/Certifications.js";
-import Accomodation from "../../models/Accomodation.js";
+import Hostel from "../../models/Hostel.js";
 
 const fileExists = async (filePath) => {
   try {
@@ -145,16 +144,13 @@ export const GalleryImageMover = async (req, res, propertyId) => {
   }
 };
 
-export const AccomodationImageMover = async (req, res, propertyId) => {
+export const HostelImageMover = async (req, res, propertyId) => {
   try {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
     const oldDir = path.join(__dirname, "../../images");
-    const newDir = path.join(
-      __dirname,
-      `../../../media/${propertyId}/accomodation`
-    );
+    const newDir = path.join(__dirname, `../../../media/${propertyId}/hostel`);
     await fs.mkdir(newDir, { recursive: true });
 
     const property = await Property.findOne({ uniqueId: propertyId });
@@ -163,20 +159,20 @@ export const AccomodationImageMover = async (req, res, propertyId) => {
       return;
     }
 
-    const AccomodationEntries = await Accomodation.find({
+    const HostelEntries = await Hostel.find({
       property_id: propertyId,
     });
 
-    for (const accomodaion of AccomodationEntries) {
-      if (!Array.isArray(accomodaion.accomodation_images)) continue;
+    for (const hostel of HostelEntries) {
+      if (!Array.isArray(hostel.hostel_images)) continue;
 
-      const updatedAccomodationPaths = [];
+      const updatedHostelPaths = [];
 
-      for (const imgPath of accomodaion.accomodation_images) {
+      for (const imgPath of hostel.hostel_images) {
         const imgName = imgPath.split(/\\|\//).pop();
 
-        if (imgPath.startsWith(`${propertyId}/accomodation/`)) {
-          updatedAccomodationPaths.push(imgPath);
+        if (imgPath.startsWith(`${propertyId}/hostel/`)) {
+          updatedHostelPaths.push(imgPath);
           continue;
         }
 
@@ -186,8 +182,8 @@ export const AccomodationImageMover = async (req, res, propertyId) => {
         if (await fileExists(oldPath)) {
           try {
             await fs.rename(oldPath, newPath);
-            updatedAccomodationPaths.push(
-              `${propertyId}/accomodation/${imgName}`
+            updatedHostelPaths.push(
+              `${propertyId}/hostel/${imgName}`
             );
           } catch (moveErr) {
             console.warn(`Failed to move ${imgName}: ${moveErr.message}`);
@@ -197,76 +193,15 @@ export const AccomodationImageMover = async (req, res, propertyId) => {
         }
       }
 
-      if (
-        updatedAccomodationPaths.length ===
-        accomodaion.accomodation_images.length
-      ) {
-        accomodaion.accomodation_images = updatedAccomodationPaths;
-        await accomodaion.save();
+      if (updatedHostelPaths.length === hostel.hostel_images.length) {
+        hostel.hostel_images = updatedHostelPaths;
+        await hostel.save();
       }
     }
 
-    console.log(
-      `Accomodaion images for property ${propertyId} moved successfully.`
-    );
+    console.log(`hostel images for property ${propertyId} moved successfully.`);
   } catch (error) {
-    console.error("Error in AccomodaionImageMover:", error);
-  }
-};
-
-export const certificationsImageMover = async (req, res, property_id) => {
-  try {
-    const certificationData = await Certifications.findOne({ property_id });
-
-    if (
-      !certificationData ||
-      !Array.isArray(certificationData.certifications)
-    ) {
-      console.warn(
-        `No valid certifications found for property_id: ${property_id}`
-      );
-      return;
-    }
-
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-
-    const oldDir = path.join(__dirname, "../../images");
-    const newDir = path.join(
-      __dirname,
-      `../../../media/${property_id}/certifications`
-    );
-    await fs.mkdir(newDir, { recursive: true });
-
-    const updatedPaths = [];
-
-    for (const imageName of certificationData.certifications) {
-      if (imageName.startsWith(`/${property_id}/certifications/`)) {
-        updatedPaths.push(imageName);
-        continue;
-      }
-
-      const oldPath = path.join(oldDir, imageName);
-      const newPath = path.join(newDir, imageName);
-
-      if (await fileExists(oldPath)) {
-        try {
-          await fs.rename(oldPath, newPath);
-          updatedPaths.push(`/${property_id}/certifications/${imageName}`);
-        } catch (moveErr) {
-          console.warn(`Failed to move ${imageName}: ${moveErr.message}`);
-        }
-      } else {
-        console.warn(`File not found: ${oldPath}`);
-      }
-    }
-
-    certificationData.certifications = updatedPaths;
-    await certificationData.save();
-
-    console.log("Images moved and database updated successfully.");
-  } catch (error) {
-    console.error("Error in CertificationImageMover:", error);
+    console.error("Error in hostelImageMover:", error);
   }
 };
 
