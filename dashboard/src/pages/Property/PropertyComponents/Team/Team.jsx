@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import AddTeacher from "./AddTeacher";
+import AddTeam from "./AddTeam";
 import { useParams } from "react-router-dom";
 import { API } from "../../../../context/API";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import ALLImages from "../../../../common/Imagesdata";
 import Swal from "sweetalert2";
-import EditTeacher from "./EditTeacher";
+import EditTeam from "./EditTeam";
 
-export default function Teacher() {
+export default function Team() {
   const { objectId } = useParams();
   const [property, setProperty] = useState("");
-  const [teachers, setTeachers] = useState([]);
+  const [team, setTeam] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [isUpdating, setIsUpdating] = useState("");
 
@@ -27,13 +27,11 @@ export default function Teacher() {
     }
   }, [objectId]);
 
-  const getTeachers = useCallback(async () => {
+  const getTeam = useCallback(async () => {
     try {
       if (property) {
-        const response = await API.get(
-          `/teacher/property/${property?.uniqueId}`
-        );
-        setTeachers(response.data);
+        const response = await API.get(`/team/property/${property?.uniqueId}`);
+        setTeam(response.data);
       }
     } catch (error) {
       console.error(
@@ -49,17 +47,13 @@ export default function Teacher() {
   }, [getProperty]);
 
   useEffect(() => {
-    getTeachers();
-  }, [getTeachers]);
+    getTeam();
+  }, [getTeam]);
 
-  const handleEdit = (teacher) => {
-    console.log("Edit", teacher);
-  };
-
-  const handleDelete = async (teacherId) => {
+  const handleDelete = async (teamId) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "This teacher will be permanently deleted.",
+      text: "This team will be permanently deleted.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
@@ -68,11 +62,11 @@ export default function Teacher() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await API.delete(`/teacher/${teacherId}`);
-          getTeachers();
+          const response = await API.delete(`/team/${teamId}`);
+          getTeam();
           Swal.fire({
             title: "Deleted!",
-            text: response.data.message || "Teacher has been deleted.",
+            text: response.data.message || "team has been deleted.",
             icon: "success",
           });
         } catch (error) {
@@ -98,45 +92,45 @@ export default function Teacher() {
             <Col>
               <Card>
                 <Card.Header className="d-flex justify-content-between">
-                  <Card.Title className="mb-0">View Teachers</Card.Title>
+                  <Card.Title className="mb-0">View Team</Card.Title>
                   <Button className="btn-sm" onClick={() => setIsAdding(true)}>
-                    <i className="fe fe-plus me-1"></i>Add Teacher
+                    <i className="fe fe-plus me-1"></i>Add Team
                   </Button>
                 </Card.Header>
                 <Card.Body>
-                  {teachers.length <= 0 ? (
+                  {team.length <= 0 ? (
                     <div className="text-center text-muted py-5">
-                      <h5>No teachers found.</h5>
-                      <p>Please click "Add Teacher" to add a new teacher.</p>
+                      <h5>No team found.</h5>
+                      <p>Please click "Add Team" to add a new team member.</p>
                     </div>
                   ) : (
                     <Row>
-                      {teachers?.map((teacher) => (
+                      {team?.map((team) => (
                         <Col
                           md={6}
                           lg={4}
                           xl={3}
-                          key={teacher._id?.$oid || teacher._id}
+                          key={team._id?.$oid || team._id}
                         >
                           <Card className="overflow-hidden position-relative">
                             <div className="position-relative">
                               <div
                                 className={`position-absolute top-0 start-0 m-2 badge z-1 ${
-                                  teacher.status === "Suspended"
+                                  team.status === "Suspended"
                                     ? "bg-danger"
-                                    : teacher.status === "Active"
+                                    : team.status === "Active"
                                     ? "bg-success"
                                     : "bg-warning"
                                 }`}
                               >
-                                {teacher.status}
+                                {team.status}
                               </div>
                               <div>
                                 <img
                                   src={
-                                    teacher?.profile?.[0]
+                                    team?.profile?.[0]
                                       ? `${import.meta.env.VITE_MEDIA_URL}/${
-                                          teacher?.profile?.[0]
+                                          team?.profile?.[0]
                                         }`
                                       : ALLImages("face8")
                                   }
@@ -148,23 +142,23 @@ export default function Teacher() {
 
                             <Card.Body className="d-flex flex-column p-3">
                               <div className="d-flex justify-content-between mb-2 text-muted small fw-medium">
-                                <span>{teacher.designation}</span>
-                                <span>{teacher.experience}</span>
+                                <span>{team.designation}</span>
+                                <span>{team.experience}</span>
                               </div>
                               <h5 className="fw-bold mb-3 text-capitalize">
-                                {capitalize(teacher.teacher_name)}
+                                {capitalize(team.name)}
                               </h5>
                               <div className="d-flex justify-content-between mt-auto">
                                 <Button
                                   size="sm"
-                                  onClick={() => setIsUpdating(teacher)}
+                                  onClick={() => setIsUpdating(team)}
                                 >
                                   <i className="fe fe-edit me-1"></i>Edit
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="danger"
-                                  onClick={() => handleDelete(teacher._id)}
+                                  onClick={() => handleDelete(team._id)}
                                 >
                                   <i className="fe fe-trash-2 me-1"></i>Delete
                                 </Button>
@@ -180,17 +174,17 @@ export default function Teacher() {
             </Col>
           </Row>
         ) : (
-          <EditTeacher
-            teacher={isUpdating}
+          <EditTeam
+            team={isUpdating}
             setIsEditing={setIsUpdating}
-            getTeachers={getTeachers}
+            getTeam={getTeam}
           />
         )
       ) : (
-        <AddTeacher
+        <AddTeam
           property={property}
           setIsAdding={setIsAdding}
-          getTeachers={getTeachers}
+          getTeam={getTeam}
         />
       )}
     </div>

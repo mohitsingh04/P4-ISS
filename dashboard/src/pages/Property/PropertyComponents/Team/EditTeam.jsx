@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import ALLImages from "../../../../common/Imagesdata";
-import { teacherValidation } from "../../../../context/ValidationSchemas";
+import { teamValidation } from "../../../../context/ValidationSchemas";
 import { API } from "../../../../context/API";
 import Swal from "sweetalert2";
 
-export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
+export default function EditTeam({ team, setIsEditing, getTeam }) {
   const [profilePreview, setProfilePreview] = useState(null);
   const [status, setStatus] = useState([]);
 
@@ -14,7 +14,7 @@ export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
     try {
       const response = await API.get(`/status`);
       const data = response.data;
-      setStatus(data.filter((item) => item.name === "Teacher"));
+      setStatus(data.filter((item) => item.name === "Team"));
     } catch (error) {
       console.error(
         error.response.data.error ||
@@ -30,22 +30,22 @@ export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
 
   const formik = useFormik({
     initialValues: {
-      teacher_name: teacher?.teacher_name || "",
-      designation: teacher?.designation || "",
-      experience_value: teacher?.experience?.split(" ")[0] || "",
-      experience_type: teacher?.experience?.split(" ")[1] || "",
+      name: team?.name || "",
+      designation: team?.designation || "",
+      experience_value: team?.experience?.split(" ")[0] || "",
+      experience_type: team?.experience?.split(" ")[1] || "",
       profile: null,
-      status: teacher?.status || "Active",
+      status: team?.status || "Active",
     },
     enableReinitialize: true,
-    validationSchema: teacherValidation,
+    validationSchema: teamValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("userId", values.userId);
       formData.append("property_id", values.property_id);
-      formData.append("teacher_name", values.teacher_name);
+      formData.append("name", values.name);
       formData.append("designation", values.designation);
       formData.append(
         "experience",
@@ -57,19 +57,19 @@ export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
       }
 
       try {
-        const response = await API.patch(`/teacher/${teacher._id}`, formData);
+        const response = await API.patch(`/team/${team._id}`, formData);
         Swal.fire({
           icon: "success",
           title: "Updated",
-          text: response.data.message || "Teacher Updated Successfully",
+          text: response.data.message || "Team Updated Successfully",
         });
         setIsEditing(false);
-        getTeachers();
+        getTeam();
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: error.response?.data?.error || "Failed To Update Teacher",
+          text: error.response?.data?.error || "Failed To Update Team",
         });
       }
     },
@@ -90,23 +90,23 @@ export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>Edit Teacher</Card.Title>
+        <Card.Title>Edit Team</Card.Title>
       </Card.Header>
       <Card.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Row className="mb-3">
             <Col>
               <Form.Group>
-                <Form.Label>Teacher Name</Form.Label>
+                <Form.Label>Team Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="teacher_name"
-                  placeholder="Enter teacher name"
-                  {...formik.getFieldProps("teacher_name")}
-                  isInvalid={!!formik.errors.teacher_name}
+                  name="name"
+                  placeholder="Enter Team name"
+                  {...formik.getFieldProps("name")}
+                  isInvalid={!!formik.errors.name}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.teacher_name}
+                  {formik.errors.name}
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -212,9 +212,9 @@ export default function EditTeacher({ teacher, setIsEditing, getTeachers }) {
                     src={
                       profilePreview
                         ? profilePreview
-                        : teacher?.profile?.[0]
+                        : team?.profile?.[0]
                         ? `${import.meta.env.VITE_MEDIA_URL}/${
-                            teacher?.profile?.[0]
+                            team?.profile?.[0]
                           }`
                         : ALLImages("face8")
                     }

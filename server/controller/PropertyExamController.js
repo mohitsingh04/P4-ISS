@@ -1,8 +1,7 @@
 import PropertyExam from "../models/PropertyExam.js";
 import Exam from "../models/Exams.js";
-import { error } from "console";
+import { addPropertyScore } from "../AnalyticController/PropertyScoreController.js";
 
-// Utility function to compare date strings (YYYY-MM-DD)
 const isSameDate = (d1, d2) => {
   if (!d1 || !d2) return d1 === d2;
   return (
@@ -108,6 +107,15 @@ export const createPropertyExam = async (req, res) => {
     const newPropertyExam = new PropertyExam(fieldsToSave);
     await newPropertyExam.save();
 
+    const allExamForProperty = await PropertyExam.find({ property_id });
+
+    if (allExamForProperty.length <= 0) {
+      await addPropertyScore({
+        property_score: 10,
+        property_id,
+      });
+    }
+
     return res.status(201).json({
       message: "Property exam created",
       property_exam: newPropertyExam,
@@ -151,7 +159,6 @@ export const updatePropertyExam = async (req, res) => {
       return res.status(404).json({ error: "Base Exam not found" });
     }
 
-    console.log(exam_short_name, originalExam?.exam_short_name);
     const updatedFields = {};
 
     if (exam_name && exam_name !== originalExam.exam_name) {
@@ -239,6 +246,15 @@ export const deletePropertyExamById = async (req, res) => {
     }
 
     const deleted = await PropertyExam.findOneAndDelete({ _id: objectId });
+
+    const allExamForProperty = await PropertyExam.find({ property_id });
+
+    if (allExamForProperty.length <= 0) {
+      await addPropertyScore({
+        property_score: -10,
+        property_id,
+      });
+    }
     if (!deleted) {
       return res.status(404).json({ error: "Exam Not Found" });
     }

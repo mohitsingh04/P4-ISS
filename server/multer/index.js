@@ -47,6 +47,12 @@ export const userUpload = multer({
   limits: { fileSize: 50 * 1024 * 1024 },
 });
 
+// 3. Exam images
+export const examUploadMulter = multer({
+  storage: createStorage("../media/exam"),
+  limits: { fileSize: 500 * 1024 * 1024 },
+});
+
 // 4. Category images
 export const categoryUploadMulter = multer({
   storage: createStorage("../media/category"),
@@ -58,7 +64,6 @@ export const blogUploadMulter = multer({
   storage: createStorage("../media/blogs"),
   limits: { fileSize: 100 * 1024 * 1024, fieldSize: 100 * 1024 * 1024 },
 });
-
 
 // 7. Event images
 export const eventUploadMulter = multer({

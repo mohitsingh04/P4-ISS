@@ -14,6 +14,13 @@ export const createExam = async (req, res) => {
       description,
     } = req.body;
 
+    const exam_logo = req?.files?.["exam_logo"]?.[0]?.webpFilename || null;
+    const exam_original_logo = req?.files?.["exam_logo"]?.[0]?.filename || null;
+    const featured_image =
+      req?.files?.["featured_image"]?.[0]?.webpFilename || null;
+    const featured_original_image =
+      req?.files?.["featured_image"]?.[0]?.filename || null;
+
     if (!exam_name) {
       return res.status(400).json({ message: "exam_name is required." });
     }
@@ -32,6 +39,8 @@ export const createExam = async (req, res) => {
       exam_form_link,
       exam_mode,
       description,
+      exam_logo: [exam_logo, exam_original_logo],
+      featured_image: [featured_image, featured_original_image],
     });
 
     const savedExam = await newExam.save();
@@ -116,43 +125,45 @@ export const updateExam = async (req, res) => {
       status,
     } = req.body;
 
-    // Optional: validate at least one field is provided
-    if (
-      !exam_name &&
-      !exam_short_name &&
-      !upcoming_exam_date &&
-      !result_date &&
-      !application_form_date &&
-      !application_form_link &&
-      !exam_form_link &&
-      !exam_mode &&
-      !description
-    ) {
-      return res.status(400).json({ message: "No update data provided." });
-    }
-
-    const updatedExam = await Exam.findByIdAndUpdate(
-      objectId,
-      {
-        exam_name,
-        exam_short_name,
-        upcoming_exam_date,
-        result_date,
-        application_form_date,
-        application_form_link,
-        exam_form_link,
-        exam_mode,
-        description,
-        status,
-      },
-      {
-        new: true, // return the updated doc
-      }
-    );
-
-    if (!updatedExam) {
+    const exam = await Exam.findById(objectId);
+    if (!exam) {
       return res.status(404).json({ message: "Exam not found." });
     }
+
+    // Handle image updates
+    const new_exam_logo = req?.files?.["exam_logo"]?.[0];
+    const new_featured_image = req?.files?.["featured_image"]?.[0];
+
+    const updatedFields = {
+      exam_name,
+      exam_short_name,
+      upcoming_exam_date,
+      result_date,
+      application_form_date,
+      application_form_link,
+      exam_form_link,
+      exam_mode,
+      description,
+      status,
+    };
+
+    if (new_exam_logo) {
+      updatedFields.exam_logo = [
+        new_exam_logo.webpFilename || null,
+        new_exam_logo.filename || null,
+      ];
+    }
+
+    if (new_featured_image) {
+      updatedFields.featured_image = [
+        new_featured_image.webpFilename || null,
+        new_featured_image.filename || null,
+      ];
+    }
+
+    const updatedExam = await Exam.findByIdAndUpdate(objectId, updatedFields, {
+      new: true,
+    });
 
     return res.status(200).json({
       message: "Exam updated successfully.",

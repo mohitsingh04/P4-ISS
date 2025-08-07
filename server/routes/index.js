@@ -7,6 +7,7 @@ import {
   processImage,
   upload,
   userUpload,
+  examUploadMulter,
 } from "../multer/index.js";
 import {
   changePassword,
@@ -55,13 +56,13 @@ import {
   updatePropertyImages,
 } from "../controller/PropertyController.js";
 import {
-  addTeacher,
-  deleteTeacher,
-  getTeacher,
-  getTeacherById,
-  getTeacherByPropertyId,
-  updateTeacher,
-} from "../controller/TeachersController.js";
+  addTeam,
+  deleteTeam,
+  getTeam,
+  getTeamById,
+  getTeamByPropertyId,
+  updateTeam,
+} from "../controller/TeamController.js";
 import {
   addReview,
   deleteReview,
@@ -247,11 +248,15 @@ router.patch("/status/:objectId", updateStatus);
 router.delete("/status/:objectId", deleteStatus);
 
 //? Exams Routes
-router.post(`/exam`, createExam);
+const examUpload = examUploadMulter.fields([
+  { name: "exam_logo", maxCount: 1 },
+  { name: "featured_image", maxCount: 1 },
+]);
+router.post(`/exam`, examUpload, processImage, createExam);
 router.get(`/exam`, getAllExams);
 router.delete(`/exam/:objectId`, deleteExam);
 router.get(`/exam/:objectId`, getExamById);
-router.patch(`/exam/:objectId`, updateExam);
+router.patch(`/exam/:objectId`, examUpload, processImage, updateExam);
 router.get("/exam/soft/:objectId", softDeleteExam);
 router.get("/exam/restore/:objectId", restoreExam);
 
@@ -324,14 +329,14 @@ router.get("/property/location/:property_id", getLocation);
 router.get("/locations", getAllLocations);
 router.post("/location", addLocation);
 
-//? Teacher Route
-const teacherProfile = upload.fields([{ name: "profile", maxCount: 1 }]);
-router.get("/teacher", getTeacher);
-router.post("/teacher", teacherProfile, processImage, addTeacher);
-router.patch("/teacher/:objectId", teacherProfile, processImage, updateTeacher);
-router.delete("/teacher/:objectId", deleteTeacher);
-router.get("/teacher/:objectId", getTeacherById);
-router.get("/teacher/property/:propertyId", getTeacherByPropertyId);
+//? Team Route
+const teamProfile = upload.fields([{ name: "profile", maxCount: 1 }]);
+router.get("/team", getTeam);
+router.post("/team", teamProfile, processImage, addTeam);
+router.patch("/team/:objectId", teamProfile, processImage, updateTeam);
+router.delete("/team/:objectId", deleteTeam);
+router.get("/team/:objectId", getTeamById);
+router.get("/team/property/:propertyId", getTeamByPropertyId);
 
 //? Hostel Route
 const HostelUpload = upload.fields([{ name: "images", maxCount: 8 }]);

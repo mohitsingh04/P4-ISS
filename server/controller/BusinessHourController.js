@@ -46,7 +46,7 @@ export const addBusinessHours = async (req, res) => {
     });
 
     await businessHours.save();
-    await addPropertyScore({ property_id, property_score: 9 });
+    await addPropertyScore({ property_id, property_score: 10 });
     return res
       .status(201)
       .json({ message: "Business Hours Added Successfully", businessHours });

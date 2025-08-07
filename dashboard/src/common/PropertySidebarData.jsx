@@ -87,8 +87,8 @@ export const MENUITEMS = [
     online: false,
   },
   {
-    tab: `teachers`,
-    title: "Teachers",
+    tab: `team`,
+    title: "Team",
     icon: "fe-user-check",
     type: "link",
     active: false,

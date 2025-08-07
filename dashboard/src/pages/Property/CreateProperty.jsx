@@ -27,6 +27,8 @@ export default function CreateProperty() {
   const editorConfig = useMemo(() => getEditorConfig(), []);
   const [academic, setAcdemic] = useState([]);
   const [propertyTypes, setPropertTyes] = useState([]);
+  const [boardingTypes, setBoardingTypes] = useState([]);
+  const [schoolType, setSchoolTypes] = useState([]);
 
   const getAuhtUser = async () => {
     setAuthLoading(true);
@@ -49,9 +51,7 @@ export default function CreateProperty() {
   }, []);
 
   if (!authLoading) {
-    if (
-      !authUser?.permissions?.some((item) => item === "Create Property")
-    ) {
+    if (!authUser?.permissions?.some((item) => item === "Create Property")) {
       navigator("/dashboard/access-denied");
     }
   }
@@ -75,10 +75,24 @@ export default function CreateProperty() {
 
   useEffect(() => {
     setAcdemic(
-      categories.filter((item) => item.parent_category === "Academic Type")
+      categories.filter(
+        (item) => item?.parent_category?.toLowerCase() === "academic type"
+      )
     );
     setPropertTyes(
-      categories.filter((item) => item.parent_category === "Property Type")
+      categories.filter(
+        (item) => item?.parent_category?.toLowerCase() === "property type"
+      )
+    );
+    setBoardingTypes(
+      categories.filter(
+        (item) => item?.parent_category?.toLowerCase() === "boarding type"
+      )
+    );
+    setSchoolTypes(
+      categories.filter(
+        (item) => item?.parent_category?.toLowerCase() === "school type"
+      )
     );
   }, [categories]);
 
@@ -95,6 +109,8 @@ export default function CreateProperty() {
       category: "",
       property_type: "",
       property_description: "",
+      boarding_type: "",
+      school_type: "",
     },
     validationSchema: CreatePropertyValidation,
     validateOnBlur: false,
@@ -265,6 +281,44 @@ export default function CreateProperty() {
                       </Form.Select>
                       <Form.Control.Feedback type="invalid">
                         {formik.errors.property_type}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Boarding Type</Form.Label>
+                      <Form.Select
+                        {...formik.getFieldProps("boarding_type")}
+                        isInvalid={formik.errors.boarding_type}
+                      >
+                        <option value="">--Select Type--</option>
+                        {boardingTypes.map((item, index) => (
+                          <option value={item.uniqueId} key={index}>
+                            {item.category_name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.boarding_type}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>School Type</Form.Label>
+                      <Form.Select
+                        {...formik.getFieldProps("school_type")}
+                        isInvalid={formik.errors.school_type}
+                      >
+                        <option value="">--Select Type--</option>
+                        {schoolType.map((item, index) => (
+                          <option value={item.uniqueId} key={index}>
+                            {item.category_name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.school_type}
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>

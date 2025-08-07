@@ -6,7 +6,7 @@ import Category from "../../models/Category.js";
 import Property from "../../models/Property.js";
 import Gallery from "../../models/Gallery.js";
 import Achievements from "../../models/Achievements.js";
-import Teachers from "../../models/Teachers.js";
+import Team from "../../models/Team.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -190,42 +190,42 @@ export const propertyAchievementsFolderCleaners = async () => {
   }
 };
 
-export const teacherProfileFolderCleaners = async () => {
+export const teamProfileFolderCleaners = async () => {
   try {
-    const allTeachers = await Teachers.find();
+    const allTeam = await Team.find();
 
-    for (const teacher of allTeachers) {
-      const { property_id, profile } = teacher;
+    for (const team of allTeam) {
+      const { property_id, profile } = team;
 
       if (!property_id) {
-        console.warn(`Skipping teacher `);
+        console.warn(`Skipping team `);
         continue;
       }
 
-      const teacherFolder = path.join(
+      const teamFolder = path.join(
         __dirname,
-        `../../media/${property_id}/teachers`
+        `../../media/${property_id}/team`
       );
 
       try {
-        const filesInFolder = await fs.readdir(teacherFolder);
+        const filesInFolder = await fs.readdir(teamFolder);
 
         const validImages = new Set(profile.filter((img) => img !== null));
 
         await Promise.all(
           filesInFolder.map(async (file) => {
-            const filePath = `media/${property_id}/teachers/${file}`;
+            const filePath = `media/${property_id}/team/${file}`;
 
             if (!validImages.has(filePath)) {
-              await fs.unlink(path.join(teacherFolder, file));
+              await fs.unlink(path.join(teamFolder, file));
             }
           })
         );
       } catch (error) {
-        console.warn(`Skipping teacher profile cleanup for property`);
+        console.warn(`Skipping team profile cleanup for property`);
       }
     }
   } catch (error) {
-    console.error("Error during teacher profile cleanup");
+    console.error("Error during team profile cleanup");
   }
 };

@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import JoditEditor from "jodit-react";
 import { API } from "../../context/API";
 import Swal from "sweetalert2";
@@ -14,6 +13,9 @@ export default function CreateExam() {
   const [authUser, setAuthUser] = useState("");
   const [authLoading, setAuthLoading] = useState(true);
   const editorConfig = useMemo(() => getEditorConfig(), []);
+
+  const [examLogoPreview, setExamLogoPreview] = useState(null);
+  const [featuredImagePreview, setFeaturedImagePreview] = useState(null);
 
   const getAuhtUser = async () => {
     setAuthLoading(true);
@@ -52,11 +54,36 @@ export default function CreateExam() {
       exam_form_link: "",
       exam_mode: "",
       description: "",
+      exam_logo: "",
+      featured_image: "",
     },
     validationSchema: ExamValidation,
     onSubmit: async (values) => {
       try {
-        const response = await API.post(`/exam`, values);
+        const formData = new FormData();
+
+        formData.append("exam_name", values.exam_name);
+        formData.append("exam_short_name", values.exam_short_name);
+        formData.append("upcoming_exam_date", values.upcoming_exam_date);
+        formData.append("result_date", values.result_date);
+        formData.append("application_form_date", values.application_form_date);
+        formData.append("application_form_link", values.application_form_link);
+        formData.append("exam_form_link", values.exam_form_link);
+        formData.append("exam_mode", values.exam_mode);
+        formData.append("description", values.description);
+
+        // Append image files if selected
+        if (values.exam_logo) {
+          formData.append("exam_logo", values.exam_logo);
+        }
+
+        if (values.featured_image) {
+          formData.append("featured_image", values.featured_image);
+        }
+        console.log(...formData);
+
+        const response = await API.post(`/exam`, formData);
+
         Swal.fire({
           icon: "success",
           title: "Successfully",
@@ -68,11 +95,19 @@ export default function CreateExam() {
         Swal.fire({
           icon: "error",
           title: "Failed",
-          text: error.response.data.message || "Failed",
+          text: error.response?.data?.message || "Failed",
         });
       }
     },
   });
+
+  const handleImageChange = (e, fieldName, previewSetter) => {
+    const file = e.currentTarget.files[0];
+    if (!file) return;
+
+    previewSetter(URL.createObjectURL(file)); // Show preview
+    formik.setFieldValue(fieldName, file); // Store File object
+  };
 
   return (
     <div>
@@ -244,6 +279,48 @@ export default function CreateExam() {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.exam_mode}
                     </Form.Control.Feedback>
+                  </Col>
+
+                  {/* Exam Logo Upload */}
+                  <Col md={6} className="mb-3">
+                    <Form.Label>Exam Logo</Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, "exam_logo", setExamLogoPreview)
+                      }
+                    />
+                    {examLogoPreview && (
+                      <div className="mt-2">
+                        <img src={examLogoPreview} alt="Preview" height="80" />
+                      </div>
+                    )}
+                  </Col>
+
+                  {/* Featured Image Upload */}
+                  <Col md={6} className="mb-3">
+                    <Form.Label>Featured Image</Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(
+                          e,
+                          "featured_image",
+                          setFeaturedImagePreview
+                        )
+                      }
+                    />
+                    {featuredImagePreview && (
+                      <div className="mt-2">
+                        <img
+                          src={featuredImagePreview}
+                          alt="Preview"
+                          height="80"
+                        />
+                      </div>
+                    )}
                   </Col>
 
                   <Col md={12} className="mb-3">

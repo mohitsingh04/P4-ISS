@@ -12,6 +12,8 @@ import Category from "./BasicDetailsComponents/Category";
 import Property_type from "./BasicDetailsComponents/Property_type";
 import Property_status from "./BasicDetailsComponents/Property_status";
 import EstablishmentYear from "./BasicDetailsComponents/EstablishmentYear";
+import BoardingType from "./BasicDetailsComponents/BoardingType";
+import SchoolType from "./BasicDetailsComponents/SchoolType";
 
 export default function BasicDetails() {
   const { objectId } = useParams();
@@ -105,6 +107,12 @@ export default function BasicDetails() {
                     getProperty={getProperty}
                   />
                 </Col>
+                <Col md={4} className="mb-3">
+                  <BoardingType property={property} getProperty={getProperty} />
+                </Col>
+                <Col md={4} className="mb-3">
+                  <SchoolType property={property} getProperty={getProperty} />
+                </Col>
 
                 <Col md={4} className="mb-3">
                   <EstablishmentYear
@@ -114,7 +122,7 @@ export default function BasicDetails() {
                 </Col>
                 {(authUser?.role === "Super Admin" ||
                   authUser?.role === "Editor") && (
-                  <Col md={6} className="mb-3">
+                  <Col md={4} className="mb-3">
                     <Property_status
                       property={property}
                       getProperty={getProperty}

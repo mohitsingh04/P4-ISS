@@ -7,18 +7,18 @@ export default function PropertyManager({ authUser, properties }) {
   const [authProperties, setAuthProperties] = useState([]);
   const [propertyExams, setPropertyExam] = useState([]);
   const [review, setReview] = useState([]);
-  const [teachers, setTeachers] = useState([]);
+  const [team, setTeam] = useState([]);
   const [faq, setFaq] = useState([]);
 
-  // Fetch all teachers and filter by property_id
-  const getTeachers = useCallback(async () => {
+  // Fetch all team and filter by property_id
+  const getTeam = useCallback(async () => {
     try {
-      const response = await API.get(`/teacher`);
+      const response = await API.get(`/team`);
       const propertyIds = authProperties.map((property) => property.uniqueId);
-      const filteredTeachers = response.data.filter((teacher) =>
-        propertyIds.includes(teacher.property_id)
+      const filteredTeam = response.data.filter((team) =>
+        propertyIds.includes(team.property_id)
       );
-      setTeachers(filteredTeachers);
+      setTeam(filteredTeam);
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +79,12 @@ export default function PropertyManager({ authUser, properties }) {
   // Fetch data when authProperties changes
   useEffect(() => {
     if (authProperties.length > 0) {
-      getTeachers();
+      getTeam();
       getReview();
       getFaq();
       getPropertyExam();
     }
-  }, [authProperties, getTeachers, getReview, getFaq, getPropertyExam]);
+  }, [authProperties, getTeam, getReview, getFaq, getPropertyExam]);
 
   const data = [
     {
@@ -100,8 +100,8 @@ export default function PropertyManager({ authUser, properties }) {
       color: "light",
     },
     {
-      title: "Teachers",
-      count: teachers?.length || 0,
+      title: "Team",
+      count: team?.length || 0,
       icon: "fe-users",
       color: "danger",
     },

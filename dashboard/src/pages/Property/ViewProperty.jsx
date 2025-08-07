@@ -15,7 +15,7 @@ import LocationDetails from "./PropertyComponents/Location/LocationDetails";
 import Faq from "./PropertyComponents/Faq/Faq";
 import Reviews from "./PropertyComponents/Reviews/Reviews";
 import Seo from "./PropertyComponents/SEO/Seo";
-import Teacher from "./PropertyComponents/Teacher/Teacher";
+import Team from "./PropertyComponents/Team/Team";
 import Gallery from "./PropertyComponents/Gallery/Gallery";
 import Businesshours from "./PropertyComponents/BussinessHours/BussinessHours";
 import Enquiry from "./PropertyComponents/Enquiry/Enquiry";
@@ -84,10 +84,10 @@ export default function ViewProperty() {
       online: false,
     },
     {
-      key: "teachers",
-      label: "Teachers",
+      key: "team",
+      label: "Team",
       icon: "ri-user-star-line",
-      component: <Teacher />,
+      component: <Team />,
       online: true,
     },
     {
@@ -326,7 +326,7 @@ export default function ViewProperty() {
                         }}
                       >
                         {(getCategoryToRelatedId(property?.category) ===
-                        "Online Yoga Studio"
+                        "Online"
                           ? tabsData.filter((tab) => tab.online === true)
                           : tabsData
                         ).map((tab, index) => (

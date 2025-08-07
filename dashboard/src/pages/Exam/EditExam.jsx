@@ -28,6 +28,8 @@ export default function UpdateExam() {
   const [status, setStatus] = useState([]);
   const [authUser, setAuthUser] = useState("");
   const [authLoading, setAuthLoading] = useState(true);
+  const [examLogoPreview, setExamLogoPreview] = useState(null);
+  const [featuredImagePreview, setFeaturedImagePreview] = useState(null);
   const editorConfig = useMemo(() => getEditorConfig(), []);
 
   const getAuhtUser = async () => {
@@ -84,13 +86,24 @@ export default function UpdateExam() {
       exam_form_link: "",
       exam_mode: "",
       description: "",
-      status: "Active",
+      status: "",
+      exam_logo: null,
+      featured_image: null,
     },
     validationSchema: ExamValidation,
     onSubmit: async (values) => {
       try {
-        const response = await API.patch(`/exam/${objectId}`, values);
-        console.log(response);
+        const formData = new FormData();
+
+        for (const key in values) {
+          if (key === "exam_logo" || key === "featured_image") {
+            if (values[key]) formData.append(key, values[key]);
+          } else {
+            formData.append(key, values[key]);
+          }
+        }
+
+        const response = await API.patch(`/exam/${objectId}`, formData);
         Swal.fire({
           icon: "success",
           title: "Updated",
@@ -117,7 +130,18 @@ export default function UpdateExam() {
           upcoming_exam_date: formatDate(data.upcoming_exam_date),
           result_date: formatDate(data.result_date),
           application_form_date: formatDate(data.application_form_date),
+          exam_logo: null,
+          featured_image: null,
         });
+
+        if (data.exam_logo)
+          setExamLogoPreview(
+            `${import.meta.env.VITE_MEDIA_URL}/exam/${data.exam_logo?.[0]}`
+          );
+        if (data.featured_image)
+          setFeaturedImagePreview(
+            `${import.meta.env.VITE_MEDIA_URL}/exam/${data.featured_image?.[0]}`
+          );
       } catch (error) {
         console.error("Error loading exam data", error);
       } finally {
@@ -125,8 +149,15 @@ export default function UpdateExam() {
       }
     };
     fetchExam();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [objectId]);
+
+  const handleImageChange = (e, fieldName, previewSetter) => {
+    const file = e.currentTarget.files[0];
+    if (!file) return;
+
+    previewSetter(URL.createObjectURL(file));
+    formik.setFieldValue(fieldName, file);
+  };
 
   if (loading) {
     return (
@@ -329,6 +360,59 @@ export default function UpdateExam() {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.status}
                     </Form.Control.Feedback>
+                  </Col>
+
+                  <Col md={6} className="mb-3">
+                    <Form.Label>Exam Logo</Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, "exam_logo", setExamLogoPreview)
+                      }
+                    />
+                    {examLogoPreview && (
+                      <div className="mt-2">
+                        <img
+                          src={examLogoPreview}
+                          alt="Exam Logo"
+                          height="80"
+                          style={{
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </Col>
+
+                  {/* Featured Image Upload */}
+                  <Col md={6} className="mb-3">
+                    <Form.Label>Featured Image</Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(
+                          e,
+                          "featured_image",
+                          setFeaturedImagePreview
+                        )
+                      }
+                    />
+                    {featuredImagePreview && (
+                      <div className="mt-2">
+                        <img
+                          src={featuredImagePreview}
+                          alt="Featured"
+                          height="80"
+                          style={{
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                          }}
+                        />
+                      </div>
+                    )}
                   </Col>
 
                   <Col md={12} className="mb-3">

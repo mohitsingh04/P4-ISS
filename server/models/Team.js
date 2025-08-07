@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { regularDatabase } from "../Databases/Databases.js";
 
-const TeachersSchema = new mongoose.Schema({
+const TeamSchema = new mongoose.Schema({
   userId: {
     type: Number,
   },
@@ -9,7 +9,7 @@ const TeachersSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  teacher_name: {
+  name: {
     type: String,
     required: true,
   },
@@ -37,6 +37,6 @@ const TeachersSchema = new mongoose.Schema({
   },
 });
 
-const Teachers = regularDatabase.model("Teachers", TeachersSchema);
+const Team = regularDatabase.model("team", TeamSchema);
 
-export default Teachers;
+export default Team;

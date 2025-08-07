@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import ALLImages from "../../../../common/Imagesdata";
-import { teacherValidation } from "../../../../context/ValidationSchemas";
+import { teamValidation } from "../../../../context/ValidationSchemas";
 import { API } from "../../../../context/API";
 import Swal from "sweetalert2";
 
-export default function AddTeacher({ property, setIsAdding, getTeachers }) {
+export default function AddTeam({ property, setIsAdding, getTeam }) {
   const [profilePreview, setProfilePreview] = useState(null);
   const [authUser, setauthUser] = useState("");
 
@@ -25,21 +25,21 @@ export default function AddTeacher({ property, setIsAdding, getTeachers }) {
     initialValues: {
       userId: authUser?.uniqueId || "",
       property_id: property?.uniqueId || "",
-      teacher_name: "",
+      name: "",
       designation: "",
       experience_value: "",
       experience_type: "",
       profile: null,
     },
     enableReinitialize: true,
-    validationSchema: teacherValidation,
+    validationSchema: teamValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("userId", values.userId);
       formData.append("property_id", values.property_id);
-      formData.append("teacher_name", values.teacher_name);
+      formData.append("name", values.name);
       formData.append("designation", values.designation);
       formData.append(
         "experience",
@@ -49,19 +49,19 @@ export default function AddTeacher({ property, setIsAdding, getTeachers }) {
         formData.append("profile", values.profile);
       }
       try {
-        const response = await API.post(`/teacher`, formData);
+        const response = await API.post(`/team`, formData);
         Swal.fire({
           icon: "success",
           title: "Successfully",
-          text: response.data.message || "Teacher Added Successfully",
+          text: response.data.message || "Team Added Successfully",
         });
         setIsAdding(false);
-        getTeachers();
+        getTeam();
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: error.response.data.error || "Failed To Add Teacher",
+          text: error.response.data.error || "Failed To Add Team",
         });
       }
     },
@@ -82,23 +82,23 @@ export default function AddTeacher({ property, setIsAdding, getTeachers }) {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>Add Teacher</Card.Title>
+        <Card.Title>Add Team</Card.Title>
       </Card.Header>
       <Card.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Row className="mb-3">
             <Col>
               <Form.Group>
-                <Form.Label>Teacher Name</Form.Label>
+                <Form.Label>Team Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="teacher_name"
-                  placeholder="Enter teacher name"
-                  {...formik.getFieldProps("teacher_name")}
-                  isInvalid={!!formik.errors.teacher_name}
+                  name="name"
+                  placeholder="Enter team name"
+                  {...formik.getFieldProps("name")}
+                  isInvalid={!!formik.errors.name}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.teacher_name}
+                  {formik.errors.name}
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>

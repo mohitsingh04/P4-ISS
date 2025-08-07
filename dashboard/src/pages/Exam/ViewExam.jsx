@@ -7,6 +7,7 @@ import {
   Row,
   Table,
   Spinner,
+  Image,
 } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../context/API";
@@ -51,8 +52,8 @@ export default function ViewExam() {
       setAuthUser(response.data);
     } catch (error) {
       console.error(
-        error.response.data.error ||
-          error.response.data.message ||
+        error.response?.data?.error ||
+          error.response?.data?.message ||
           error.message
       );
     } finally {
@@ -64,11 +65,11 @@ export default function ViewExam() {
     getAuhtUser();
   }, []);
 
-  if (!authLoading) {
-    if (!authUser?.permissions?.some((item) => item === "Read Exam")) {
-      navigator("/dashboard/access-denied");
+  useEffect(() => {
+    if (!authLoading && !authUser?.permissions?.includes("Read Exam")) {
+      navigate("/dashboard/access-denied");
     }
-  }
+  }, [authLoading, authUser, navigate]);
 
   if (loading) {
     return (
@@ -174,6 +175,41 @@ export default function ViewExam() {
                   </tr>
                 </tbody>
               </Table>
+
+              <Row className="mt-4">
+                <Col md={6} className="mb-3">
+                  <h6>Exam Logo</h6>
+                  {exam.exam_logo ? (
+                    <Image
+                      src={`${import.meta.env.VITE_MEDIA_URL}/exam/${
+                        exam?.exam_logo?.[0]
+                      }`}
+                      alt="Exam Logo"
+                      fluid
+                      thumbnail
+                      style={{ maxHeight: "200px" }}
+                    />
+                  ) : (
+                    <p>No logo available</p>
+                  )}
+                </Col>
+                <Col md={6} className="mb-3">
+                  <h6>Featured Image</h6>
+                  {exam.featured_image ? (
+                    <Image
+                      src={`${import.meta.env.VITE_MEDIA_URL}/exam/${
+                        exam.featured_image?.[0]
+                      }`}
+                      alt="Featured Exam"
+                      fluid
+                      thumbnail
+                      style={{ maxHeight: "200px" }}
+                    />
+                  ) : (
+                    <p>No featured image available</p>
+                  )}
+                </Col>
+              </Row>
             </Card.Body>
 
             <Card.Footer>

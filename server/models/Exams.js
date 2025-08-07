@@ -43,6 +43,12 @@ const examSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    exam_logo: {
+      type: [String],
+    },
+    featured_image: {
+      type: [String],
+    },
   },
   { timestamps: true }
 );

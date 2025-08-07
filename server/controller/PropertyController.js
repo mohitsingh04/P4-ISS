@@ -10,7 +10,7 @@ import Location from "../models/Location.js";
 import Property from "../models/Property.js";
 import Review from "../models/Reviews.js";
 import Seo from "../models/Seo.js";
-import Teachers from "../models/Teachers.js";
+import Team from "../models/Team.js";
 import fs from "fs/promises";
 import Rank from "../AnalyticModel/Rank.js";
 import Traffic from "../AnalyticModel/Traffic.js";
@@ -34,16 +34,18 @@ export const addProperty = async (req, res) => {
       category,
       property_type,
       property_description,
+      boarding_type,
+      school_type,
     } = req.body;
 
-    let score = 3;
+    let score = 6;
 
     const allCategories = await Category.find();
     const currentCategory = allCategories.filter(
       (item) => item.uniqueId === Number(category)
     );
 
-    if (currentCategory?.[0]?.category_name === "Online Yoga Studio") {
+    if (currentCategory?.[0]?.category_name === "Online") {
       score += 39;
     } else if (category) {
       score += 1;
@@ -104,6 +106,8 @@ export const addProperty = async (req, res) => {
       property_mobile_no: `+${property_mobile_no}`,
       category,
       property_type,
+      boarding_type,
+      school_type,
       property_logo: [],
       featured_image: [],
       property_description: updatedDescription,
@@ -183,6 +187,8 @@ export const updateProperty = async (req, res) => {
       status,
       property_type,
       property_website,
+      boarding_type,
+      school_type,
     } = req.body;
 
     const existProperty = await Property.findById(objectId);
@@ -235,15 +241,15 @@ export const updateProperty = async (req, res) => {
     if (!existProperty?.property_description && property_description)
       score += 1;
     if (!existProperty?.category) {
-      if (currentCategory?.[0]?.category_name === "Online Yoga Studio") {
+      if (currentCategory?.[0]?.category_name === "Online") {
         score += 39;
       } else if (category) {
         score += 1;
       }
     } else {
       if (
-        currentCategory?.[0]?.category_name !== "Online Yoga Studio" &&
-        existProperty?.category === "Online Yoga Studio"
+        currentCategory?.[0]?.category_name !== "Online" &&
+        existProperty?.category === "Online"
       ) {
         score -= 38;
       }
@@ -258,6 +264,8 @@ export const updateProperty = async (req, res) => {
       status,
       property_type,
       property_website,
+      boarding_type,
+      school_type,
     };
 
     if (formattedAltMobile) {
@@ -312,7 +320,7 @@ export const deleteProperty = async (req, res) => {
 
     await Promise.all([
       Property.findByIdAndDelete(objectId),
-      Teachers.deleteMany({ property_id: uniqueId }),
+      Team.deleteMany({ property_id: uniqueId }),
       Gallery.deleteMany({ propertyId: uniqueId }),
       Review.deleteMany({ property_id: uniqueId }),
       Seo.deleteMany({ property_id: uniqueId }),
@@ -367,10 +375,10 @@ export const updatePropertyImages = async (req, res) => {
     const featuredFile = req.files?.["featured_image"]?.[0];
 
     if (property?.property_logo.length === 0 && iconFile) {
-      score += 1;
+      score += 4;
     }
     if (property?.featured_image.length === 0 && featuredFile) {
-      score += 1;
+      score += 4;
     }
     const updates = {};
 

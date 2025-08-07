@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import Property from "../../models/Property.js";
-import Teachers from "../../models/Teachers.js";
+import Team from "../../models/Team.js";
 import Gallery from "../../models/Gallery.js";
 import Hostel from "../../models/Hostel.js";
 
@@ -182,9 +182,7 @@ export const HostelImageMover = async (req, res, propertyId) => {
         if (await fileExists(oldPath)) {
           try {
             await fs.rename(oldPath, newPath);
-            updatedHostelPaths.push(
-              `${propertyId}/hostel/${imgName}`
-            );
+            updatedHostelPaths.push(`${propertyId}/hostel/${imgName}`);
           } catch (moveErr) {
             console.warn(`Failed to move ${imgName}: ${moveErr.message}`);
           }
@@ -205,28 +203,25 @@ export const HostelImageMover = async (req, res, propertyId) => {
   }
 };
 
-export const TeacherImageMover = async (req, res, propertyId) => {
+export const TeamImageMover = async (req, res, propertyId) => {
   try {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
     const oldDir = path.join(__dirname, "../../images");
-    const newDir = path.join(
-      __dirname,
-      `../../../media/${propertyId}/teachers`
-    );
+    const newDir = path.join(__dirname, `../../../media/${propertyId}/team`);
     await fs.mkdir(newDir, { recursive: true });
 
-    const teachers = await Teachers.find({ property_id: propertyId });
+    const teams = await Team.find({ property_id: propertyId });
 
-    for (const teacher of teachers) {
+    for (const team of teams) {
       const newProfilePaths = [];
       const skippedFiles = [];
 
-      for (const imgPath of teacher.profile) {
+      for (const imgPath of team.profile) {
         const imgName = imgPath?.split(/\\|\//).pop();
 
-        if (imgPath?.startsWith(`${propertyId}/teachers/`)) {
+        if (imgPath?.startsWith(`${propertyId}/team/`)) {
           newProfilePaths.push(imgPath);
           continue;
         }
@@ -237,7 +232,7 @@ export const TeacherImageMover = async (req, res, propertyId) => {
         if (await fileExists(oldPath)) {
           try {
             await fs.rename(oldPath, newPath);
-            newProfilePaths.push(`${propertyId}/teachers/${imgName}`);
+            newProfilePaths.push(`${propertyId}/team/${imgName}`);
           } catch (err) {
             console.warn(`Failed to move ${imgName}: ${err.message}`);
             skippedFiles.push(imgName);
@@ -250,20 +245,18 @@ export const TeacherImageMover = async (req, res, propertyId) => {
 
       // Only update if we moved both
       if (newProfilePaths.length === 2) {
-        teacher.profile = newProfilePaths;
-        await teacher.save();
-        console.log(`Updated teacher ${teacher.teacher_name}`);
+        team.profile = newProfilePaths;
+        await team.save();
+        console.log(`Updated team ${team.name}`);
       } else {
         console.warn(
-          `Mismatch in profile image count for ${teacher.teacher_name}. Expected 2, got ${newProfilePaths.length}`
+          `Mismatch in profile image count for ${team.name}. Expected 2, got ${newProfilePaths.length}`
         );
       }
     }
 
-    console.log(
-      `Teacher images moved successfully for property: ${propertyId}`
-    );
+    console.log(`team images moved successfully for property: ${propertyId}`);
   } catch (error) {
-    console.error("Error in TeacherImageMover:", error);
+    console.error("Error in teamImageMover:", error);
   }
 };

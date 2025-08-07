@@ -112,6 +112,8 @@ export const CreatePropertyValidation = Yup.object({
   property_mobile_no: mobile_no,
   category: Yup.string().required("Category is required"),
   property_type: Yup.string().required("Property type is required"),
+  boarding_type: Yup.string().required("Boarding type is required"),
+  school_type: Yup.string().required("School type is required"),
 });
 
 export const faqValidation = Yup.object({
@@ -142,8 +144,8 @@ export const seoValidation = Yup.object({
 });
 // import * as Yup from "yup";
 
-export const teacherValidation = Yup.object({
-  teacher_name: name,
+export const teamValidation = Yup.object({
+  name: name,
   designation: Yup.string().required("Designation is required"),
 
   experience_value: Yup.number()

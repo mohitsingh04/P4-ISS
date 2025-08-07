@@ -51,6 +51,12 @@ const PropertySchema = new mongoose.Schema(
     property_type: {
       type: Number,
     },
+    boarding_type: {
+      type: Number,
+    },
+    school_type: {
+      type: Number,
+    },
     property_website: {
       type: String,
     },
