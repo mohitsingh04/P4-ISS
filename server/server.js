@@ -12,7 +12,6 @@ const app = express();
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   process.env.FRONTEND_DASHBOARD_URL,
-  process.env.FRONTEND_CAREER_URL,
 ];
 
 app.use(cookieParser());
