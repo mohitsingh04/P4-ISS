@@ -2,14 +2,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { LuSearch, LuX } from "react-icons/lu";
 import PropertyCard from "./searchModalComponents/PropertyCard";
-import CourseCard from "./searchModalComponents/CourseCard";
+import ExamCard from "./searchModalComponents/ExamCard";
 import BlogCard from "./searchModalComponents/BlogCard";
 import {
   BlogCategoryProps,
   BlogsProps,
   BlogTagProps,
   CategoryProps,
-  CourseProps,
+  ExamProps,
   LocationProps,
   PropertyProps,
 } from "@/types/types";
@@ -27,43 +27,30 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [properties, setProperties] = useState<PropertyProps[]>([]);
-  const [courses, setCourses] = useState<CourseProps[]>([]);
+  const [exams, setExams] = useState<ExamProps[]>([]);
   const [blogs, setBlogs] = useState<BlogsProps[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<PropertyProps[]>(
     []
   );
-  const [filteredCourses, setFilteredCourses] = useState<CourseProps[]>([]);
+  const [filteredExams, setFilteredExams] = useState<ExamProps[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<BlogsProps[]>([]);
 
-  const getPropertiesAndCourseWithCategories = useCallback(async () => {
+  const getPropertiesAndExamWithCategories = useCallback(async () => {
     try {
       setIsLoading(true);
-      const [propertyRes, locationRes, catRes, courseRes] = await Promise.all([
+      const [propertyRes, locationRes, catRes, examRes] = await Promise.all([
         API.get("/property"),
         API.get("/locations"),
         API.get("/category"),
-        API.get("/course"),
+        API.get("/exam"),
       ]);
 
-      const processedCourses = courseRes.data.map((courseItem: CourseProps) => {
-        const findCategoryNameById = (id: string | number) => {
-          const found = catRes.data.find(
-            (cat: CategoryProps) => String(cat.uniqueId) === String(id)
-          );
-          return found?.category_name || null;
-        };
-
+      const processedExam = examRes.data.map((examItem: ExamProps) => {
         return {
-          ...courseItem,
-          course_level:
-            findCategoryNameById(courseItem.course_level) ||
-            courseItem.course_level,
-          certification_type:
-            findCategoryNameById(courseItem.certification_type) ||
-            courseItem.certification_type,
+          ...examItem,
         };
       });
-      setCourses(processedCourses);
+      setExams(processedExam);
 
       const processedProperties = propertyRes.data.map(
         (propertyItem: PropertyProps) => {
@@ -142,9 +129,9 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   }, []);
 
   useEffect(() => {
-    getPropertiesAndCourseWithCategories();
+    getPropertiesAndExamWithCategories();
     getBlogsWithCategoryAndTags();
-  }, [getPropertiesAndCourseWithCategories, getBlogsWithCategoryAndTags]);
+  }, [getPropertiesAndExamWithCategories, getBlogsWithCategoryAndTags]);
 
   const handleSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,15 +155,10 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
             prop.property_country?.toLowerCase().includes(lowerQuery)
         );
 
-        const filteredCrs = courses.filter(
-          (course) =>
-            course.course_type?.toLowerCase().includes(lowerQuery) ||
-            (typeof course.course_level === "string" &&
-              course.course_level.toLowerCase().includes(lowerQuery)) ||
-            course.course_name?.toLowerCase().includes(lowerQuery) ||
-            course.course_short_name?.toLowerCase().includes(lowerQuery) ||
-            (typeof course.certification_type === "string" &&
-              course.certification_type.toLowerCase().includes(lowerQuery))
+        const filteredCrs = exams.filter(
+          (exam) =>
+            exam.exam_name?.toLowerCase().includes(lowerQuery) ||
+            exam.exam_short_name?.toLowerCase().includes(lowerQuery)
         );
 
         const filteredBlgs = blogs.filter(
@@ -189,17 +171,17 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         );
 
         setFilteredProperties(filteredProps);
-        setFilteredCourses(filteredCrs);
+        setFilteredExams(filteredCrs);
         setFilteredBlogs(filteredBlgs);
         setIsLoading(false);
       } else {
         setFilteredProperties([]);
-        setFilteredCourses([]);
+        setFilteredExams([]);
         setFilteredBlogs([]);
         setIsLoading(false);
       }
     },
-    [properties, courses, blogs]
+    [properties, exams, blogs]
   );
 
   const handleStoreSearch = useCallback(async () => {
@@ -233,29 +215,29 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-white text-purple-900 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-white text-indigo-900 flex flex-col">
       <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-4 bg-white shadow-xs sticky top-0 z-50">
         <div className="relative">
-          <LuSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 h-5 w-5" />
+          <LuSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-indigo-400 h-5 w-5" />
           <input
             type="text"
-            placeholder="Search properties, courses, blogs, institutes..."
+            placeholder="Search properties, exams, blogs, institutes..."
             value={query}
             onKeyDown={handleKeyDown}
             onChange={handleSearch}
-            className="w-full pl-12 pr-10 py-4 text-lg border-2 border-purple-300 rounded-xl shadow-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full pl-12 pr-10 py-4 text-lg border-2 border-indigo-300 rounded-xl shadow-xs focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             autoFocus
           />
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex gap-2">
             <button
               onClick={handleSearchButton}
-              className="text-purple-600 hover:bg-purple-100 p-2 cursor-pointer rounded-full"
+              className="text-indigo-600 hover:bg-indigo-100 p-2 cursor-pointer rounded-full"
             >
               <LuSearch className="h-4 w-4" />
             </button>
             <button
               onClick={onClose}
-              className="text-purple-600 hover:bg-purple-100 p-2 cursor-pointer rounded-full"
+              className="text-indigo-600 hover:bg-indigo-100 p-2 cursor-pointer rounded-full"
             >
               <LuX className="h-4 w-4" />
             </button>
@@ -271,8 +253,8 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         {/* Loader */}
         {isLoading && (
           <div className="text-center py-10">
-            <div className="animate-spin h-8 w-8 border-2 border-purple-600 border-t-transparent rounded-full mx-auto" />
-            <p className="mt-4 text-purple-500">
+            <div className="animate-spin h-8 w-8 border-2 border-indigo-600 border-t-transparent rounded-full mx-auto" />
+            <p className="mt-4 text-indigo-500">
               Searching for your results...
             </p>
           </div>
@@ -281,9 +263,9 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         {!isLoading && query.length >= 3 && (
           <>
             {filteredProperties.length === 0 &&
-            filteredCourses.length === 0 &&
+            filteredExams.length === 0 &&
             filteredBlogs.length === 0 ? (
-              <p className="text-center text-purple-600 mt-10">
+              <p className="text-center text-indigo-600 mt-10">
                 No results found matching your search. Please try a different
                 keyword.
               </p>
@@ -297,10 +279,10 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                     onClose={onClose}
                   />
                 ))}
-                {filteredCourses.map((course, index) => (
-                  <CourseCard
+                {filteredExams.map((exam, index) => (
+                  <ExamCard
                     key={index}
-                    course={course}
+                    exam={exam}
                     handleStoreSearch={handleStoreSearch}
                     onClose={onClose}
                   />
@@ -319,7 +301,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         )}
 
         {query?.length < 3 && (
-          <p className="text-center text-purple-600 mt-10">
+          <p className="text-center text-indigo-600 mt-10">
             Type at least 3 characters to search
           </p>
         )}

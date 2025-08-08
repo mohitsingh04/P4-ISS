@@ -201,6 +201,7 @@ import {
 import {
   createPropertyExam,
   deletePropertyExamById,
+  getAllPropertyExam,
   getExamByPropertyId,
   updatePropertyExam,
 } from "../controller/PropertyExamController.js";
@@ -262,6 +263,7 @@ router.get("/exam/restore/:objectId", restoreExam);
 
 //? Property Exam Routes
 router.post(`/property-exam`, createPropertyExam);
+router.get(`/property-exam`, getAllPropertyExam);
 router.delete(`/property-exam/:objectId`, deletePropertyExamById);
 router.get(`/property/property-exam/:property_id`, getExamByPropertyId);
 router.patch(`/property-exam/:objectId`, updatePropertyExam);

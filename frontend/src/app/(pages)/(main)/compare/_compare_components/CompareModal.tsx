@@ -86,7 +86,7 @@ export default function CompareModal({
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
       <div className="bg-white w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl relative max-h-[95vh] flex flex-col">
         {/* Compact Header */}
-        <div className="relative bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 px-4 py-3">
+        <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 px-4 py-3">
           <div className="relative z-10 pr-10">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -96,7 +96,7 @@ export default function CompareModal({
                 <h2 className="text-lg font-bold text-white">
                   Select Institutes to Compare
                 </h2>
-                <p className="text-purple-100 text-xs">
+                <p className="text-indigo-100 text-xs">
                   {draftSelectedProperties.length}/3 selected from{" "}
                   {availableProperties.length} available
                 </p>
@@ -106,19 +106,19 @@ export default function CompareModal({
         </div>
 
         {/* Search Bar and Selected Properties Row */}
-        <div className="px-4 py-3 bg-purple-50 border-b border-purple-200">
+        <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-200">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             {/* Search Bar - Always at start */}
             <div className="relative flex-1 w-full sm:max-w-xs">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <LuSearch className="h-4 w-4 text-purple-400" />
+                <LuSearch className="h-4 w-4 text-indigo-400" />
               </div>
               <input
                 type="text"
                 placeholder="Search Institutes..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white shadow-sm text-sm"
+                className="block w-full pl-10 pr-3 py-2 border border-indigo-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white shadow-sm text-sm"
               />
             </div>
 
@@ -128,14 +128,14 @@ export default function CompareModal({
                 {draftSelectedProperties.map((property) => (
                   <div
                     key={property.uniqueId}
-                    className="flex items-center gap-1.5 bg-gradient-to-r from-purple-100 to-purple-200 px-3 py-1.5 rounded-full shadow-sm"
+                    className="flex items-center gap-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 px-3 py-1.5 rounded-full shadow-sm"
                   >
-                    <span className="text-xs font-medium text-purple-700 truncate max-w-[100px]">
+                    <span className="text-xs font-medium text-indigo-700 truncate max-w-[100px]">
                       {property.property_name}
                     </span>
                     <button
                       onClick={() => handleRemoveProperty(property)}
-                      className="text-purple-600 hover:text-purple-800 transition-colors ml-1"
+                      className="text-indigo-600 hover:text-indigo-800 transition-colors ml-1"
                     >
                       <LuX size={12} />
                     </button>
@@ -153,7 +153,7 @@ export default function CompareModal({
                 <div
                   key={property.uniqueId}
                   onClick={() => handleAddProperty(property)}
-                  className={`group bg-white border-2 border-purple-100 rounded-xl p-3 transition-all duration-300 hover:shadow-sm ${
+                  className={`group bg-white border-2 border-indigo-100 rounded-xl p-3 transition-all duration-300 hover:shadow-sm ${
                     draftSelectedProperties.length >= 3
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:shadow-md cursor-pointer"
@@ -167,7 +167,7 @@ export default function CompareModal({
                           src={
                             property?.featured_image?.[0]
                               ? `${process.env.NEXT_PUBLIC_MEDIA_URL}/${property.featured_image?.[0]}`
-                              : "/images/course_banner.png"
+                              : "/images/exam_banner.png"
                           }
                           alt={property.property_name}
                           fill
@@ -187,7 +187,7 @@ export default function CompareModal({
 
                     {/* College Info */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-800 mb-1 line-clamp-1 group-hover:text-purple-700 transition-colors text-sm">
+                      <h3 className="font-semibold text-gray-800 mb-1 line-clamp-1 group-hover:text-indigo-700 transition-colors text-sm">
                         {property.property_name}
                       </h3>
 
@@ -195,7 +195,7 @@ export default function CompareModal({
                         <div className="flex items-center gap-1">
                           <LuMapPin
                             size={12}
-                            className="text-purple-500 flex-shrink-0"
+                            className="text-indigo-500 flex-shrink-0"
                           />
                           <span className="truncate">
                             {property.city}, {property.state}
@@ -208,12 +208,12 @@ export default function CompareModal({
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="text-xs px-2 py-1 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-full font-medium">
+                        <span className="text-xs px-2 py-1 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-full font-medium">
                           {property.category}
                         </span>
                         {draftSelectedProperties.length < 3 && (
-                          <div className="w-6 h-6 bg-gradient-to-br from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm">
-                            <LuPlus size={14} className="text-purple-600" />
+                          <div className="w-6 h-6 bg-gradient-to-br from-indigo-100 to-indigo-200 hover:from-indigo-200 hover:to-indigo-300 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm">
+                            <LuPlus size={14} className="text-indigo-600" />
                           </div>
                         )}
                       </div>
@@ -242,14 +242,14 @@ export default function CompareModal({
         </div>
 
         {/* Compact Footer */}
-        <div className="border-t border-gray-200 px-4 py-3 bg-gradient-to-r from-gray-50 to-purple-50">
+        <div className="border-t border-gray-200 px-4 py-3 bg-gradient-to-r from-gray-50 to-indigo-50">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <div className="flex -space-x-1">
                 {draftSelectedProperties.slice(0, 3).map((prop, idx) => (
                   <div
                     key={idx}
-                    className="w-6 h-6 bg-gradient-to-br from-purple-100 to-purple-200 border-2 border-white rounded-full flex items-center justify-center text-xs font-bold text-purple-700 shadow-sm"
+                    className="w-6 h-6 bg-gradient-to-br from-indigo-100 to-indigo-200 border-2 border-white rounded-full flex items-center justify-center text-xs font-bold text-indigo-700 shadow-sm"
                   >
                     {prop.property_name.charAt(0)}
                   </div>
@@ -276,7 +276,7 @@ export default function CompareModal({
                 disabled={draftSelectedProperties.length < 2}
                 className={`px-4 py-1.5 rounded-lg font-medium transition-all duration-200 flex items-center gap-1.5 text-sm ${
                   draftSelectedProperties.length >= 2
-                    ? "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl cursor-pointer"
+                    ? "bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white shadow-lg hover:shadow-xl cursor-pointer"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               >

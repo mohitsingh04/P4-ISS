@@ -5,10 +5,6 @@ export const getAmenities = async (req, res) => {
   try {
     const amenities = await Amenities.find();
 
-    if (!amenities || amenities.length === 0) {
-      return res.status(404).json({ message: "No amenities found." });
-    }
-
     return res.status(200).json(amenities);
   } catch (error) {
     console.error("Error fetching amenities:", error);

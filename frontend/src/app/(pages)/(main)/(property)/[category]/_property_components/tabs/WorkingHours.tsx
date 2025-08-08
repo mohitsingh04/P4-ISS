@@ -11,18 +11,18 @@ const WorkingHoursTab = ({
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-xs overflow-hidden">
-        <div className="bg-purple-600 text-white p-4">
+        <div className="bg-indigo-600 text-white p-4">
           <h3 className="text-xl font-semibold flex items-center gap-2">
             <LuClock className="w-5 h-5" />
             Working Hours
           </h3>
         </div>
 
-        <div className="divide-y divide-purple-200">
+        <div className="divide-y divide-indigo-200">
           {workingHours?.map((schedule) => (
             <div
               key={schedule.day}
-              className="p-4 flex items-center justify-between hover:bg-purple-50"
+              className="p-4 flex items-center justify-between hover:bg-indigo-50"
             >
               <div className="flex items-center gap-3">
                 <span className="font-medium text-gray-900 w-20">

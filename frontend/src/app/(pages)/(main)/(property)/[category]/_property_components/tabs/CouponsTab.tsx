@@ -26,11 +26,11 @@ const CouponCard = ({ coupon }: { coupon: CouponsProps }) => {
   };
 
   return (
-    <div className="group bg-white border border-purple-200 shadow-sm rounded-2xl p-6 space-y-5 relative overflow-hidden transition duration-300">
+    <div className="group bg-white border border-indigo-200 shadow-sm rounded-2xl p-6 space-y-5 relative overflow-hidden transition duration-300">
       {isActive && (
-        <div className="flex items-center justify-between bg-purple-50 border border-purple-300 px-4 py-2 rounded-lg shadow-sm transition duration-300 z-10">
+        <div className="flex items-center justify-between bg-indigo-50 border border-indigo-300 px-4 py-2 rounded-lg shadow-sm transition duration-300 z-10">
           <div
-            className={`text-purple-700 font-mono cursor-pointer text-lg tracking-wider ${
+            className={`text-indigo-700 font-mono cursor-pointer text-lg tracking-wider ${
               !isview ? "blur-[3px]" : ""
             }`}
           >
@@ -39,7 +39,7 @@ const CouponCard = ({ coupon }: { coupon: CouponsProps }) => {
           {isview ? (
             <button
               onClick={handleCopy}
-              className="bg-purple-600 text-white px-2 cursor-pointer py-2 rounded-md hover:bg-purple-700 transition flex items-center gap-2 text-sm"
+              className="bg-indigo-600 text-white px-2 cursor-pointer py-2 rounded-md hover:bg-indigo-700 transition flex items-center gap-2 text-sm"
             >
               {copied ? (
                 <FaCheckCircle className="w-4 h-4" />
@@ -50,7 +50,7 @@ const CouponCard = ({ coupon }: { coupon: CouponsProps }) => {
           ) : (
             <button
               onClick={() => setIsview(true)}
-              className="text-purple-600 cursor-pointer text-sm underline hover:text-purple-800 flex items-center gap-1"
+              className="text-indigo-600 cursor-pointer text-sm underline hover:text-indigo-800 flex items-center gap-1"
             >
               <FaEye className="w-4 h-4" />
             </button>
@@ -80,7 +80,7 @@ const CouponsTab = ({ coupons }: { coupons: CouponsProps[] }) => {
   return (
     <div className="min-h-screen px-4 py-10">
       <div className="text-center mb-6 space-y-1">
-        <h2 className="text-2xl font-bold text-purple-800">
+        <h2 className="text-2xl font-bold text-indigo-800">
           Exclusive Coupon Offer!
         </h2>
         <p className="text-gray-600 text-sm sm:text-base">

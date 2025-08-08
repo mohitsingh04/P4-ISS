@@ -42,7 +42,7 @@ const FeaturedBlogs = () => {
     <section className="pt-10 pb-40 px-4 sm:px-8 md:px-16 bg-white">
       <div className="text-center mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mt-2">
-          Recent <span className="text-purple-600">Blog</span>
+          Recent <span className="text-indigo-600">Blog</span>
         </h2>
         <p className="text-gray-500 text-lg mb-10 max-w-xl mx-auto">
           Photography spots in {"India`s"} most breathtaking travel
@@ -78,7 +78,7 @@ const FeaturedBlogs = () => {
                 </div>
               </Link>
 
-              <div className="absolute top-4 left-4 bg-purple-600 text-white text-center px-3 py-2 rounded">
+              <div className="absolute top-4 left-4 bg-indigo-600 text-white text-center px-3 py-2 rounded">
                 <div className="text-lg font-bold">
                   {formatDateTime(blog?.createdAt)?.day}
                 </div>
@@ -91,12 +91,12 @@ const FeaturedBlogs = () => {
             <div className="p-6">
               <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                 <span className="flex items-center gap-1">
-                  <FiUser className="text-purple-600" />
+                  <FiUser className="text-indigo-600" />
                   {getAuthorById(blog?.author)}
                 </span>
               </div>
               <Link href={`/blog/${generateSlug(blog?.title)}`}>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2 hover:text-purple-600 cursor-pointer">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2 hover:text-indigo-600 cursor-pointer">
                   {blog.title}
                 </h3>
               </Link>
@@ -105,7 +105,7 @@ const FeaturedBlogs = () => {
               </p>
               <Link
                 href={`/blog/${generateSlug(blog?.title)}`}
-                className="mt-4 cursor-pointer inline-block px-4 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 transition"
+                className="mt-4 cursor-pointer inline-block px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
               >
                 Read More
               </Link>

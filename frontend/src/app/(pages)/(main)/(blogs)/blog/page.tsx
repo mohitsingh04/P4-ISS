@@ -121,7 +121,7 @@ const BlogPage: React.FC = () => {
   return (
     <div>
       {!loading ? (
-        <div className="bg-purple-50">
+        <div className="bg-indigo-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div>
               <Breadcrumb items={[{ label: "Blog" }]} />
@@ -141,7 +141,7 @@ const BlogPage: React.FC = () => {
                     placeholder="Search blogs, tags, or topics..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-white rounded-2xl focus:ring-2 focus:ring-purple-500 transition-all duration-200 shadow-sm hover:shadow-md"
+                    className="w-full pl-10 pr-4 py-3 bg-white rounded-2xl focus:ring-2 focus:ring-indigo-500 transition-all duration-200 shadow-sm hover:shadow-md"
                   />
                 </div>
                 <div>
@@ -150,7 +150,7 @@ const BlogPage: React.FC = () => {
                       {filteredBlogs.length === regularBlogs.length ? (
                         <>
                           Showing all{" "}
-                          <span className="font-bold text-purple-600">
+                          <span className="font-bold text-indigo-600">
                             {filteredBlogs.length}
                           </span>{" "}
                           blogs
@@ -164,7 +164,7 @@ const BlogPage: React.FC = () => {
                     {searchTerm && (
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="text-purple-600 bg-purple-50 px-3 py-2 rounded-xl hover:text-purple-700 text-sm font-medium flex items-center cursor-pointer hover:underline"
+                        className="text-indigo-600 bg-indigo-50 px-3 py-2 rounded-xl hover:text-indigo-700 text-sm font-medium flex items-center cursor-pointer hover:underline"
                       >
                         Clear search
                       </button>
@@ -185,8 +185,8 @@ const BlogPage: React.FC = () => {
             {filteredBlogs.length === 0 && (
               <div className="text-center py-16">
                 <div className="max-w-md mx-auto">
-                  <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <LuSearch className="h-12 w-12 text-purple-600" />
+                  <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <LuSearch className="h-12 w-12 text-indigo-600" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     No blogs found

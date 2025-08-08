@@ -215,10 +215,10 @@ export default function CreateProperty() {
                         type="email"
                         placeholder="Enter email"
                         {...formik.getFieldProps("property_email")}
-                        isInvalid={formik.errors.email}
+                        isInvalid={formik.errors.property_email}
                       />
                       <Form.Control.Feedback type="invalid">
-                        {formik.errors.email}
+                        {formik.errors.property_email}
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>

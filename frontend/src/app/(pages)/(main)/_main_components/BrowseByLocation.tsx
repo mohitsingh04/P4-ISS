@@ -53,7 +53,7 @@ export default function BrowseByLocation({
   return (
     <section className="pt-16 pb-30 px-6 bg-white text-center">
       <h2 className="text-4xl font-bold text-gray-900 mb-2">
-        Browse by <span className="text-purple-600">Location</span>
+        Browse by <span className="text-indigo-600">Location</span>
       </h2>
       <p className="text-gray-500 text-lg mb-10 max-w-xl mx-auto">
         Photography spots in {"India`s"} most breathtaking travel destinations.
@@ -62,7 +62,7 @@ export default function BrowseByLocation({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 cursor-pointer gap-6 max-w-6xl mx-auto">
         {topLocations?.map((location, index) => (
           <Link
-            href={`/yoga-institutes?country=${location.country}&state=${location.state}&city=${location.city}`}
+            href={`/institutes?country=${location.country}&state=${location.state}&city=${location.city}`}
             key={index}
             className="relative overflow-hidden shadow-lg group transition-all duration-300 hover:shadow-xl"
           >

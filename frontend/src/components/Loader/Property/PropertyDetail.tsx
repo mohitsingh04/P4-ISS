@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const InstituteDetailLoader: React.FC = () => {
   const tabs = [
     "Overview",
-    "Courses",
+    "Exams",
     "Gallery",
     "Accommodation",
     "Amenities",
@@ -64,7 +64,6 @@ const InstituteDetailLoader: React.FC = () => {
                       <Skeleton height={16} />
                     </div>
                   </div>
-                  {/* Courses */}
                   <div className="text-center">
                     <div className="w-6 h-6 mx-auto mb-2">
                       <Skeleton width="100%" height="100%" />

@@ -36,7 +36,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, index }) => {
           </div>
         </Link>
         <div className="absolute top-4 left-4">
-          <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+          <span className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
             {blog.category}
           </span>
         </div>
@@ -44,7 +44,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, index }) => {
 
       <div className="p-6">
         <Link href={`/blog/${generateSlug(blog.title)}`}>
-          <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-purple-600 transition-colors duration-200 line-clamp-2 leading-tight">
+          <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-indigo-600 transition-colors duration-200 line-clamp-2 leading-tight">
             {blog.title}
           </h3>
         </Link>
@@ -56,7 +56,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, index }) => {
         <div className="flex items-center justify-between">
           <Link
             href={`/blog/${generateSlug(blog.title)}`}
-            className="flex items-center space-x-1 text-purple-600 hover:text-purple-800 font-medium text-sm transition-all duration-200 transform hover:translate-x-1"
+            className="flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-all duration-200 transform hover:translate-x-1"
           >
             <span>Read</span>
             <LuArrowRight className="h-4 w-4" />

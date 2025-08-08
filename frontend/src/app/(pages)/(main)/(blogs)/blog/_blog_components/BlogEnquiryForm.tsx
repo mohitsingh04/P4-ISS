@@ -50,7 +50,7 @@ const BlogEnquiryForm = ({ blog }: { blog: BlogsProps | null }) => {
           </p>
           <button
             onClick={() => setSubmitted(false)}
-            className="text-purple-600 font-medium hover:text-purple-700 transition-colors bg-white px-6 py-2 rounded-lg shadow-sm hover:shadow-md"
+            className="text-indigo-600 font-medium hover:text-indigo-700 transition-colors bg-white px-6 py-2 rounded-lg shadow-sm hover:shadow-md"
           >
             Send Another Enquiry
           </button>
@@ -187,7 +187,7 @@ const BlogEnquiryForm = ({ blog }: { blog: BlogsProps | null }) => {
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2"
             >
               {formik.isSubmitting ? (
                 <>

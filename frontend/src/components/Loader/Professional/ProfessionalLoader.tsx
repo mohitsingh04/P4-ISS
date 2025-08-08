@@ -6,8 +6,8 @@ const ProfessionalLoader = () => {
   return (
     <SkeletonTheme>
       <div className="min-h-screen bg-gray-50">
-        {/* Purple Header */}
-        <div className="bg-purple-600 h-48 relative">
+        {/* indigo Header */}
+        <div className="bg-indigo-600 h-48 relative">
           <div className="absolute top-4 right-4 flex space-x-2">
             <Skeleton
               height={36}

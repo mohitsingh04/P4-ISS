@@ -31,11 +31,11 @@ const FAQTab = ({ faqs }: { faqs: FaqProps[] }) => {
           return (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm border border-purple-200 overflow-hidden"
+              className="bg-white rounded-lg shadow-sm border border-indigo-200 overflow-hidden"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full p-6 text-left hover:bg-purple-50 cursor-pointer transition-colors focus:outline-none focus:bg-purple-50"
+                className="w-full p-6 text-left hover:bg-indigo-50 cursor-pointer transition-colors focus:outline-none focus:bg-indigo-50"
               >
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900 pr-4">
@@ -48,9 +48,9 @@ const FAQTab = ({ faqs }: { faqs: FaqProps[] }) => {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     {isOpen ? (
-                      <LuMinus className="w-5 h-5 text-purple-600" />
+                      <LuMinus className="w-5 h-5 text-indigo-600" />
                     ) : (
-                      <LuPlus className="w-5 h-5 text-purple-600" />
+                      <LuPlus className="w-5 h-5 text-indigo-600" />
                     )}
                   </motion.div>
                 </div>
@@ -86,7 +86,7 @@ const FAQTab = ({ faqs }: { faqs: FaqProps[] }) => {
         })}
       </div>
 
-      {/* <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 text-center">
+      {/* <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6 text-center">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Still have questions?
         </h3>
@@ -94,7 +94,7 @@ const FAQTab = ({ faqs }: { faqs: FaqProps[] }) => {
           Our team is here to help you with any additional questions you may
           have.
         </p>
-        <button className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+        <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors">
           Contact Us
         </button>
       </div> */}

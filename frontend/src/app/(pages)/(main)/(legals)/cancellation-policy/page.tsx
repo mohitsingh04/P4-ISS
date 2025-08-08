@@ -32,9 +32,9 @@ const CancellationPolicy = () => {
           dangerouslySetInnerHTML={{ __html: cancellation }}
         />
       ) : (
-        <div className="flex-grow px-6 py-16 flex flex-col items-center justify-center text-center bg-gradient-to-br from-white to-purple-50">
-          <LuLock size={80} className="text-purple-600 mb-6" />
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-purple-900">
+        <div className="flex-grow px-6 py-16 flex flex-col items-center justify-center text-center bg-gradient-to-br from-white to-indigo-50">
+          <LuLock size={80} className="text-indigo-600 mb-6" />
+          <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-indigo-900">
             Policy Coming Soon
           </h2>
           <p className="text-gray-600 max-w-xl">

@@ -3,11 +3,9 @@ export async function GET() {
 
   const staticRoutes = [
     { path: "", priority: 1.0, changefreq: "weekly" },
-    { path: "/yoga-istitutes", priority: 0.9, changefreq: "weekly" },
+    { path: "/institutes", priority: 0.9, changefreq: "weekly" },
     { path: "/blog", priority: 0.8, changefreq: "weekly" },
     { path: "/events", priority: 0.8, changefreq: "weekly" },
-    { path: "/auth/register", priority: 0.8, changefreq: "weekly" },
-    { path: "/auth/login", priority: 0.8, changefreq: "weekly" },
     { path: "/profile", priority: 0.8, changefreq: "weekly" },
     { path: "/profile/professional", priority: 0.8, changefreq: "weekly" },
   ];

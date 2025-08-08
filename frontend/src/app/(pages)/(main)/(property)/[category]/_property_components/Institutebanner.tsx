@@ -21,7 +21,7 @@ const InstituteBanner = ({
       <div className="absolute top-4 right-4 z-20">
         <Link
           href={`/compare/${institute?.property_slug}`}
-          className="bg-purple-600 hover:bg-purple-800 text-white px-4 py-2 rounded-md shadow-lg transition"
+          className="bg-indigo-600 hover:bg-indigo-800 text-white px-4 py-2 rounded-md shadow-lg transition"
         >
           Compare
         </Link>
@@ -93,12 +93,12 @@ const InstituteBanner = ({
 
               <div className="p-4 text-center">
                 <div className="flex items-center justify-center mb-2">
-                  <LuBookOpen className="w-6 h-6 text-purple-300" />
+                  <LuBookOpen className="w-6 h-6 text-indigo-300" />
                 </div>
                 <div className="text-2xl font-bold text-white">
-                  {institute?.courses?.length}
+                  {institute?.exams?.length}
                 </div>
-                <div className="text-white/70 text-sm">Courses</div>
+                <div className="text-white/70 text-sm">Exams</div>
               </div>
 
               <div className="p-4 text-center">

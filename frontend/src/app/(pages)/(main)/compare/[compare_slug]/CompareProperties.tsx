@@ -10,10 +10,10 @@ import ComparisonTable from "../_compare_components/ComparisonTable";
 import CompareModal from "../_compare_components/CompareModal";
 import {
   CategoryProps,
-  CourseProps,
+  ExamProps,
   LocationProps,
   PropertyAmenities,
-  PropertyCourse,
+  PropertyExam,
   PropertyProps,
   ReviewProps,
 } from "@/types/types";
@@ -21,27 +21,23 @@ import API from "@/contexts/API";
 import BasicDetailTable from "../_compare_components/BasicDetailTable";
 import MainGridCard from "../_compare_components/MainGridCard";
 import { useRouter } from "next/navigation";
-import { getProfile } from "@/contexts/getAssets";
 import Breadcrumb from "@/components/breadcrumbs/breadcrumbs";
 import CompareLoader from "@/components/Loader/Compare/CompareLoader";
 import { LuLink } from "react-icons/lu";
 import Link from "next/link";
 import { generateSlug } from "@/contexts/Callbacks";
 
-type MergedCourse = PropertyCourse & Partial<CourseProps>;
+type MergedExam = PropertyExam & Partial<ExamProps>;
 
-const mergeCourseData = (
-  propertyCourses: PropertyCourse[],
-  courses: CourseProps[]
-) => {
-  return propertyCourses.map((pc) => {
-    const matchingCourse = courses.find((c) => c.uniqueId === pc.course_id);
-    if (!matchingCourse) return pc;
+const mergeExamsData = (PropertyExams: PropertyExam[], exams: ExamProps[]) => {
+  return PropertyExams.map((pc) => {
+    const matchingExams = exams.find((c) => c.uniqueId === pc.exam_id);
+    if (!matchingExams) return pc;
 
     const merged = { ...pc };
-    for (const key in matchingCourse) {
+    for (const key in matchingExams) {
       if (!(key in pc)) {
-        merged[key] = matchingCourse[key];
+        merged[key] = matchingExams[key];
       }
     }
     return merged;
@@ -110,15 +106,15 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
         propertyRes,
         locationRes,
         reviewRes,
-        propertyCourseRes,
-        allCourseRes,
+        PropertyExamRes,
+        allExamRes,
         amenitiesRes,
       ] = await Promise.allSettled([
         API.get(`/property`),
         API.get<LocationProps[]>(`/locations`),
         API.get(`/review`),
-        API.get(`/property-course`),
-        API.get(`/course`),
+        API.get(`/property-exam`),
+        API.get(`/exam`),
         API.get<PropertyAmenities[]>(`/amenities`),
       ]);
 
@@ -126,15 +122,15 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
         propertyRes.status === "fulfilled" &&
         locationRes.status === "fulfilled" &&
         reviewRes.status === "fulfilled" &&
-        propertyCourseRes.status === "fulfilled" &&
-        allCourseRes.status === "fulfilled" &&
+        PropertyExamRes.status === "fulfilled" &&
+        allExamRes.status === "fulfilled" &&
         amenitiesRes.status === "fulfilled"
       ) {
         const propertiesData = propertyRes.value?.data || [];
         const locationsData = locationRes.value?.data || [];
         const reviewsData = reviewRes.value?.data || [];
-        const propertyCoursesData = propertyCourseRes.value?.data || [];
-        const allCoursesData = allCourseRes.value?.data || [];
+        const PropertyExamsData = PropertyExamRes.value?.data || [];
+        const allExamData = allExamRes.value?.data || [];
         const amenitiesData = amenitiesRes?.value?.data || [];
 
         const locationMap = new Map(
@@ -153,12 +149,12 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
           reviewMap.get(propId)!.push(rev);
         });
 
-        const courseMap = new Map<number, PropertyCourse[]>();
-        propertyCoursesData.forEach((pc: PropertyCourse) => {
-          if (!courseMap.has(pc?.property_id)) {
-            courseMap.set(pc.property_id, []);
+        const examMap = new Map<number, PropertyExam[]>();
+        PropertyExamsData.forEach((pc: PropertyExam) => {
+          if (!examMap.has(pc?.property_id)) {
+            examMap.set(pc.property_id, []);
           }
-          courseMap.get(pc.property_id)!.push(pc);
+          examMap.get(pc.property_id)!.push(pc);
         });
 
         const amenityMap = new Map(
@@ -172,12 +168,9 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
           (property: PropertyProps) => {
             const location = locationMap.get(property.uniqueId);
             const reviews = reviewMap.get(property.uniqueId) || [];
-            const propertyCourses = courseMap.get(property.uniqueId) || [];
+            const PropertyExams = examMap.get(property.uniqueId) || [];
             const amenity = amenityMap.get(property.uniqueId);
-            const mergedCourses = mergeCourseData(
-              propertyCourses,
-              allCoursesData
-            );
+            const mergedExams = mergeExamsData(PropertyExams, allExamData);
 
             return {
               uniqueId: property.uniqueId,
@@ -200,16 +193,11 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
               property_country: location?.property_country || "",
               reviews: reviews,
               amenities: amenity?.selectedAmenities?.[0],
-              courses: mergedCourses.map((course: MergedCourse) => ({
-                property_id: course.property_id,
-                image: course?.image || [],
-                course_name: course?.course_name || "",
-                course_level: getCategoryById(course?.course_level) || "",
-                course_type: getCategoryById(course?.course_type) || "",
-                course_format: getCategoryById(course?.course_format) || "",
-                duration: course?.duration || "",
-                course_short_name: course?.course_short_name || "",
-                certification_type: course?.certification_type || "",
+              exams: mergedExams.map((exam: MergedExam) => ({
+                property_id: exam.property_id,
+                image: exam?.image || [],
+                exam_name: exam?.exam_name || "",
+                exam_short_name: exam?.exam_short_name || "",
               })),
             };
           }
@@ -286,9 +274,8 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
 
   const SaveCompare = useCallback(async () => {
     try {
-      const user = await getProfile();
       const properties = selectedProperties.map((item) => item.uniqueId);
-      const payload = { userId: user?.uniqueId, properties };
+      const payload = { userId: "", properties };
 
       if (properties.length > 0) {
         const response = await API.post(`/compare`, payload);
@@ -360,24 +347,24 @@ const CompareProperties = ({ slugs }: { slugs?: string[] }) => {
             <ComparisonTable selectedProperties={selectedProperties} />
 
             {/* Visit Links Row */}
-            <div className="bg-white rounded-b-2xl shadow-sm border-x border-b border-purple-100 overflow-hidden">
+            <div className="bg-white rounded-b-2xl shadow-sm border-x border-b border-indigo-100 overflow-hidden">
               <div className="w-full overflow-x-auto">
                 <table className="w-full border-collapse">
                   <tbody>
-                    <tr className="bg-gradient-to-r from-purple-50 to-purple-100">
-                      <td className="text-left p-4 font-semibold text-gray-800 border-r border-purple-200 min-w-[160px] text-sm">
+                    <tr className="bg-gradient-to-r from-indigo-50 to-indigo-100">
+                      <td className="text-left p-4 font-semibold text-gray-800 border-r border-indigo-200 min-w-[160px] text-sm">
                         Visit College
                       </td>
                       {selectedProperties.map((prop, idx) => (
                         <td
                           key={idx}
-                          className="text-center p-4 border-r border-purple-200 last:border-r-0 min-w-[200px]"
+                          className="text-center p-4 border-r border-indigo-200 last:border-r-0 min-w-[200px]"
                         >
                           <Link
                             href={`/${generateSlug(prop.category)}/${
                               prop.property_slug
                             }`}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg text-sm"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg text-sm"
                           >
                             Visit
                             <LuLink />

@@ -43,11 +43,11 @@ const FeaturedProperty = ({
         className="max-w-7xl mx-auto mb-10 text-center"
       >
         <h2 className="text-3xl sm:text-4xl font-bold mb-3">
-          Featured Yoga <span className="text-purple-600">Institutes</span>
+          Featured <span className="text-indigo-600">Institutes</span>
         </h2>
         <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
-          Explore our carefully selected list of premium yoga institutions from
-          across the country.
+          Discover India’s best Sainik Schools, RIMC, and elite training centers
+          — handpicked to help you achieve your dreams.
         </p>
       </motion.div>
 
@@ -115,10 +115,10 @@ const FeaturedProperty = ({
                       />
                     </div>
                   </Link>
-                  <span className="absolute bottom-2 left-2 bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded">
+                  <span className="absolute bottom-2 left-2 bg-indigo-600 text-white text-sm font-semibold px-3 py-1 rounded">
                     {getCategoryById(inst.category)}
                   </span>
-                  <div className="absolute top-2 right-2 bg-purple-600 text-white text-center rounded px-2 py-1 text-xs font-bold">
+                  <div className="absolute top-2 right-2 bg-indigo-600 text-white text-center rounded px-2 py-1 text-xs font-bold">
                     <div className="flex gap-1 items-center">
                       <FaStar />
                       {getAverageRating(inst?.reviews)} / 5
@@ -140,7 +140,7 @@ const FeaturedProperty = ({
                       getCategoryById(inst?.category) || ""
                     )}/${inst?.property_slug}`}
                   >
-                    <h3 className="text-lg font-semibold text-gray-800 group-hover:text-purple-700 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-800 group-hover:text-indigo-700 mb-2">
                       {inst.property_name}
                     </h3>
                   </Link>
@@ -148,7 +148,7 @@ const FeaturedProperty = ({
                     href={`/${generateSlug(
                       getCategoryById(inst?.category) || ""
                     )}/${inst?.property_slug}`}
-                    className="text-purple-600 font-medium text-sm inline-flex items-center gap-1 hover:underline"
+                    className="text-indigo-600 font-medium text-sm inline-flex items-center gap-1 hover:underline"
                   >
                     Read More
                     <LuArrowRight className="ml-1" />
@@ -163,10 +163,10 @@ const FeaturedProperty = ({
       {/* Footer Link */}
       <div className="text-center mt-10">
         <Link
-          href="/yoga-institutes"
-          className="text-purple-600 text-sm font-medium hover:underline inline-flex items-center"
+          href="/institutes"
+          className="text-indigo-600 text-sm font-medium hover:underline inline-flex items-center"
         >
-          View all yoga institutes&nbsp;→
+          View all institutes&nbsp;→
         </Link>
       </div>
     </section>

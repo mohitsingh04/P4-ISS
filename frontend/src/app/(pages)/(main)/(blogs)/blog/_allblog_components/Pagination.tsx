@@ -53,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white text-purple-700 hover:bg-purple-100  hover:text-purple-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-700 transition-all duration-200"
+        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white text-indigo-700 hover:bg-indigo-100  hover:text-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-700 transition-all duration-200"
       >
         <LuChevronLeft className="h-4 w-4" />
         <span className="hidden sm:inline">Previous</span>
@@ -69,8 +69,8 @@ const Pagination: React.FC<PaginationProps> = ({
                 onClick={() => onPageChange(page as number)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors min-w-[40px] cursor-pointer ${
                   currentPage === page
-                    ? "bg-purple-600 text-white shadow-lg transform scale-105"
-                    : "bg-purple-100 text-gray-700 hover:bg-purple-200 hover:scale-105"
+                    ? "bg-indigo-600 text-white shadow-lg transform scale-105"
+                    : "bg-indigo-100 text-gray-700 hover:bg-indigo-200 hover:scale-105"
                 }`}
               >
                 {page}
@@ -83,7 +83,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white text-purple-700 hover:bg-purple-100  hover:text-purple-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-700 transition-all duration-200"
+        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white text-indigo-700 hover:bg-indigo-100  hover:text-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-700 transition-all duration-200"
       >
         <span className="hidden sm:inline">Next</span>
         <LuChevronRight className="h-4 w-4" />

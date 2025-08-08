@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import BrowseByLocation from "./_main_components/BrowseByLocation";
 import Category from "./_main_components/Category";
 import FeaturedBlogs from "./_main_components/FeaturedBlogs";
-import FeaturedCourses from "./_main_components/FeaturedCourses";
+import FeaturedExams from "./_main_components/FeaturedExams";
 import FeaturedFaq from "./_main_components/FeaturedFaqs";
 import FeaturedProperty from "./_main_components/FeaturedProperty";
 import Hero from "./_main_components/Hero";
@@ -13,7 +13,7 @@ import "swiper/css/navigation";
 import API from "@/contexts/API";
 import {
   CategoryProps,
-  CourseProps,
+  ExamProps,
   LocationProps,
   PropertyProps,
   RankProps,
@@ -35,12 +35,12 @@ export default function Home() {
   const getRanksAndProperty = useCallback(async () => {
     setLoading(true);
     try {
-      const [rankRes, propertyRes, locationRes, courseRes, reviewRes, catRes] =
+      const [rankRes, propertyRes, locationRes, examRes, reviewRes, catRes] =
         await Promise.all([
           API.get("/ranks"),
           API.get("/property"),
           API.get("/locations"),
-          API.get("/property-course"),
+          API.get("/property-exam"),
           API.get("/review"),
           API.get(`/category`),
         ]);
@@ -64,9 +64,9 @@ export default function Home() {
           (reviewItem: ReviewProps) =>
             Number(reviewItem.property_id) === propertyItem.uniqueId
         );
-        const matchingCourse = courseRes.data.filter(
-          (courseItem: CourseProps) =>
-            Number(courseItem.property_id) === propertyItem.uniqueId
+        const matchingExam = examRes.data.filter(
+          (examItem: ExamProps) =>
+            Number(examItem.property_id) === propertyItem.uniqueId
         );
         const uniqueLocations = [
           ...new Set(
@@ -91,7 +91,7 @@ export default function Home() {
           overallScore: matchingRank?.overallScore || null,
           ...cleanLocation,
           reviews: matchingReviews,
-          course: { courses: matchingCourse },
+          exam: { exams: matchingExam },
         };
       });
 
@@ -114,7 +114,7 @@ export default function Home() {
           <Hero modalOpen={() => setIsOpen(true)} />
           <Category />
           <FeaturedProperty properties={properties} categorise={categories} />
-          <FeaturedCourses />
+          <FeaturedExams />
           <BrowseByLocation
             unqieLocations={unqieLocations}
             properties={properties}

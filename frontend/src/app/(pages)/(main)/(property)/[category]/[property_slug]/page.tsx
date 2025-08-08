@@ -6,11 +6,9 @@ import TabNavigation from "../_property_components/TabNavigation";
 import EnquiryForm from "../_property_components/EnquiryForm";
 import RelatedInstitutesDetails from "../_property_components/RelatedInstitute";
 import {
-  LuAward,
   LuBadgePercent,
   LuBed,
   LuBookOpen,
-  LuBriefcase,
   LuCircleHelp,
   LuClock,
   LuImage,
@@ -22,39 +20,34 @@ import {
 import { notFound } from "next/navigation";
 import {
   CategoryProps,
-  CourseProps,
-  PropertyCourse,
+  ExamProps,
+  PropertyExam,
   PropertyProps,
 } from "@/types/types";
 import API from "@/contexts/API";
 import OverviewTab from "../_property_components/tabs/OverviewTab";
-import CoursesTab from "../_property_components/tabs/CourseTab";
+import ExamsTab from "../_property_components/tabs/ExamsTab";
 import GalleryTab from "../_property_components/tabs/GalleryTab";
 import AccommodationTab from "../_property_components/tabs/AccomodationTab";
 import AmenitiesTab from "../_property_components/tabs/AmenitiesTab";
-import CertificationTab from "../_property_components/tabs/CertificationTab";
 import WorkingHoursTab from "../_property_components/tabs/WorkingHours";
 import TeachersTab from "../_property_components/tabs/TeachersTab";
 import FAQTab from "../_property_components/tabs/FaqTab";
 import ReviewsTab from "../_property_components/tabs/ReviewTab";
 import CouponsTab from "../_property_components/tabs/CouponsTab";
-import HiringTab from "../_property_components/tabs/HiringTab";
 import { transformWorkingHours } from "@/contexts/Callbacks";
 import { AxiosError, AxiosResponse } from "axios";
 import InstituteDetailLoader from "@/components/Loader/Property/PropertyDetail";
 
-const mergeCourseData = (
-  propertyCourses: PropertyCourse[],
-  courses: CourseProps[]
-) => {
-  return propertyCourses.map((pc) => {
-    const matchingCourse = courses.find((c) => c.uniqueId === pc.course_id);
-    if (!matchingCourse) return pc;
+const mergeExamData = (propertyexams: PropertyExam[], exams: ExamProps[]) => {
+  return propertyexams.map((pc) => {
+    const matchingExams = exams.find((c) => c.uniqueId === pc.exam_id);
+    if (!matchingExams) return pc;
 
     const merged = { ...pc };
-    for (const key in matchingCourse) {
+    for (const key in matchingExams) {
       if (!(key in pc)) {
-        merged[key] = matchingCourse[key];
+        merged[key] = matchingExams[key];
       }
     }
     return merged;
@@ -112,33 +105,29 @@ const Property = () => {
       const requests = [
         API.get(`/property/location/${uniqueId}`),
         API.get(`/review/property/${uniqueId}`),
-        API.get(`/property/property-course/${uniqueId}`),
-        API.get(`/course`),
+        API.get(`/property/property-exam/${uniqueId}`),
+        API.get(`/exam`),
         API.get(`/property/gallery/${uniqueId}`),
         API.get(`/accomodation/${uniqueId}`),
         API.get(`/property/amenities/${uniqueId}`),
-        API.get(`/certifications/${uniqueId}`),
         API.get(`/business-hours/${uniqueId}`),
         API.get(`/teacher/property/${uniqueId}`),
         API.get(`/property/faq/${uniqueId}`),
         API.get(`/coupons/property/${uniqueId}`),
-        API.get(`/hiring/${uniqueId}`),
       ];
 
       const [
         locRes,
         reviewRes,
-        propertyCourseRes,
-        allCourseRes,
+        propertyExamsRes,
+        allExamsRes,
         galleryRes,
         accomodationRes,
         amenityRes,
-        certiRes,
         hoursRes,
         teacherRes,
         faqRes,
         couponRes,
-        hiringRes,
       ] = await Promise.allSettled(requests);
 
       const getData = <T,>(
@@ -146,13 +135,13 @@ const Property = () => {
         fallback: T
       ): T => (result.status === "fulfilled" ? result.value.data : fallback);
 
-      const mergedCourses: CourseProps[] =
-        propertyCourseRes.status === "fulfilled" &&
-        allCourseRes.status === "fulfilled"
-          ? (mergeCourseData(
-              propertyCourseRes.value?.data,
-              allCourseRes.value?.data
-            ) as unknown as CourseProps[])
+      const mergedExams: ExamProps[] =
+        propertyExamsRes.status === "fulfilled" &&
+        allExamsRes.status === "fulfilled"
+          ? (mergeExamData(
+              propertyExamsRes.value?.data,
+              allExamsRes.value?.data
+            ) as unknown as ExamProps[])
           : [];
 
       const locationData = getData(locRes, {});
@@ -165,19 +154,16 @@ const Property = () => {
         state: locationData.property_state,
         country: locationData.property_country,
         reviews: getData(reviewRes, {}),
-        courses: mergedCourses,
+        exams: mergedExams,
         gallery: getData(galleryRes, []),
         accomodation: getData(accomodationRes, []),
         amenities:
           getData(amenityRes, { selectedAmenities: [{}] })
             .selectedAmenities[0] || {},
-        certification:
-          getData(certiRes, { certifications: [] })?.certifications ?? [],
         working_hours: transformWorkingHours(getData(hoursRes, [])),
         teachers: getData(teacherRes, []),
         faqs: getData(faqRes, []),
         coupons: getData(couponRes, []),
-        hiring: getData(hiringRes, []),
       };
 
       setProperty(finalData);
@@ -195,10 +181,10 @@ const Property = () => {
   const tabs = [
     { id: "overview", label: "Overview", icon: LuInfo, show: true },
     {
-      id: "courses",
-      label: "Courses",
+      id: "exams",
+      label: "Exams",
       icon: LuBookOpen,
-      show: (property?.courses?.length || 0) > 0,
+      show: (property?.exams?.length || 0) > 0,
     },
     {
       id: "gallery",
@@ -217,12 +203,6 @@ const Property = () => {
       label: "Amenities",
       icon: LuSettings,
       show: !!property?.amenities,
-    },
-    {
-      id: "certifications",
-      label: "Certifications",
-      icon: LuAward,
-      show: (property?.certification?.length || 0) > 0,
     },
     {
       id: "hours",
@@ -254,12 +234,6 @@ const Property = () => {
       icon: LuBadgePercent,
       show: (property?.coupons?.length || 0) > 0,
     },
-    {
-      id: "hiring",
-      label: "Hiring",
-      icon: LuBriefcase,
-      show: (property?.hiring?.length || 0) > 0,
-    },
   ];
 
   const getCategoryById = (id: string) => {
@@ -278,13 +252,8 @@ const Property = () => {
             />
           )
         );
-      case "courses":
-        return (
-          <CoursesTab
-            courses={property?.courses ?? []}
-            getCategoryById={getCategoryById}
-          />
-        );
+      case "exams":
+        return <ExamsTab exams={property?.exams ?? []} />;
       case "gallery":
         return <GalleryTab galleries={property?.gallery ?? []} />;
       case "accomodation":
@@ -293,8 +262,6 @@ const Property = () => {
         );
       case "amenities":
         return <AmenitiesTab amenities={property?.amenities ?? {}} />;
-      case "certifications":
-        return <CertificationTab images={property?.certification ?? []} />;
       case "hours":
         return <WorkingHoursTab workingHours={property?.working_hours ?? []} />;
       case "teachers":
@@ -309,8 +276,6 @@ const Property = () => {
         );
       case "coupons":
         return <CouponsTab coupons={property?.coupons ?? []} />;
-      case "hiring":
-        return <HiringTab hiring={property?.hiring ?? []} />;
       default:
         return (
           property && (

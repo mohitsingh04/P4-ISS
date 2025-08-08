@@ -22,22 +22,23 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.yogprerna.com";
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.IndianSainikSchool.com";
 
 export const metadata: Metadata = {
   title: {
-    default: "Yogprerna",
-    template: "%s - Yogprerna",
+    default: "Indian Sainik School",
+    template: "%s - Indian Sainik School",
   },
   description:
-    "Yogprerna is your source for holistic wellness and mindful living through yoga.",
+    "Indian Sainik School is your trusted source for quality education, disciplined training, and expert guidance for Sainik School, RIMC, and military entrance preparation..",
   keywords: [
-    "yoga",
-    "meditation",
-    "wellness",
-    "Yogprerna",
-    "mindfulness",
-    "fitness",
+    "sainik school",
+    "rimc",
+    "military school",
+    "entrance exam coaching",
+    "training centers",
+    "boarding schools",
   ],
   metadataBase: new URL(baseUrl),
   alternates: {

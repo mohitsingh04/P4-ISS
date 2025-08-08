@@ -77,7 +77,6 @@ const PropertiesLoader: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Course Name Filter */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-24 h-5">
@@ -93,7 +92,6 @@ const PropertiesLoader: React.FC = () => {
                     <Skeleton height={40} />
                   </div>
 
-                  {/* Course Options */}
                   <div className="space-y-3">
                     {Array.from({ length: 4 }).map((_, index) => (
                       <div

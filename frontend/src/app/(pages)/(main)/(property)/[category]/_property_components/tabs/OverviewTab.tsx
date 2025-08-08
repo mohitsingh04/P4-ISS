@@ -31,7 +31,7 @@ const OverviewTab = ({
           institute?.country) && (
           <div className="bg-gray-50 rounded-lg p-6 shadow-sm">
             <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <LuMapPin className="w-5 h-5 text-purple-600" />
+              <LuMapPin className="w-5 h-5 text-indigo-600" />
               Location
             </h3>
             <div className="space-y-2 text-gray-700 text-base">
@@ -53,7 +53,7 @@ const OverviewTab = ({
 
         <div className="bg-gray-50 rounded-lg p-6 shadow-sm">
           <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <LuBuilding className="w-5 h-5 text-purple-600" />
+            <LuBuilding className="w-5 h-5 text-indigo-600" />
             Property Details
           </h3>
           <div className="space-y-2 text-gray-700 text-base">

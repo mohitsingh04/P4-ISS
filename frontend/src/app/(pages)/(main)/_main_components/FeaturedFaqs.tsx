@@ -7,39 +7,39 @@ import Image from "next/image";
 const faqItems = [
   {
     id: "q1",
-    question: "How to book our custom treatments?",
+    question: "How to apply for Sainik School or RIMC?",
     answer:
-      "We are committed to providing our customers with exceptional service. You can easily book our custom treatments online through our website or by contacting our customer support. Our team is ready to assist you with your booking.",
+      "You can apply online through the official website of the respective institution or via the National Testing Agency (NTA) portal where applicable. We also provide guidance and resources to help you with the application process.",
   },
   {
     id: "q2",
-    question: "Are there also sports massages?",
+    question: "Do you offer coaching for entrance exams?",
     answer:
-      "Yes, we offer a range of sports massages performed by certified therapists. These massages are designed to help with muscle recovery, improve flexibility, and prepare your body for physical activity. You can find more details and book a session on our services page.",
+      "Yes, we offer specialized coaching for Sainik School, RIMC, and Rashtriya Military School entrance exams. Our expert faculty focuses on syllabus coverage, mock tests, and interview preparation.",
   },
   {
     id: "q3",
-    question: "How do you price your services?",
+    question: "How much does the training cost?",
     answer:
-      "Our pricing varies depending on the type of service, duration, and any additional customization. We offer competitive rates and various packages. Please refer to our pricing page for a detailed breakdown or contact us for a personalized quote.",
+      "The cost depends on the course duration, format (online or offline), and additional facilities like hostel or study material. Please check our fee structure page or contact us for a personalized quote.",
   },
   {
     id: "q4",
-    question: "Can I book my appointment online?",
+    question: "Can I register for classes online?",
     answer:
-      "Absolutely! Our online booking portal is available 24/7 for your convenience. Simply visit our website, select your desired service and time slot, and confirm your appointment. You will receive a confirmation email shortly after.",
+      "Absolutely! You can register online by filling out the enrollment form on our website. Choose your preferred course, pay the registration fee, and you will receive confirmation with further instructions.",
   },
   {
     id: "q5",
-    question: "Can I book home services?",
+    question: "Do you provide hostel facilities?",
     answer:
-      "Yes, we provide home services for select treatments to ensure your comfort and convenience. Please check our service area and availability on our website, or contact us directly to inquire about home service options in your location.",
+      "Yes, selected training centers and schools provide hostel accommodation for students. Facilities include meals, study rooms, and round-the-clock supervision. Please verify availability before applying.",
   },
   {
     id: "q6",
-    question: "What are included in your services?",
+    question: "What services do you offer?",
     answer:
-      "Our comprehensive services include a variety of yoga classes (beginner to advanced), meditation sessions, personalized wellness programs, dietary consultations, and specialized workshops. Each service is designed to promote holistic well-being.",
+      "Our services include entrance exam coaching, interview preparation, study materials, mock tests, personality development, and guidance for admission into Sainik Schools, RIMC, and military training institutions.",
   },
 ];
 
@@ -82,7 +82,7 @@ export default function FeaturedFaq() {
                     <motion.span
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className="text-purple-600"
+                      className="text-indigo-600"
                     >
                       {!isOpen ? <LuPlus size={24} /> : <LuMinus />}
                     </motion.span>

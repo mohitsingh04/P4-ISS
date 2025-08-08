@@ -29,7 +29,7 @@ const AmenitiesTab = ({ amenities }: { amenities: AmenitiesProps }) => {
             onClick={() => setActiveCategory(category)}
             className={`cursor-pointer flex justify-between items-center border-b p-4 transition ${
               activeCategory === category
-                ? "border-purple-500 shadow-sm"
+                ? "border-indigo-500 shadow-sm"
                 : "border-gray-200"
             }`}
           >
@@ -65,7 +65,7 @@ const AmenitiesTab = ({ amenities }: { amenities: AmenitiesProps }) => {
                 className="bg-gray-50 hover:bg-white transition-all border border-gray-200 hover:shadow rounded-lg p-4 flex justify-between items-center"
               >
                 <div className="flex items-center gap-2 text-sm font-medium text-gray-800">
-                  <LuCircleCheck className="w-4 h-4 text-purple-600" />
+                  <LuCircleCheck className="w-4 h-4 text-indigo-600" />
                   {key}
                 </div>
 
@@ -75,14 +75,14 @@ const AmenitiesTab = ({ amenities }: { amenities: AmenitiesProps }) => {
                     {value.map((option, i) => (
                       <span
                         key={i}
-                        className={`text-xs font-medium px-2 py-0.5 rounded-full text-purple-800 bg-purple-100`}
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full text-indigo-800 bg-indigo-100`}
                       >
                         {option}
                       </span>
                     ))}
                   </div>
                 ) : value === true ? null : (
-                  <span className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-full">
                     {String(value)}
                   </span>
                 )}

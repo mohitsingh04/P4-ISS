@@ -81,7 +81,7 @@ const ReviewsTab = ({
         </p>
       </div>
 
-      <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-8 mb-8 border border-purple-100">
+      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-8 mb-8 border border-indigo-100">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="text-center md:text-left">
             <div className="text-5xl font-bold text-gray-900 mb-2">
@@ -121,7 +121,7 @@ const ReviewsTab = ({
       <div className="text-center mb-8">
         <button
           onClick={() => setShowReviewForm(!showReviewForm)}
-          className="bg-purple-600 text-white px-8 py-3 cursor-pointer rounded-xl hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 font-medium shadow"
+          className="bg-indigo-600 text-white px-8 py-3 cursor-pointer rounded-xl hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 font-medium shadow"
         >
           {showReviewForm ? "Cancel Review" : "Write a Review"}
         </button>
@@ -139,8 +139,8 @@ const ReviewsTab = ({
             >
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center">
-                    <LuUser className="w-7 h-7 text-purple-600" />
+                  <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-full flex items-center justify-center">
+                    <LuUser className="w-7 h-7 text-indigo-600" />
                   </div>
                 </div>
 
@@ -167,7 +167,7 @@ const ReviewsTab = ({
                         </p>
                         {isLong && (
                           <button
-                            className="text-purple-600 font-medium mt-2 hover:underline"
+                            className="text-indigo-600 font-medium mt-2 hover:underline"
                             onClick={() => toggleReadMore(index)}
                           >
                             {isExpanded ? "Show less" : "Read more"}

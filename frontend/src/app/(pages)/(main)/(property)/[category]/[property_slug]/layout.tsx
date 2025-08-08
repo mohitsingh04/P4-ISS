@@ -41,7 +41,6 @@ export async function generateMetadata({
       notFound();
     }
   }
-
   if (property?.uniqueId) {
     try {
       const seoRes = await API.get(`/seo/property/${property.uniqueId}`, {
@@ -50,7 +49,11 @@ export async function generateMetadata({
       seo = seoRes.data;
     } catch (error) {
       const err = error as AxiosError<{ error: string }>;
-      console.error("Error loading SEO:", err.response?.data.error);
+      if (err.response?.status !== 404) {
+        console.error("Error loading SEO:", err.response?.data?.error);
+      }
+      // Skip SEO if not found
+      seo = null;
     }
   }
 

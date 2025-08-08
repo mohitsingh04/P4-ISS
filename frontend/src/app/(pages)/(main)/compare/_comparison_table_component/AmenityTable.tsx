@@ -30,9 +30,9 @@ export default function AmenityTable({
   const allAmenities = Array.from(amenitySet).sort();
 
   return (
-    <div className="bg-white shadow-sm border border-purple-100 overflow-hidden transition-all duration-300 hover:shadow-md">
+    <div className="bg-white shadow-sm border border-indigo-100 overflow-hidden transition-all duration-300 hover:shadow-md">
       <div
-        className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 cursor-pointer px-6 py-3 transition-all duration-200 hover:from-purple-600 hover:via-purple-700 hover:to-purple-800 relative overflow-hidden"
+        className="bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 cursor-pointer px-6 py-3 transition-all duration-200 hover:from-indigo-600 hover:via-indigo-700 hover:to-indigo-800 relative overflow-hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="absolute inset-0 opacity-10">
@@ -49,7 +49,7 @@ export default function AmenityTable({
               <h2 className="text-lg font-bold text-white mb-0.5">
                 Amenities Comparison
               </h2>
-              <p className="text-purple-100 text-xs">
+              <p className="text-indigo-100 text-xs">
                 Compare facilities across {selectedProperties.length} colleges
               </p>
             </div>
@@ -76,19 +76,19 @@ export default function AmenityTable({
             <div className="w-full overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-gradient-to-r from-purple-50 to-purple-100 border-b border-purple-200">
-                    <th className="text-left p-4 font-semibold text-gray-800 border-r border-purple-200 min-w-[160px] text-sm">
+                  <tr className="bg-gradient-to-r from-indigo-50 to-indigo-100 border-b border-indigo-200">
+                    <th className="text-left p-4 font-semibold text-gray-800 border-r border-indigo-200 min-w-[160px] text-sm">
                       Amenity
                     </th>
                     {selectedProperties.map((prop, idx) => (
                       <th
                         key={idx}
-                        className="text-center p-4 font-semibold text-gray-800 border-r border-purple-200 last:border-r-0 min-w-[200px]"
+                        className="text-center p-4 font-semibold text-gray-800 border-r border-indigo-200 last:border-r-0 min-w-[200px]"
                       >
                         <div className="flex flex-col items-center">
                           {!prop?.property_logo?.[0] ? (
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center mb-2 shadow-sm">
-                              <span className="text-purple-600 font-bold text-sm">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center mb-2 shadow-sm">
+                              <span className="text-indigo-600 font-bold text-sm">
                                 {prop.property_name.charAt(0)}
                               </span>
                             </div>
@@ -114,12 +114,12 @@ export default function AmenityTable({
                   {allAmenities.map((amenity, idx) => (
                     <tr
                       key={idx}
-                      className="hover:bg-purple-25 transition-colors duration-200"
+                      className="hover:bg-indigo-25 transition-colors duration-200"
                     >
-                      <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-gray-50 to-purple-25 border-r border-purple-200">
+                      <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-gray-50 to-indigo-25 border-r border-indigo-200">
                         <div className="flex items-center gap-3">
-                          <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
-                            <span className="text-purple-600 text-sm">
+                          <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+                            <span className="text-indigo-600 text-sm">
                               <LuBuilding />
                             </span>
                           </div>

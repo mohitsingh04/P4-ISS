@@ -105,7 +105,7 @@ const BlogDetailPage: React.FC = () => {
     if (!blog && !loading) {
       notFound();
     }
-  }, [blog]);
+  }, [blog, loading]);
 
   useEffect(() => {
     if (users.length && categories.length && tags.length) {
@@ -121,9 +121,9 @@ const BlogDetailPage: React.FC = () => {
           <div className="mb-6">
             <Link
               href="/"
-              className="inline-flex items-center space-x-2 text-purple-600 transition-colors  group"
+              className="inline-flex items-center space-x-2 text-indigo-600 transition-colors  group"
             >
-              <LuArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform  hover:text-purple-800 duration-200" />
+              <LuArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform  hover:text-indigo-800 duration-200" />
               <span>Back to Blog</span>
             </Link>
           </div>
@@ -160,12 +160,12 @@ const BlogDetailPage: React.FC = () => {
                     {blog?.category.map((category) => (
                       <span
                         key={category}
-                        className="bg-purple-600 text-white px-4 py-2 my-4 rounded-full text-sm font-medium shadow-lg"
+                        className="bg-indigo-600 text-white px-4 py-2 my-4 rounded-full text-sm font-medium shadow-lg"
                       >
                         {category}
                       </span>
                     ))}
-                    <div className="flex items-center text-gray-400 pe-6 space-x-1 hover:text-purple-600 transition-colors duration-200 ml-auto">
+                    <div className="flex items-center text-gray-400 pe-6 space-x-1 hover:text-indigo-600 transition-colors duration-200 ml-auto">
                       <LuCalendar className="h-4 w-4" />
                       <span>
                         {new Date(blog?.createdAt || "").toLocaleDateString(
@@ -179,7 +179,7 @@ const BlogDetailPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="flex items-center space-x-1 text-gray-400 hover:text-purple-600 transition-colors duration-200">
+                    <div className="flex items-center space-x-1 text-gray-400 hover:text-indigo-600 transition-colors duration-200">
                       <LuClock className="h-4 w-4" />
                       <span className="text-sm">
                         {formatDistanceToNow(new Date(blog?.createdAt || ""), {
@@ -203,14 +203,14 @@ const BlogDetailPage: React.FC = () => {
                   {/* Tags */}
                   <div className="mt-8 pt-2">
                     <div className="flex items-center space-x-2 mb-4">
-                      <LuTag className="h-5 w-5 text-purple-600" />
+                      <LuTag className="h-5 w-5 text-indigo-600" />
                       <span className="font-medium text-gray-900">Tags</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {blog?.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm hover:bg-purple-200 cursor-pointer transition-all duration-200 transform hover:scale-105"
+                          className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 cursor-pointer transition-all duration-200 transform hover:scale-105"
                         >
                           {tag}
                         </span>
@@ -223,12 +223,12 @@ const BlogDetailPage: React.FC = () => {
               <div className="bg-gray-50 rounded-2xl p-6 md:flex items-start space-x-6 mt-5 shadow-sm shad">
                 {/* Image */}
                 <div className="flex flex-col items-center justify-center w-32 h-40 mx-auto md:mx-0">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-purple-100 mb-3">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-indigo-100 mb-3">
                     <Image
                       src={
                         blog?.author_profile?.[0]
                           ? `${process.env.NEXT_PUBLIC_MEDIA_URL}/user/${blog.author_profile[0]}`
-                          : "/images/course_banner.png"
+                          : "/images/exam_banner.png"
                       }
                       alt={blog?.author_name || ""}
                       fill

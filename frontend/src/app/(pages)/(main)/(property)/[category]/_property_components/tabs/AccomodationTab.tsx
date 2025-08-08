@@ -25,9 +25,9 @@ const AccommodationItem = ({ item }: { item: AccommodationProps }) => {
   };
 
   return (
-    <div className="bg-white shadow-sx rounded md:p-10 p-6 mb-10 transition hover:shadow-sm border border-purple-100">
+    <div className="bg-white shadow-sx rounded md:p-10 p-6 mb-10 transition hover:shadow-sm border border-indigo-100">
       <div className="flex justify-between">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-purple-800">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-indigo-800">
           {item?.accomodation_name}
         </h2>
         <p className="text-gray-700 text-lg font-medium mt-2">
@@ -94,7 +94,7 @@ const AccommodationTab = ({
     <div className="min-h-screen py-12">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-5xl font-bold text-purple-900">
+          <h1 className="text-3xl sm:text-5xl font-bold text-indigo-900">
             Our Accommodations
           </h1>
           <p className="text-gray-600 mt-4 text-lg sm:text-xl">

@@ -6,7 +6,7 @@ import {
   BlogsProps,
   BlogTagProps,
   CategoryProps,
-  CourseProps,
+  ExamProps,
   LocationProps,
   PropertyProps,
 } from "@/types/types";
@@ -20,7 +20,7 @@ import {
   LuX,
 } from "react-icons/lu";
 import BlogCard from "../search_components/BlogCard";
-import CourseCard from "../search_components/CourseCard";
+import ExamCard from "../search_components/ExamCard";
 import PropertyCard from "../search_components/PropertyCard";
 import Pagination from "../search_components/Pagination";
 import Breadcrumb from "@/components/breadcrumbs/breadcrumbs";
@@ -29,7 +29,7 @@ import SearchLoader from "@/components/Loader/Search/SearchLoader";
 const ITEMS_PER_PAGE = 10;
 type SearchResult =
   | (PropertyProps & { type: "property" })
-  | (CourseProps & { type: "course" })
+  | (ExamProps & { type: "exam" })
   | (BlogsProps & { type: "blog" });
 
 const SearchResults = () => {
@@ -37,20 +37,18 @@ const SearchResults = () => {
   const [activeTab, setActiveTab] = useState("all");
   const { query } = useParams();
   const [properties, setProperties] = useState<PropertyProps[]>([]);
-  const [courses, setCourses] = useState<CourseProps[]>([]);
+  const [exams, setExams] = useState<ExamProps[]>([]);
   const [blogs, setBlogs] = useState<BlogsProps[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<PropertyProps[]>(
     []
   );
-  const [filteredCourses, setFilteredCourses] = useState<CourseProps[]>([]);
+  const [filteredExams, setFilteredExams] = useState<ExamProps[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<BlogsProps[]>([]);
   const [searchInput, setSearchInput] = useState("");
   const [finalFilteredProperties, setFinalFilteredProperties] = useState<
     PropertyProps[]
   >([]);
-  const [finalFilteredCourses, setFinalFilteredCourses] = useState<
-    CourseProps[]
-  >([]);
+  const [finalFilteredExams, setFinalFilteredExams] = useState<ExamProps[]>([]);
   const [finalFilteredBlogs, setFinalFilteredBlogs] = useState<BlogsProps[]>(
     []
   );
@@ -79,15 +77,10 @@ const SearchResults = () => {
           generateSlug(prop.property_country || "").includes(lowerQuery)
       );
 
-      const filteredCrs = courses.filter(
-        (course) =>
-          generateSlug(course.course_type || "").includes(lowerQuery) ||
-          (typeof course.course_level === "string" &&
-            generateSlug(course.course_level).includes(lowerQuery)) ||
-          generateSlug(course.course_name || "").includes(lowerQuery) ||
-          generateSlug(course.course_short_name || "").includes(lowerQuery) ||
-          (typeof course.certification_type === "string" &&
-            generateSlug(course.certification_type).includes(lowerQuery))
+      const filteredCrs = exams.filter(
+        (exam) =>
+          generateSlug(exam.exam_name || "").includes(lowerQuery) ||
+          generateSlug(exam.exam_short_name || "").includes(lowerQuery)
       );
 
       const filteredBlgs = blogs.filter(
@@ -100,21 +93,21 @@ const SearchResults = () => {
       );
 
       setFilteredProperties(filteredProps);
-      setFilteredCourses(filteredCrs);
+      setFilteredExams(filteredCrs);
       setFilteredBlogs(filteredBlgs);
       setIsLoading(false);
     } else {
       setFilteredProperties([]);
-      setFilteredCourses([]);
+      setFilteredExams([]);
       setFilteredBlogs([]);
       setIsLoading(false);
     }
-  }, [query, properties, courses, blogs]);
+  }, [query, properties, exams, blogs]);
 
   useEffect(() => {
     if (!searchInput.trim()) {
       setFinalFilteredProperties(filteredProperties);
-      setFinalFilteredCourses(filteredCourses);
+      setFinalFilteredExams(filteredExams);
       setFinalFilteredBlogs(filteredBlogs);
       return;
     }
@@ -134,17 +127,10 @@ const SearchResults = () => {
         generateSlug(prop.property_description || "").includes(searchQuery)
     );
 
-    const searchFilteredCourses = filteredCourses.filter(
-      (course) =>
-        generateSlug(course.course_type || "").includes(searchQuery) ||
-        (typeof course.course_level === "string" &&
-          generateSlug(course.course_level).includes(searchQuery)) ||
-        generateSlug(course.course_name || "").includes(searchQuery) ||
-        generateSlug(course.course_short_name || "").includes(searchQuery) ||
-        (typeof course.certification_type === "string" &&
-          generateSlug(course.certification_type).includes(searchQuery)) ||
-        generateSlug(course.course_format || "").includes(searchQuery) ||
-        generateSlug(course.duration || "").includes(searchQuery)
+    const searchFilteredExams = filteredExams.filter(
+      (exam) =>
+        generateSlug(exam.exam_name || "").includes(searchQuery) ||
+        generateSlug(exam.exam_short_name || "").includes(searchQuery)
     );
 
     const searchFilteredBlogs = filteredBlogs.filter(
@@ -159,17 +145,17 @@ const SearchResults = () => {
     );
 
     setFinalFilteredProperties(searchFilteredProps);
-    setFinalFilteredCourses(searchFilteredCourses);
+    setFinalFilteredExams(searchFilteredExams);
     setFinalFilteredBlogs(searchFilteredBlogs);
-  }, [searchInput, filteredProperties, filteredCourses, filteredBlogs]);
+  }, [searchInput, filteredProperties, filteredExams, filteredBlogs]);
 
   const getTotalResults = useCallback(() => {
     return (
       (finalFilteredProperties?.length || 0) +
-      (finalFilteredCourses?.length || 0) +
+      (finalFilteredExams?.length || 0) +
       (finalFilteredBlogs?.length || 0)
     );
-  }, [finalFilteredBlogs, finalFilteredCourses, finalFilteredProperties]);
+  }, [finalFilteredBlogs, finalFilteredExams, finalFilteredProperties]);
 
   // Get paginated results based on active tab
   const paginatedResults = useMemo(() => {
@@ -181,9 +167,9 @@ const SearchResults = () => {
           ...item,
           type: "property" as const,
         })),
-        ...finalFilteredCourses.map((item) => ({
+        ...finalFilteredExams.map((item) => ({
           ...item,
-          type: "course" as const,
+          type: "exam" as const,
         })),
         ...finalFilteredBlogs.map((item) => ({
           ...item,
@@ -195,10 +181,10 @@ const SearchResults = () => {
         ...item,
         type: "property" as const,
       }));
-    } else if (activeTab === "courses") {
-      allResults = finalFilteredCourses.map((item) => ({
+    } else if (activeTab === "exams") {
+      allResults = finalFilteredExams.map((item) => ({
         ...item,
-        type: "course" as const,
+        type: "exam" as const,
       }));
     } else if (activeTab === "blogs") {
       allResults = finalFilteredBlogs.map((item) => ({
@@ -218,40 +204,27 @@ const SearchResults = () => {
   }, [
     activeTab,
     finalFilteredProperties,
-    finalFilteredCourses,
+    finalFilteredExams,
     finalFilteredBlogs,
     currentPage,
   ]);
 
-  const getPropertiesAndCourseWithCategories = useCallback(async () => {
+  const getPropertiesAndExamWithCategories = useCallback(async () => {
     try {
       setIsLoading(true);
-      const [propertyRes, locationRes, catRes, courseRes] = await Promise.all([
+      const [propertyRes, locationRes, catRes, examRes] = await Promise.all([
         API.get("/property"),
         API.get("/locations"),
         API.get("/category"),
-        API.get("/course"),
+        API.get("/exam"),
       ]);
 
-      const processedCourses = courseRes.data.map((courseItem: CourseProps) => {
-        const findCategoryNameById = (id: string | number) => {
-          const found = catRes.data.find(
-            (cat: CategoryProps) => String(cat.uniqueId) === String(id)
-          );
-          return found?.category_name || null;
-        };
-
+      const processedEmail = examRes.data.map((examItem: ExamProps) => {
         return {
-          ...courseItem,
-          course_level:
-            findCategoryNameById(courseItem.course_level) ||
-            courseItem.course_level,
-          certification_type:
-            findCategoryNameById(courseItem.certification_type) ||
-            courseItem.certification_type,
+          ...examItem,
         };
       });
-      setCourses(processedCourses);
+      setExams(processedEmail);
 
       const processedProperties = propertyRes.data.map(
         (propertyItem: PropertyProps) => {
@@ -330,9 +303,9 @@ const SearchResults = () => {
   }, []);
 
   useEffect(() => {
-    getPropertiesAndCourseWithCategories();
+    getPropertiesAndExamWithCategories();
     getBlogsWithCategoryAndTags();
-  }, [getPropertiesAndCourseWithCategories, getBlogsWithCategoryAndTags]);
+  }, [getPropertiesAndExamWithCategories, getBlogsWithCategoryAndTags]);
 
   const clearSearch = () => {
     setSearchInput("");
@@ -345,24 +318,24 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="min-h-screen bg-purple-50">
+    <div className="min-h-screen bg-indigo-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Breadcrumb items={[{ label: "Search" }, { label: `${query}` }]} />
       </div>
       <div className="container mx-auto max-w-7xl px-4 pb-8">
         <div className="relative flex-1 max-w-2xl mb-2">
-          <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400 h-5 w-5" />
+          <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-400 h-5 w-5" />
           <input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="Search courses, properties, institutes, blogs..."
-            className="w-full pl-10 pr-12 py-3 text-lg rounded-xl bg-white shadow-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+            placeholder="Search exams, properties, institutes, blogs..."
+            className="w-full pl-10 pr-12 py-3 text-lg rounded-xl bg-white shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
           />
           {searchInput && (
             <button
               type="button"
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-400 hover:text-indigo-600 transition"
             >
               <LuX className="h-5 w-5" />
             </button>
@@ -370,13 +343,13 @@ const SearchResults = () => {
         </div>
 
         {(finalFilteredBlogs.length > 0 ||
-          finalFilteredCourses.length > 0 ||
+          finalFilteredExams.length > 0 ||
           finalFilteredProperties.length > 0) && (
           <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
             <div className="flex flex-col gap-2">
               <p className="text-gray-700 text-lg">
                 Found{" "}
-                <span className="font-bold text-purple-700">
+                <span className="font-bold text-indigo-700">
                   {getTotalResults()}
                 </span>{" "}
                 results
@@ -408,10 +381,10 @@ const SearchResults = () => {
                   count: finalFilteredProperties.length,
                 },
                 {
-                  key: "courses",
-                  label: "Courses",
+                  key: "exams",
+                  label: "Exams",
                   icon: LuGraduationCap,
-                  count: finalFilteredCourses.length,
+                  count: finalFilteredExams.length,
                 },
                 {
                   key: "blogs",
@@ -425,13 +398,13 @@ const SearchResults = () => {
                   onClick={() => setActiveTab(tab.key)}
                   className={`inline-flex items-center gap-2 transform px-4 py-2 cursor-pointer rounded-xl text-sm shadow-sm transition-all ${
                     activeTab === tab.key
-                      ? "bg-purple-600 text-white scale-95"
-                      : "bg-white text-purple-600 hover:scale-105"
+                      ? "bg-indigo-600 text-white scale-95"
+                      : "bg-white text-indigo-600 hover:scale-105"
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
                   {tab.label}
-                  <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full ml-1">
+                  <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full ml-1">
                     {tab.count}
                   </span>
                 </button>
@@ -446,8 +419,8 @@ const SearchResults = () => {
           {paginatedResults.items.map((item, index) => {
             if (item.type === "property") {
               return <PropertyCard key={index} property={item} />;
-            } else if (item.type === "course") {
-              return <CourseCard key={index} course={item} />;
+            } else if (item.type === "exam") {
+              return <ExamCard key={index} exam={item} />;
             } else if (item.type === "blog") {
               return <BlogCard key={index} blog={item} />;
             }
@@ -483,7 +456,7 @@ const SearchResults = () => {
               {searchInput && (
                 <button
                   onClick={clearSearch}
-                  className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition"
+                  className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition"
                 >
                   Clear Search Filter
                 </button>

@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 
-export type ColorKey = "blue" | "green" | "purple" | "orange";
+export type ColorKey = "blue" | "green" | "indigo" | "orange";
 
 export interface CategoryItem {
   icon: IconType;
@@ -11,22 +11,13 @@ export interface CategoryItem {
   link: string;
 }
 
-export interface CourseProps {
+export interface ExamProps {
+  exam_name: string;
+  featured_image: string[];
+  exam_short_name: string;
   uniqueId: string;
-  course_name: string;
-  image: string[];
-  course_type: string;
-  course_short_name: string;
-  duration: string;
-  course_level: string;
-  description: string;
   [key: string]: unknown;
   property_id: number;
-  certification_type: string;
-  course_format: string;
-  key_outcomes: string[] | number[];
-  requirements: string[] | number[];
-  best_for: string[];
 }
 export interface BlogsProps {
   uniqueId?: number;
@@ -75,16 +66,14 @@ export interface PropertyProps {
   country: string;
   est_year: string;
   property_type: string;
-  courses: CourseProps[];
+  exams: ExamProps[];
   gallery: GalleryProps[];
   accomodation: AccommodationProps[];
   amenities: AmenitiesProps;
   working_hours: WorkingHoursProps[];
   faqs: FaqProps[];
   coupons: CouponsProps[];
-  hiring: HiringProps[];
   teachers: TeacherProps[];
-  certification: string[];
 }
 export interface RankProps {
   property_id: number;
@@ -181,18 +170,6 @@ export interface CouponsProps {
   valid_upto: Date;
 }
 
-export interface HiringProps {
-  _id: string;
-  title: string;
-  job_type: string;
-  job_description: string;
-  experience: string;
-  salary: PriceProps;
-  end_date: Date;
-  skills: string[];
-  qualification: string[];
-}
-
 export interface PriceProps {
   INR: string;
   DOLLAR: string;
@@ -202,10 +179,7 @@ export interface FiltersProps {
   country: string[];
   state: string[];
   city: string[];
-  course_name: string[];
-  course_level: string[];
-  course_type: string[];
-  course_format: string[];
+  exam_name: string[];
   rating: string[];
   category: string[];
   property_type: string[];
@@ -229,10 +203,7 @@ export interface DynamicFilterOptionsProps {
     selectedCountries?: string[],
     selectedStates?: string[]
   ) => string[];
-  courseNames: FilterOptionProps[];
-  courseLevels: FilterOptionProps[];
-  courseTypes: FilterOptionProps[];
-  courseFormats: FilterOptionProps[];
+  examsNames: FilterOptionProps[];
   categories: CategoryOptionProps[];
   propertyTypes: CategoryOptionProps[];
 }
@@ -241,10 +212,7 @@ export interface FilterSearchTermsProps {
   country: string;
   state: string;
   city: string;
-  course_name: string;
-  course_level: string;
-  course_type: string;
-  course_format: string;
+  exam_name: string;
   category: string;
   property_type: string;
 }
@@ -253,10 +221,7 @@ export interface ExpandedFiltersProps {
   country: boolean;
   state: boolean;
   city: boolean;
-  course_name: boolean;
-  course_level: boolean;
-  course_type: boolean;
-  course_format: boolean;
+  exam_name: boolean;
   rating: boolean;
   category: boolean;
   property_type: boolean;
@@ -278,19 +243,13 @@ export interface SlidProps {
   title?: string;
 }
 
-export interface PropertyCourse {
-  course_id: string;
+export interface PropertyExam {
+  exam_id: string;
   property_id: number;
   [key: string]: unknown;
-  course_level: string;
-  course_type: string;
-  course_format: string;
 }
 
-export interface CertificationProps {
-  images: string[];
-}
-export interface PropertyCourseMainProps {
+export interface PropertyExamMainProps {
   property_id: string;
   image: string[];
 }
@@ -420,10 +379,7 @@ export interface DynamicFilterOptionsProps {
     selectedCountries?: string[],
     selectedStates?: string[]
   ) => FilterOptionProps[];
-  courseNames: FilterOptionProps[];
-  courseLevels: FilterOptionProps[];
-  courseTypes: FilterOptionProps[];
-  courseFormats: FilterOptionProps[];
+  examsNames: FilterOptionProps[];
   categories: CategoryOptionProps[];
   propertyTypes: CategoryOptionProps[];
   ratingCounts: RatingCount[];

@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const FeaturedBlog = ({ blog }: { blog: BlogsProps }) => {
   return (
-    <div className="relative bg-purple-600 rounded-3xl overflow-hidden shadow-2xl mb-16">
+    <div className="relative bg-indigo-600 rounded-3xl overflow-hidden shadow-2xl mb-16">
       <div className="absolute inset-0 bg-black/30"></div>
 
       <div
@@ -32,23 +32,23 @@ const FeaturedBlog = ({ blog }: { blog: BlogsProps }) => {
             </div>
 
             <Link href={`/blog/${generateSlug(blog.title)}`}>
-              <h2 className="text-3xl lg:text-4xl font-bold text-white hover:text-purple-100 mb-1 leading-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white hover:text-indigo-100 mb-1 leading-tight">
                 {blog.title}
               </h2>
             </Link>
 
-            <p className="text-purple-100 text-lg mb-2 leading-relaxed">
+            <p className="text-indigo-100 text-lg mb-2 leading-relaxed">
               {stripHtmlAndLimit(blog.blog, 240)}
             </p>
 
-            <div className="flex items-center space-x-6 text-purple-200 mb-4">
+            <div className="flex items-center space-x-6 text-indigo-200 mb-4">
               <div className="flex items-center space-x-2">
                 <div className="relative w-8 h-8 rounded-full overflow-hidden">
                   <Image
                     src={
                       blog?.author_profile?.[0]
                         ? `${process.env.NEXT_PUBLIC_MEDIA_URL}/user/${blog.author_profile[0]}`
-                        : "/images/course_banner.png"
+                        : "/images/exam_banner.png"
                     }
                     alt={blog.author_name}
                     fill
@@ -75,7 +75,7 @@ const FeaturedBlog = ({ blog }: { blog: BlogsProps }) => {
 
             <Link
               href={`/blog/${generateSlug(blog.title)}`}
-              className="inline-flex items-center space-x-2 bg-white text-purple-700 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="inline-flex items-center space-x-2 bg-white text-indigo-700 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg"
             >
               <span>Read Full Article</span>
               <LuArrowRight className="h-5 w-5" />

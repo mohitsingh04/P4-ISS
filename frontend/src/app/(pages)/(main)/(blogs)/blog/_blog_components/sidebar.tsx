@@ -58,7 +58,7 @@ const Sidebar = ({ blog }: { blog: BlogsProps | null }) => {
     <div className="space-y-8 sticky top-24">
       <div className="bg-white rounded-2xl shadow-sm p-6 transition-all duration-300 hover:shadow-sm">
         <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center space-x-2">
-          <LuTrendingUp className="h-5 w-5 text-purple-600" />
+          <LuTrendingUp className="h-5 w-5 text-indigo-600" />
           <span>Recent Blogs</span>
         </h3>
         <div className="space-y-4">
@@ -83,7 +83,7 @@ const Sidebar = ({ blog }: { blog: BlogsProps | null }) => {
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-300 line-clamp-2">
+                <h4 className="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
                   {blog.title}
                 </h4>
                 <div className="flex items-center space-x-1 mt-1">

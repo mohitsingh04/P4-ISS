@@ -7,7 +7,7 @@ export default function Hero({ modalOpen }: { modalOpen: () => void }) {
   const [currentText, setCurrentText] = React.useState(0);
 
   const texts = React.useMemo(
-    () => ["YOGA INSTITUTE", "YOGA COURSES", "YOGA TRAINER", "JOBS IN YOGA"],
+    () => ["Coahing Centers", "EXAMS", "Schools", "Expert TRAINER"],
     []
   );
 
@@ -25,19 +25,11 @@ export default function Hero({ modalOpen }: { modalOpen: () => void }) {
 
   return (
     <div className="min-h-screen relative">
-      <div
-        className="absolute top-0 left-0 z-[-1] h-full bg-cover bg-center bg-no-repeat w-full md:w-1/4"
-        style={{
-          backgroundImage: "url('/images/hero-bg.jpg')",
-          backgroundPosition: "center right",
-        }}
-      />
-
       <div className="container mx-auto px-4 h-screen flex items-center justify-center">
         <div className="w-full max-w-2xl flex flex-col items-center text-center space-y-8">
           <motion.img
             src={`/images/logo.png`}
-            alt="YogPrerna Logo"
+            alt="Indian Sainik School Logo"
             className="w-52 py-4"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -82,10 +74,10 @@ export default function Hero({ modalOpen }: { modalOpen: () => void }) {
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <input
                 type="text"
-                placeholder="Search Yoga Institute, Course, Trainer, City..."
+                placeholder="Search Coahing Centers, Schools, Exam, Trainer, City..."
                 className="w-full outline-none text-sm px-2 py-2 sm:py-1 rounded-full"
               />
-              <button className="w-full sm:w-auto bg-purple-600 rounded-full cursor-pointer text-white  px-6 py-2 flex items-center justify-center gap-2 hover:bg-purple-700 transition-colors">
+              <button className="w-full sm:w-auto bg-indigo-600 rounded-full cursor-pointer text-white  px-6 py-2 flex items-center justify-center gap-2 hover:bg-indigo-700 transition-colors">
                 <FaSearch className="w-4 h-4" />
                 <span>Search</span>
               </button>
@@ -99,17 +91,18 @@ export default function Hero({ modalOpen }: { modalOpen: () => void }) {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             {[
-              "Yoga Institute",
-              "Personal Yoga Trainer",
-              "Yoga Courses",
-              "Find Classes in India",
-              "Cities",
-              "Just Start",
+              "Sainik School",
+              "RIMC",
+              "Military Training Center",
+              "Entrance Exam",
+              "Find Schools in India",
+              "Top Cities",
+              "Join Now",
             ].map((link, index) => (
               <motion.a
                 key={link}
                 href="#"
-                className="px-4 py-1 bg-white rounded-full  text-purple-600 hover:text-purple-800  transition-all duration-300 shadow-sm  text-sm md:text-base"
+                className="px-4 py-1 bg-white rounded-full  text-indigo-600 hover:text-indigo-800  transition-all duration-300 shadow-sm  text-sm md:text-base"
                 whileHover={{ scale: 1.05, y: -2 }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

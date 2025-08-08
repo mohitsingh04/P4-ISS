@@ -25,10 +25,10 @@ const colorClasses: Record<
     icon: "text-green-700",
     button: "bg-green-700 text-white hover:bg-green-800",
   },
-  purple: {
+  indigo: {
     bg: "bg-[#f1e6fa]",
-    icon: "text-purple-700",
-    button: "bg-purple-700 text-white hover:bg-purple-800",
+    icon: "text-indigo-700",
+    button: "bg-indigo-700 text-white hover:bg-indigo-800",
   },
   orange: {
     bg: "bg-[#fff2e5]",
@@ -41,34 +41,38 @@ const colorClasses: Record<
 const categories: CategoryItem[] = [
   {
     icon: LuLaptop,
-    title: "Online Yoga",
-    link: "online-yoga-studio",
-    description: "Practice from the comfort of your home with expert trainers.",
-    linkText: "Explore Online Yoga",
+    title: "Online Coaching",
+    link: "online-coaching",
+    description:
+      "Prepare for Sainik School & RIMC entrance from home with expert mentors.",
+    linkText: "Explore Online Coaching",
     color: "blue",
   },
   {
     icon: LuSchool,
-    title: "Yoga Colleges",
-    link: "college",
-    description: "Browse certified yoga colleges with government affiliations.",
-    linkText: "List of Yoga Colleges",
+    title: "Schools",
+    link: "schools",
+    description:
+      "Browse top schools including Sainik Schools and military institutions.",
+    linkText: "List of Schools",
     color: "green",
   },
   {
     icon: LuLandmark,
-    title: "Universities",
-    link: "university",
-    description: "Explore university-level yoga degree & diploma programs.",
-    linkText: "Explore Universities",
-    color: "purple",
+    title: "RIMC & Military Colleges",
+    link: "military-colleges",
+    description:
+      "Explore RIMC, Rashtriya Military Schools, and other defence academies.",
+    linkText: "Explore Military Colleges",
+    color: "indigo",
   },
   {
     icon: LuStore,
-    title: "Yoga Studios",
-    link: "yoga-studio",
-    description: "Join a local yoga studio for in-person group training.",
-    linkText: "List of Yoga Studios",
+    title: "Training Centers",
+    link: "training-centers",
+    description:
+      "Join defence exam coaching centers for Sainik School & RIMC preparation.",
+    linkText: "List of Training Centers",
     color: "orange",
   },
 ];
@@ -83,7 +87,7 @@ export default function Category() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        Discover Our <span className="text-purple-600">Yoga Categories</span>
+        Discover Our <span className="text-indigo-600">Categories</span>
       </motion.h2>
 
       <motion.p
@@ -93,8 +97,8 @@ export default function Category() {
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: true }}
       >
-        Explore yoga options tailored to your goals—from online classes to top
-        institutions.
+        Explore preparation options tailored to your goals — from live online
+        classes to India’s top Sainik Schools and RIMC.
       </motion.p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -122,7 +126,7 @@ export default function Category() {
                 {cat.description}
               </p>
               <Link
-                href={`/yoga-institutes?category=${cat?.link}`}
+                href={`/institutes?category=${cat?.link}`}
                 className="text-sm font-medium underline text-gray-700 hover:text-black transition"
               >
                 {cat.linkText}

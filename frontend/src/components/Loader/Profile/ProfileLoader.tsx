@@ -47,7 +47,7 @@ const ProfileLoader: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <Skeleton width={20} height={20} />
                 </div>
                 <div className="flex-1">
@@ -60,7 +60,7 @@ const ProfileLoader: React.FC = () => {
 
               {/* Email */}
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <Skeleton width={20} height={20} />
                 </div>
                 <div className="flex-1">
@@ -73,7 +73,7 @@ const ProfileLoader: React.FC = () => {
 
               {/* Phone */}
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <Skeleton width={20} height={20} />
                 </div>
                 <div className="flex-1">
@@ -86,7 +86,7 @@ const ProfileLoader: React.FC = () => {
 
               {/* Location */}
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <Skeleton width={20} height={20} />
                 </div>
                 <div className="flex-1">
@@ -100,7 +100,7 @@ const ProfileLoader: React.FC = () => {
 
               {/* Alt Phone */}
               <div className="flex items-center space-x-4 md:col-start-2">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <Skeleton width={20} height={20} />
                 </div>
                 <div className="flex-1">

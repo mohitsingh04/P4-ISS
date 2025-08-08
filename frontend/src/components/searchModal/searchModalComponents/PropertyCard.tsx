@@ -16,7 +16,7 @@ export default function PropertyCard({
 }) {
   return (
     <section>
-      <div className="bg-purple-100 p-6 rounded-2xl shadow-xs flex justify-between items-start mt-2">
+      <div className="bg-indigo-100 p-6 rounded-2xl shadow-xs flex justify-between items-start mt-2">
         <div className="flex items-start gap-4">
           <div className="relative w-12 h-12">
             <Image
@@ -39,13 +39,13 @@ export default function PropertyCard({
                 handleStoreSearch();
                 onClose();
               }}
-              className="text-lg font-semibold text-purple-600 hover:text-purple-900"
+              className="text-lg font-semibold text-indigo-600 hover:text-indigo-900"
             >
               {property?.property_name}
             </Link>
 
             <div className="flex items-center gap-1 text-gray-600 text-sm mt-1">
-              <LuMap className="w-4 h-4 text-purple-500" />
+              <LuMap className="w-4 h-4 text-indigo-500" />
               <span>
                 {property?.property_city && <>{property?.property_city}</>}{" "}
                 {property?.property_state && <>{property?.property_state}</>}{" "}
@@ -57,8 +57,8 @@ export default function PropertyCard({
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <LuLandmark className="w-5 h-5 text-purple-600" />
-          <h3 className="text-xl font-bold text-purple-800">
+          <LuLandmark className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-xl font-bold text-indigo-800">
             {property?.category}
           </h3>
         </div>

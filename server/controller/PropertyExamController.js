@@ -10,6 +10,16 @@ const isSameDate = (d1, d2) => {
   );
 };
 
+export const getAllPropertyExam = async (req, res) => {
+  try {
+    const exams = await PropertyExam.find();
+    return res.status(200).json(exams);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const createPropertyExam = async (req, res) => {
   try {
     const {

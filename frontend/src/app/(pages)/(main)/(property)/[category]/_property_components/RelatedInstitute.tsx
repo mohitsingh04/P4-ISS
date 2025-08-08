@@ -107,14 +107,14 @@ const RelatedInstitutesDetails = ({
 
   return (
     <div className="bg-white rounded-xl shadow p-6 w-full max-w-xl mx-auto">
-      <h2 className="text-xl font-semibold text-purple-700 mb-4">
+      <h2 className="text-xl font-semibold text-indigo-700 mb-4">
         Related Institutes
       </h2>
       <div className="space-y-4">
         {properties?.map((institute) => (
           <div
             key={institute.uniqueId}
-            className="flex items-start gap-4 p-4 rounded-lg shadow-xs hover:shadow-sm transition-all hover:shadow-purple-200"
+            className="flex items-start gap-4 p-4 rounded-lg shadow-xs hover:shadow-sm transition-all hover:shadow-indigo-200"
           >
             <Link
               href={`/${generateSlug(institute.category)}/${
@@ -140,7 +140,7 @@ const RelatedInstitutesDetails = ({
                 href={`/${generateSlug(institute.category)}/${
                   institute?.property_slug
                 }`}
-                className="text-md font-semibold text-gray-900 hover:text-purple-600 transition-all duration-300"
+                className="text-md font-semibold text-gray-900 hover:text-indigo-600 transition-all duration-300"
               >
                 {institute.property_name}
               </Link>

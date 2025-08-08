@@ -23,9 +23,9 @@ export default function BasicDetailTable({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="bg-white rounded-t-2xl shadow-sm border border-purple-100 overflow-hidden transition-all duration-300 hover:shadow-md">
+    <div className="bg-white rounded-t-2xl shadow-sm border border-indigo-100 overflow-hidden transition-all duration-300 hover:shadow-md">
       <div
-        className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 cursor-pointer px-6 py-3 transition-all duration-200 hover:from-purple-600 hover:via-purple-700 hover:to-purple-800 relative overflow-hidden"
+        className="bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 cursor-pointer px-6 py-3 transition-all duration-200 hover:from-indigo-600 hover:via-indigo-700 hover:to-indigo-800 relative overflow-hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="absolute inset-0 opacity-10">
@@ -42,7 +42,7 @@ export default function BasicDetailTable({
               <h2 className="text-lg font-bold text-white mb-0.5">
                 Basic Comparison
               </h2>
-              <p className="text-purple-100 text-xs">
+              <p className="text-indigo-100 text-xs">
                 Overview of {selectedProperties.length} selected colleges
               </p>
             </div>
@@ -96,12 +96,12 @@ export default function BasicDetailTable({
         <div className="w-full overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-gradient-to-r from-purple-50 to-purple-100 border-b border-purple-200">
-                <th className="text-left p-4 font-semibold text-gray-800 border-r border-purple-200 min-w-[160px] text-sm"></th>
+              <tr className="bg-gradient-to-r from-indigo-50 to-indigo-100 border-b border-indigo-200">
+                <th className="text-left p-4 font-semibold text-gray-800 border-r border-indigo-200 min-w-[160px] text-sm"></th>
                 {selectedProperties.map((p, i) => (
                   <th
                     key={i}
-                    className="text-center p-4 font-semibold text-gray-800 border-r border-purple-200 last:border-r-0 min-w-[200px]"
+                    className="text-center p-4 font-semibold text-gray-800 border-r border-indigo-200 last:border-r-0 min-w-[200px]"
                   >
                     <div className="flex flex-col items-center relative">
                       {/* Remove button for individual property */}
@@ -117,8 +117,8 @@ export default function BasicDetailTable({
                       </button>
 
                       {!p?.property_logo?.[0] ? (
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center mb-2 shadow-sm">
-                          <span className="text-purple-600 font-bold text-sm">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center mb-2 shadow-sm">
+                          <span className="text-indigo-600 font-bold text-sm">
                             {p.property_name.charAt(0)}
                           </span>
                         </div>
@@ -142,8 +142,8 @@ export default function BasicDetailTable({
             </thead>
             <tbody className="divide-y divide-gray-100">
               {/* Featured Image Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200"></td>
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200"></td>
                 {selectedProperties.map((p, i) => (
                   <td
                     key={i}
@@ -156,7 +156,7 @@ export default function BasicDetailTable({
                             src={
                               p?.featured_image?.[0]
                                 ? `${process.env.NEXT_PUBLIC_MEDIA_URL}/${p.featured_image?.[0]}`
-                                : "/images/course_banner.png"
+                                : "/images/exam_banner.png"
                             }
                             alt={p.property_name}
                             fill
@@ -171,11 +171,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* Academic Type Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuGraduationCap size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuGraduationCap size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">Academic Type</span>
                   </div>
@@ -185,7 +185,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.category || "Not Available"}
                     </span>
                   </td>
@@ -193,11 +193,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* Property Type Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuBuilding2 size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuBuilding2 size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">Institution Type</span>
                   </div>
@@ -207,7 +207,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.property_type || "Not Available"}
                     </span>
                   </td>
@@ -215,11 +215,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* City Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuMapPin size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuMapPin size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">City</span>
                   </div>
@@ -229,7 +229,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.city || "Not Available"}
                     </span>
                   </td>
@@ -237,11 +237,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* State Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuMapPin size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuMapPin size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">State</span>
                   </div>
@@ -251,7 +251,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.state || "Not Available"}
                     </span>
                   </td>
@@ -259,11 +259,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* Country Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuMapPin size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuMapPin size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">Country</span>
                   </div>
@@ -273,7 +273,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.country || "Not Available"}
                     </span>
                   </td>
@@ -281,11 +281,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* Rating Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuStar size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuStar size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">Average Rating</span>
                   </div>
@@ -295,12 +295,12 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 rounded-lg shadow-sm">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-lg shadow-sm">
                       <LuStar
                         size={14}
                         className="text-yellow-500 fill-current"
                       />
-                      <span className="font-medium text-purple-700 text-sm">
+                      <span className="font-medium text-indigo-700 text-sm">
                         {getAverageRating(p.reviews)}/5
                       </span>
                     </div>
@@ -309,11 +309,11 @@ export default function BasicDetailTable({
               </tr>
 
               {/* Established Year Row */}
-              <tr className="hover:bg-purple-25 transition-colors duration-200">
-                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-purple-25 to-purple-50 border-r border-purple-200">
+              <tr className="hover:bg-indigo-25 transition-colors duration-200">
+                <td className="font-semibold p-4 text-gray-700 bg-gradient-to-r from-indigo-25 to-indigo-50 border-r border-indigo-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center shadow-sm">
-                      <LuCalendar size={14} className="text-purple-600" />
+                    <div className="w-7 h-7 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center shadow-sm">
+                      <LuCalendar size={14} className="text-indigo-600" />
                     </div>
                     <span className="text-sm">Established</span>
                   </div>
@@ -323,7 +323,7 @@ export default function BasicDetailTable({
                     key={i}
                     className="text-center p-4 border-r border-gray-100 last:border-r-0"
                   >
-                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 rounded-lg text-sm font-medium shadow-sm">
+                    <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 rounded-lg text-sm font-medium shadow-sm">
                       {p.est_year || "Not Available"}
                     </span>
                   </td>

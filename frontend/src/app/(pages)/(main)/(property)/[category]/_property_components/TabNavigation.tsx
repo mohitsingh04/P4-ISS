@@ -30,7 +30,7 @@ const TabNavigation = ({ tabs }: { tabs: TabProps[] }) => {
         {/* Left Button */}
         <button
           onClick={() => swiperInstance?.slidePrev()}
-          className="absolute left-0 top-1/2 ms-3 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 hover:bg-purple-700 transition group"
+          className="absolute left-0 top-1/2 ms-3 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 hover:bg-indigo-700 transition group"
           aria-label="Previous tabs"
         >
           <LuChevronLeft className="w-4 h-4 text-gray-600 group-hover:text-white" />
@@ -39,7 +39,7 @@ const TabNavigation = ({ tabs }: { tabs: TabProps[] }) => {
         {/* Right Button */}
         <button
           onClick={() => swiperInstance?.slideNext()}
-          className="absolute right-0 top-1/2 me-3 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 hover:bg-purple-700 transition group"
+          className="absolute right-0 top-1/2 me-3 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 hover:bg-indigo-700 transition group"
           aria-label="Next tabs"
         >
           <LuChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white" />
@@ -62,8 +62,8 @@ const TabNavigation = ({ tabs }: { tabs: TabProps[] }) => {
                       onClick={() => handleTabChange(tab.id)}
                       className={`flex items-center gap-2 px-4 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                         activeTab === tab.id
-                          ? "border-purple-600 text-purple-600"
-                          : "border-transparent text-gray-500 hover:text-purple-700 hover:border-purple-300"
+                          ? "border-indigo-600 text-indigo-600"
+                          : "border-transparent text-gray-500 hover:text-indigo-700 hover:border-indigo-300"
                       }`}
                     >
                       <tab.icon className="w-4 h-4" />

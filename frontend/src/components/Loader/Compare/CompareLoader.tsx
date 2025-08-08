@@ -98,7 +98,6 @@ const CompareLoader = () => {
             </div>
           </div>
 
-          {/* Course Comparison Section */}
           <div className="bg-white rounded-lg shadow-sm mb-8">
             <div className="bg-gray-50 text-white px-6 py-4 rounded-t-lg flex items-center justify-between">
               <Skeleton height={24} width={200} />
@@ -106,13 +105,11 @@ const CompareLoader = () => {
             </div>
 
             <div className="p-6">
-              {/* Course Selection */}
               <div className="mb-6">
                 <Skeleton height={16} width={150} className="mb-2" />
                 <Skeleton height={40} width={300} className="rounded-lg" />
               </div>
 
-              {/* Course Details */}
               <div className="space-y-6">
                 {[...Array(5)].map((_, index) => (
                   <div
@@ -135,7 +132,6 @@ const CompareLoader = () => {
                 ))}
               </div>
 
-              {/* Yogaprema Section */}
               <div className="mt-8 p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center justify-between">
                   <Skeleton height={24} width={120} />

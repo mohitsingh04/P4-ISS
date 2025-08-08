@@ -25,7 +25,7 @@ const TeachersTab = ({ teachers }: { teachers: TeacherProps[] }) => {
                 src={
                   teacher.profile?.[0]
                     ? `${process.env.NEXT_PUBLIC_MEDIA_URL}/${teacher.profile?.[0]}`
-                    : "/images/course_banner.png"
+                    : "/images/exam_banner.png"
                 }
                 alt={teacher.teacher_name}
                 fill
@@ -37,11 +37,11 @@ const TeachersTab = ({ teachers }: { teachers: TeacherProps[] }) => {
                 {teacher.teacher_name}
               </h3>
               <div className="flex items-center text-gray-600 text-sm mb-2">
-                <LuMapPin className="w-4 h-4 mr-1 text-purple-600" />
+                <LuMapPin className="w-4 h-4 mr-1 text-indigo-600" />
                 {teacher.designation}
               </div>
               <div className="flex items-center text-gray-600 text-sm">
-                <LuClock className="w-4 h-4 mr-1 text-purple-600" />
+                <LuClock className="w-4 h-4 mr-1 text-indigo-600" />
                 {teacher.experience} of experience
               </div>
             </div>
