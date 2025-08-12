@@ -96,32 +96,36 @@ export default function Exams() {
   }, [search, propertyExams]);
 
   const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    });
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      });
 
-    if (result.isConfirmed) {
-      try {
-        const response = await API.delete(`/property-exam/${id}`);
-        Swal.fire({
-          title: "Deleted!",
-          text: response?.data?.message || "Exam deleted successfully.",
-          icon: "success",
-        });
-        getPropertyExams();
-      } catch (error) {
-        Swal.fire({
-          title: "Error",
-          text: error?.response?.data?.error || "Failed to delete Exam!",
-          icon: "error",
-        });
+      if (result.isConfirmed) {
+        try {
+          const response = await API.delete(`/property-exam/${id}`);
+          Swal.fire({
+            title: "Deleted!",
+            text: response?.data?.message || "Exam deleted successfully.",
+            icon: "success",
+          });
+          getPropertyExams();
+        } catch (error) {
+          Swal.fire({
+            title: "Error",
+            text: error?.response?.data?.error || "Failed to delete Exam!",
+            icon: "error",
+          });
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -239,7 +243,9 @@ export default function Exams() {
           <UpdateExams
             property={property}
             exam={isEditing}
+            setIsEditing={setIsEditing}
             getExamById={getExamById}
+            getExams={getPropertyExams}
           />
         )
       ) : (

@@ -1,6 +1,7 @@
 import PropertyExam from "../models/PropertyExam.js";
 import Exam from "../models/Exams.js";
 import { addPropertyScore } from "../AnalyticController/PropertyScoreController.js";
+import { error } from "console";
 
 const isSameDate = (d1, d2) => {
   if (!d1 || !d2) return d1 === d2;
@@ -19,7 +20,6 @@ export const getAllPropertyExam = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 export const createPropertyExam = async (req, res) => {
   try {
     const {
@@ -34,6 +34,7 @@ export const createPropertyExam = async (req, res) => {
       exam_mode,
       description,
       property_id,
+      exam_fee, // ✅ new field
     } = req.body;
 
     if (!exam_id || !property_id) {
@@ -71,6 +72,10 @@ export const createPropertyExam = async (req, res) => {
       exam_id: exam_id,
       property_id: property_id,
     };
+
+    if (exam_fee !== undefined && exam_fee !== null && exam_fee !== "") {
+      fieldsToSave.exam_fee = exam_fee;
+    }
 
     if (exam_name && exam_name !== originalExam.exam_name) {
       fieldsToSave.exam_name = exam_name;
@@ -151,6 +156,7 @@ export const updatePropertyExam = async (req, res) => {
       exam_form_link,
       exam_mode,
       description,
+      exam_fee, // ✅ new field
     } = req.body;
 
     if (!objectId || !exam_id) {
@@ -170,6 +176,11 @@ export const updatePropertyExam = async (req, res) => {
     }
 
     const updatedFields = {};
+
+    // ✅ Save exam_fee directly if provided
+    if (exam_fee !== undefined && exam_fee !== null && exam_fee !== "") {
+      updatedFields.exam_fee = exam_fee;
+    }
 
     if (exam_name && exam_name !== originalExam.exam_name) {
       updatedFields.exam_name = exam_name;
@@ -257,17 +268,22 @@ export const deletePropertyExamById = async (req, res) => {
 
     const deleted = await PropertyExam.findOneAndDelete({ _id: objectId });
 
-    const allExamForProperty = await PropertyExam.find({ property_id });
+    const allExamForProperty = await PropertyExam.find({
+      property_id: deleted?.property_id,
+    });
 
     if (allExamForProperty.length <= 0) {
       await addPropertyScore({
         property_score: -10,
-        property_id,
+        property_id: deleted?.property_id,
       });
     }
     if (!deleted) {
       return res.status(404).json({ error: "Exam Not Found" });
     }
     return res.status(200).json({ message: "Exam Deleted Successfully" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server error" });
+  }
 };

@@ -266,16 +266,18 @@ export default function CreateExam() {
 
                   <Col md={6} className="mb-3">
                     <Form.Label>Exam Mode</Form.Label>
-                    <Form.Control
-                      type="text"
+                    <Form.Select
                       name="exam_mode"
-                      placeholder="Online / Offline"
                       value={formik.values.exam_mode}
                       onChange={formik.handleChange}
                       isInvalid={
                         formik.touched.exam_mode && formik.errors.exam_mode
                       }
-                    />
+                    >
+                      <option value="">Select Mode</option>
+                      <option value="online">Online</option>
+                      <option value="offline">Offline</option>
+                    </Form.Select>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.exam_mode}
                     </Form.Control.Feedback>

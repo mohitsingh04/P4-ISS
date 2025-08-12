@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Breadcrumb,
   Button,
@@ -7,6 +7,8 @@ import {
   Row,
   Form,
   Alert,
+  Dropdown,
+  Image,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -16,6 +18,7 @@ import { API } from "../../context/API";
 import { CreatePropertyValidation } from "../../context/ValidationSchemas";
 import Swal from "sweetalert2";
 import { getEditorConfig } from "../../context/getEditorConfig";
+import ALLImages from "../../common/Imagesdata";
 
 export default function CreateProperty() {
   const navigator = useNavigate();
@@ -29,6 +32,42 @@ export default function CreateProperty() {
   const [propertyTypes, setPropertTyes] = useState([]);
   const [boardingTypes, setBoardingTypes] = useState([]);
   const [schoolType, setSchoolTypes] = useState([]);
+  const [allProperty, setAllProperty] = useState([]);
+  const [allFilteredProperty, setAllFilterdProperty] = useState([]);
+  const [allLocations, setAllLocations] = useState([]);
+
+  const getAllProperty = useCallback(async () => {
+    try {
+      const response = await API.get(`/property`);
+      setAllProperty(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getAllProperty();
+  }, [getAllProperty]);
+
+  const getAllLocations = useCallback(async () => {
+    try {
+      const response = await API.get(`/locations`);
+      setAllLocations(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getAllLocations();
+  }, [getAllLocations]);
+
+  const getLocationsById = (id) => {
+    const location = allLocations.find(
+      (item) => Number(item.property_id) === Number(id)
+    );
+    return location;
+  };
 
   const getAuhtUser = async () => {
     setAuthLoading(true);
@@ -143,6 +182,16 @@ export default function CreateProperty() {
     },
   });
 
+  useEffect(() => {
+    setAllFilterdProperty(
+      allProperty.filter((item) =>
+        item?.property_name
+          ?.toLowerCase()
+          ?.includes(formik?.values?.property_name?.toLowerCase())
+      )
+    );
+  }, [formik.values.property_name, allProperty]);
+
   return (
     <div>
       <div className="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
@@ -195,17 +244,83 @@ export default function CreateProperty() {
               <Form onSubmit={formik.handleSubmit}>
                 <Row>
                   <Col md={6}>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 position-relative">
                       <Form.Label>Property Name</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter property name"
                         {...formik.getFieldProps("property_name")}
                         isInvalid={formik.errors.property_name}
+                        autoComplete="off"
                       />
                       <Form.Control.Feedback type="invalid">
                         {formik.errors.property_name}
                       </Form.Control.Feedback>
+
+                      {formik.values.property_name &&
+                        allFilteredProperty.length > 0 && (
+                          <Dropdown.Menu show className="w-100">
+                            {allFilteredProperty.map((item, index) => {
+                              const city = getLocationsById(
+                                item.uniqueId
+                              )?.property_city;
+                              const website = item.property_website;
+                              const logoSrc = item.property_logo?.[0]
+                                ? `${import.meta.env.VITE_MEDIA_URL}/${
+                                    item.property_logo[0]
+                                  }`
+                                : ALLImages("face8");
+
+                              return (
+                                <Dropdown.Item
+                                  key={index}
+                                  as="div"
+                                  className="py-2"
+                                >
+                                  <div className="d-flex align-items-start">
+                                    <Image
+                                      src={logoSrc}
+                                      alt={item.property_name}
+                                      rounded
+                                      width={40}
+                                      height={40}
+                                      className="me-2 border"
+                                    />
+                                    <div>
+                                      {/* Property Name */}
+                                      <div className="fw-semibold">
+                                        {item.property_name}
+                                      </div>
+
+                                      {/* City */}
+                                      {city && (
+                                        <div className="text-muted small">
+                                          <i className="fe fe-map-pin me-1"></i>{" "}
+                                          {city}
+                                        </div>
+                                      )}
+
+                                      {/* Website */}
+                                      {website && (
+                                        <div className="small">
+                                          <i className="fe fe-globe me-1 text-primary"></i>
+                                          <a
+                                            href={website}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-decoration-none"
+                                          >
+                                            {website}
+                                          </a>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </Dropdown.Item>
+                              );
+                            })}
+                          </Dropdown.Menu>
+                        )}
                     </Form.Group>
                   </Col>
                   <Col md={6}>

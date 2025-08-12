@@ -42,7 +42,10 @@ const examSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Pending",
+      default: "Active",
+    },
+    exam_fee: {
+      type: Number,
     },
     isDeleted: {
       type: Boolean,
