@@ -26,48 +26,58 @@ export default function EditAmenities({
     )
   );
 
+  // Config for amenities that require at least one sub-option
+  const requiredSubOptions = {
+    Transportation: {
+      Parking: () => parkingType.length > 0,
+    },
+    "Basic Facilities": {
+      WiFi: () => wifiType.length > 0,
+    },
+  };
+
   useEffect(() => {
     if (!existingAmenity) return;
 
     const fetched = existingAmenity?.selectedAmenities?.[0] || {};
 
-    setAmenities(() =>
-      Object.fromEntries(
-        Object.entries(amenitiesData).map(([category, items]) => [
-          category,
-          Object.fromEntries(
-            items.map((amenity) => {
-              const found = fetched[category]?.find((item) =>
-                typeof item === "object"
-                  ? Object.keys(item)[0] === amenity
-                  : item === amenity
-              );
+    // compute new amenities state and collect parking/wifi values once
+    let initialParking = [];
+    let initialWifi = [];
 
-              if (typeof found === "object" && amenity === "Parking") {
-                setParkingType(
-                  found?.[amenity]?.map((val) => ({
-                    label: val,
-                    value: val,
-                  })) || []
-                );
-              }
+    const newAmenities = Object.fromEntries(
+      Object.entries(amenitiesData).map(([category, items]) => [
+        category,
+        Object.fromEntries(
+          items.map((amenity) => {
+            const found = fetched[category]?.find((item) =>
+              typeof item === "object"
+                ? Object.keys(item)[0] === amenity
+                : item === amenity
+            );
 
-              if (typeof found === "object" && amenity === "WiFi") {
-                setWifiType(
-                  found?.[amenity]?.map((val) => ({
-                    label: val,
-                    value: val,
-                  })) || []
-                );
-              }
+            if (typeof found === "object" && amenity === "Parking") {
+              initialParking =
+                found?.[amenity]?.map((val) => ({ label: val, value: val })) ||
+                [];
+            }
 
-              return [amenity, !!found];
-            })
-          ),
-        ])
-      )
+            if (typeof found === "object" && amenity === "WiFi") {
+              initialWifi =
+                found?.[amenity]?.map((val) => ({ label: val, value: val })) ||
+                [];
+            }
+
+            return [amenity, !!found];
+          })
+        ),
+      ])
     );
-  }, [existingAmenity]);
+
+    setAmenities(newAmenities);
+    setParkingType(initialParking);
+    setWifiType(initialWifi);
+  }, [existingAmenity, amenitiesData]);
 
   const handleSelection = (category, amenity, value) => {
     setAmenities((prev) => ({
@@ -105,25 +115,27 @@ export default function EditAmenities({
     onSubmit: async (values) => {
       if (isSubmitting) return;
 
-      if (
-        (amenities["Mandatory"]?.["Parking"] && parkingType.length === 0) ||
-        (amenities["Basic Facilities"]?.["WiFi"] && wifiType.length === 0)
-      ) {
-        Swal.fire({
-          icon: "warning",
-          title: "Incomplete Selection",
-          text: "Please select at least one option for Parking and/or WiFi if enabled.",
-        });
-        return;
+      // Validate required sub-options (scalable)
+      for (const [category, amenityObj] of Object.entries(requiredSubOptions)) {
+        for (const [amenity, validator] of Object.entries(amenityObj)) {
+          if (amenities?.[category]?.[amenity] && !validator()) {
+            Swal.fire({
+              icon: "warning",
+              title: "Incomplete Selection",
+              text: `Please select at least one option for ${amenity}.`,
+            });
+            return;
+          }
+        }
       }
+
+      const payload = {
+        propertyId: values.propertyId,
+        selectedAmenities: formatAmenitiesForSubmission(),
+      };
 
       setIsSubmitting(true);
       try {
-        const payload = {
-          propertyId: values.propertyId,
-          selectedAmenities: formatAmenitiesForSubmission(),
-        };
-
         const response = await API.put(
           `/amenities/${existingAmenity?.uniqueId}`,
           payload

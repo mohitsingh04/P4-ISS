@@ -15,6 +15,7 @@ export default function AddAmenities({
   const [wifiType, setWifiType] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // state to track all amenities
   const [amenities, setAmenities] = useState(() =>
     Object.fromEntries(
       Object.entries(amenitiesData).map(([category, items]) => [
@@ -66,11 +67,14 @@ export default function AddAmenities({
         formattedAmenities.length === 0 ||
         Object.keys(formattedAmenities[0]).length === 0;
 
+      // ✅ FIX: Correct category names for validation
       const hasWiFiSelected =
-        amenities["Basic Facilities"]?.WiFi === true && wifiType.length === 0;
+        amenities["Basic Facilities"]?.WiFi === true &&
+        wifiType.length === 0;
 
       const hasParkingSelected =
-        amenities["Mandatory"]?.Parking === true && parkingType.length === 0;
+        amenities["Transportation"]?.Parking === true &&
+        parkingType.length === 0;
 
       if (isEmpty || hasWiFiSelected || hasParkingSelected) {
         let message = "Please select at least one amenity.";
@@ -153,6 +157,7 @@ export default function AddAmenities({
               </div>
             </div>
 
+            {/* Parking dropdown */}
             {category === "Transportation" &&
               amenity === "Parking" &&
               isSelected && (
@@ -175,6 +180,7 @@ export default function AddAmenities({
                 </div>
               )}
 
+            {/* WiFi dropdown */}
             {category === "Basic Facilities" &&
               amenity === "WiFi" &&
               isSelected && (
@@ -210,6 +216,7 @@ export default function AddAmenities({
             </Card.Header>
             <Card.Body className="p-0">
               <div className="d-flex flex-column flex-md-row">
+                {/* Sidebar with categories */}
                 <div
                   className="categories-sidebar border-end"
                   style={{ minWidth: "320px" }}
@@ -253,6 +260,7 @@ export default function AddAmenities({
                     </div>
                   </div>
                 </div>
+                {/* Amenity items */}
                 <div className="flex-grow-1 p-4 px-0">
                   <h5 className="mb-4 px-4">{selectedCategory}</h5>
                   <div className="amenities-list">
